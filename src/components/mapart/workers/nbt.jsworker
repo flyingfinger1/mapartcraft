@@ -619,15 +619,16 @@ class Map_NBT {
         }
         break;
       }
-      case MapModes.SCHEMATIC_NBT.staircaseModes.CLASSIC.uniqueId: {
+      case MapModes.SCHEMATIC_NBT.staircaseModes.CLASSIC.uniqueId:
+      case MapModes.SCHEMATIC_NBT.staircaseModes.OFF.uniqueId: {
         // make sure the column's global minimum is at y = 0; doing this for every column gives the map a common base.
+        // for OFF mode this removes the empty air layers that would otherwise appear below flat maps.
         const columnMinimumY = physicalColumn.reduce((a, b) => (a.pos.value.value[1] < b.pos.value.value[1] ? a : b)).pos.value.value[1];
         physicalColumn.forEach((block) => {
           block.pos.value.value[1] -= columnMinimumY;
         });
         break;
       }
-      case MapModes.SCHEMATIC_NBT.staircaseModes.OFF.uniqueId:
       case MapModes.SCHEMATIC_NBT.staircaseModes.FULL_DARK.uniqueId:
       case MapModes.SCHEMATIC_NBT.staircaseModes.FULL_LIGHT.uniqueId: {
         break;
