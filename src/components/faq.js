@@ -125,6 +125,11 @@ function FAQ(props) {
         More staircasing modes can be enabled from the <em>Extras</em> settings tab.
       </p>
 
+      <b>Can I rotate a 3D (staircased) mapart?</b>
+      <p>
+        No! Unlike flat maparts, 3D maparts rely on the North–South direction for their shading. Rotating the schematic will break the shading and the map will look wrong in-game. Always place the schematic in its original orientation. See also: <a href="https://github.com/rebane2001/mapartcraft/issues/297" target="_blank" rel="noopener noreferrer">#297</a>.
+      </p>
+
       <b>Better color?</b>
       <p>
         This setting will give you more natural colors. Disabling this will make the website faster and give you slightly worse colors. It is recommended to
