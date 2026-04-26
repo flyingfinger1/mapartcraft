@@ -38,6 +38,7 @@ class MapartController extends Component {
     optionValue_staircasing: MapModes.SCHEMATIC_NBT.staircaseModes.VALLEY.uniqueId,
     optionValue_whereSupportBlocks: WhereSupportBlocksModes.ALL_OPTIMIZED.uniqueId,
     optionValue_supportBlock: "cobblestone",
+    optionValue_noSupportBlocksFirstRow: false,
     optionValue_transparency: false,
     optionValue_transparencyTolerance: 128,
     optionValue_mapdatFilenameUseId: true,
@@ -338,6 +339,10 @@ class MapartController extends Component {
 
   setOption_SupportBlock = (text) => {
     this.setState({ optionValue_supportBlock: text });
+  };
+
+  onOptionChange_noSupportBlocksFirstRow = () => {
+    this.setState({ optionValue_noSupportBlocksFirstRow: !this.state.optionValue_noSupportBlocksFirstRow });
   };
 
   onOptionChange_PreProcessingEnabled = () => {
@@ -752,6 +757,7 @@ class MapartController extends Component {
       optionValue_staircasing,
       optionValue_whereSupportBlocks,
       optionValue_supportBlock,
+      optionValue_noSupportBlocksFirstRow,
       optionValue_transparency,
       optionValue_transparencyTolerance,
       optionValue_mapdatFilenameUseId,
@@ -854,6 +860,8 @@ class MapartController extends Component {
               onOptionChange_WhereSupportBlocks={this.onOptionChange_WhereSupportBlocks}
               optionValue_supportBlock={optionValue_supportBlock}
               setOption_SupportBlock={this.setOption_SupportBlock}
+              optionValue_noSupportBlocksFirstRow={optionValue_noSupportBlocksFirstRow}
+              onOptionChange_noSupportBlocksFirstRow={this.onOptionChange_noSupportBlocksFirstRow}
               optionValue_transparency={optionValue_transparency}
               onOptionChange_transparency={this.onOptionChange_transparency}
               optionValue_transparencyTolerance={optionValue_transparencyTolerance}
@@ -896,6 +904,7 @@ class MapartController extends Component {
               optionValue_staircasing={optionValue_staircasing}
               optionValue_whereSupportBlocks={optionValue_whereSupportBlocks}
               optionValue_supportBlock={optionValue_supportBlock}
+              optionValue_noSupportBlocksFirstRow={optionValue_noSupportBlocksFirstRow}
               optionValue_transparency={optionValue_transparency}
               optionValue_transparencyTolerance={optionValue_transparencyTolerance}
               optionValue_mapdatFilenameUseId={optionValue_mapdatFilenameUseId}

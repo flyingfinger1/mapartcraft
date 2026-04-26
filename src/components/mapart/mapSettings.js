@@ -44,6 +44,8 @@ class MapSettings extends Component {
       onOptionChange_WhereSupportBlocks,
       optionValue_supportBlock,
       setOption_SupportBlock,
+      optionValue_noSupportBlocksFirstRow,
+      onOptionChange_noSupportBlocksFirstRow,
       optionValue_transparency,
       onOptionChange_transparency,
       optionValue_transparencyTolerance,
@@ -308,6 +310,14 @@ class MapSettings extends Component {
             setValue={setOption_SupportBlock}
             optionValue_version={optionValue_version}
           />
+          <br />
+          <Tooltip tooltipText={getLocaleString("MAP-SETTINGS/NBT-SPECIFIC/NO-SUPPORT-BLOCKS-FIRST-ROW-TT")}>
+            <b>
+              {getLocaleString("MAP-SETTINGS/NBT-SPECIFIC/NO-SUPPORT-BLOCKS-FIRST-ROW")}
+              {":"}
+            </b>
+          </Tooltip>{" "}
+          <input type="checkbox" checked={optionValue_noSupportBlocksFirstRow} onChange={onOptionChange_noSupportBlocksFirstRow} />
           <br />
         </React.Fragment>
       );

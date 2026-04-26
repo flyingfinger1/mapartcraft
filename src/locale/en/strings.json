@@ -116,7 +116,9 @@
         "ALL-DOUBLE-OPTIMIZED": "All double (optimized)"
       },
       "SUPPORT-BLOCK-TO-ADD": "Block to add",
-      "SUPPORT-BLOCK-TO-ADD-TT": "Related to previous option"
+      "SUPPORT-BLOCK-TO-ADD-TT": "Related to previous option",
+      "NO-SUPPORT-BLOCKS-FIRST-ROW": "Exclude support/noobline from first row",
+      "NO-SUPPORT-BLOCKS-FIRST-ROW-TT": "Make schematic row 1 air by removing first-row support/noobline blocks"
     },
     "MAPDAT-SPECIFIC": {
       "UNOBTAINABLE-COLOURS": "Unobtainiable colors",

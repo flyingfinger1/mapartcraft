@@ -6,6 +6,7 @@ var optionValue_version;
 var optionValue_staircasing;
 var optionValue_whereSupportBlocks;
 var optionValue_supportBlock;
+var optionValue_noSupportBlocksFirstRow;
 var pixelsData;
 var maps;
 var currentSelectedBlocks;
@@ -298,9 +299,11 @@ class Map_NBT {
       this.palette_colourSetId_paletteId[colourSetId] = this.palette_paletteId_colourSetId.length;
       this.palette_paletteId_colourSetId.push(colourSetId);
     });
-    // finally add noobline/scaffold material at the end, special key
+    // finally add support and noobline materials at the end, special keys
     this.palette_colourSetId_paletteId["NOOBLINE_SCAFFOLD"] = this.palette_paletteId_colourSetId.length;
     this.palette_paletteId_colourSetId.push("NOOBLINE_SCAFFOLD");
+    this.palette_colourSetId_paletteId["NOOBLINE_ROW"] = this.palette_paletteId_colourSetId.length;
+    this.palette_paletteId_colourSetId.push("NOOBLINE_ROW");
   }
 
   setNBT_json_palette() {
@@ -312,6 +315,11 @@ class Map_NBT {
           value: `minecraft:${optionValue_supportBlock.toLowerCase()}`,
         };
         // we expect the support block to be something non-exotic with no properties eg netherrack
+      } else if (colourSetId === "NOOBLINE_ROW") {
+        paletteItemToPush.Name = {
+          type: TagTypes.string,
+          value: optionValue_noSupportBlocksFirstRow ? "minecraft:air" : `minecraft:${optionValue_supportBlock.toLowerCase()}`,
+        };
       } else {
         let blockNBTData = coloursJSON[colourSetId].blocks[currentSelectedBlocks[colourSetId]].validVersions[optionValue_version.MCVersion];
         if (typeof blockNBTData === "string") {
@@ -391,7 +399,7 @@ class Map_NBT {
     }
 
     // initialize noobline
-    physicalColumn.push(this.returnPhysicalBlock(columnNumber, currentHeight, 0, "NOOBLINE_SCAFFOLD"));
+    physicalColumn.push(this.returnPhysicalBlock(columnNumber, currentHeight, 0, "NOOBLINE_ROW"));
 
     for (let rowNumber = 0; rowNumber < mapColoursLayoutColumn.length; rowNumber++) {
       const coloursLayoutBlock = mapColoursLayoutColumn[rowNumber];
@@ -423,7 +431,8 @@ class Map_NBT {
           break;
         }
         case WhereSupportBlocksModes.IMPORTANT.uniqueId: {
-          if (isSupportBlockMandatoryForColourSetIdAndTone(coloursLayoutBlock)) {
+          // Skip support blocks for the first row if the option is enabled
+          if (!(optionValue_noSupportBlocksFirstRow && rowNumber === 0) && isSupportBlockMandatoryForColourSetIdAndTone(coloursLayoutBlock)) {
             physicalColumn.push(this.returnPhysicalBlock(columnNumber, currentHeight - 1, rowNumber + 1, "NOOBLINE_SCAFFOLD"));
           }
           break;
@@ -431,16 +440,19 @@ class Map_NBT {
         case WhereSupportBlocksModes.ALL_OPTIMIZED.uniqueId: {
           switch (rowNumber) {
             case 0: {
-              if (
-                coloursLayoutBlock.tone === "dark" ||
-                (coloursLayoutBlock.tone === "normal" && isSupportBlockMandatoryForColourSetIdAndTone(coloursLayoutBlock))
-              ) {
-                // first under-support block
-                physicalColumn.push(this.returnPhysicalBlock(columnNumber, previousHeight - 1, rowNumber, "NOOBLINE_SCAFFOLD"));
-              }
-              if (coloursLayoutBlock.tone === "dark" && isSupportBlockMandatoryForColourSetIdAndTone(coloursLayoutBlock)) {
-                // second under-support block
-                physicalColumn.push(this.returnPhysicalBlock(columnNumber, previousHeight - 2, rowNumber, "NOOBLINE_SCAFFOLD"));
+              // Skip support blocks for the first row if the option is enabled
+              if (!optionValue_noSupportBlocksFirstRow) {
+                if (
+                  coloursLayoutBlock.tone === "dark" ||
+                  (coloursLayoutBlock.tone === "normal" && isSupportBlockMandatoryForColourSetIdAndTone(coloursLayoutBlock))
+                ) {
+                  // first under-support block
+                  physicalColumn.push(this.returnPhysicalBlock(columnNumber, previousHeight - 1, rowNumber, "NOOBLINE_SCAFFOLD"));
+                }
+                if (coloursLayoutBlock.tone === "dark" && isSupportBlockMandatoryForColourSetIdAndTone(coloursLayoutBlock)) {
+                  // second under-support block
+                  physicalColumn.push(this.returnPhysicalBlock(columnNumber, previousHeight - 2, rowNumber, "NOOBLINE_SCAFFOLD"));
+                }
               }
               break;
             }
@@ -506,9 +518,11 @@ class Map_NBT {
         case WhereSupportBlocksModes.ALL_DOUBLE_OPTIMIZED.uniqueId: {
           switch (rowNumber) {
             case 0: {
-              physicalColumn.push(this.returnPhysicalBlock(columnNumber, previousHeight - 1, rowNumber, "NOOBLINE_SCAFFOLD"));
-              if (coloursLayoutBlock.tone === "dark") {
-                physicalColumn.push(this.returnPhysicalBlock(columnNumber, previousHeight - 2, rowNumber, "NOOBLINE_SCAFFOLD"));
+              if (!optionValue_noSupportBlocksFirstRow) {
+                physicalColumn.push(this.returnPhysicalBlock(columnNumber, previousHeight - 1, rowNumber, "NOOBLINE_SCAFFOLD"));
+                if (coloursLayoutBlock.tone === "dark") {
+                  physicalColumn.push(this.returnPhysicalBlock(columnNumber, previousHeight - 2, rowNumber, "NOOBLINE_SCAFFOLD"));
+                }
               }
               break;
             }
@@ -565,7 +579,7 @@ class Map_NBT {
 
         for (let i = 0; i < physicalColumn.length; i++) {
           const physicalBlock = physicalColumn[i];
-          if (this.palette_paletteId_colourSetId[physicalBlock.state.value] === "NOOBLINE_SCAFFOLD") {
+          if (["NOOBLINE_SCAFFOLD", "NOOBLINE_ROW"].includes(this.palette_paletteId_colourSetId[physicalBlock.state.value])) {
             continue;
           }
           if (ascending && physicalBlock.pos.value.value[1] < visibleBlocksHeight) {
@@ -828,6 +842,7 @@ onmessage = (e) => {
   optionValue_staircasing = e.data.body.optionValue_staircasing;
   optionValue_whereSupportBlocks = e.data.body.optionValue_whereSupportBlocks;
   optionValue_supportBlock = e.data.body.optionValue_supportBlock;
+  optionValue_noSupportBlocksFirstRow = e.data.body.optionValue_noSupportBlocksFirstRow;
   pixelsData = e.data.body.pixelsData;
   maps = e.data.body.maps;
   currentSelectedBlocks = e.data.body.currentSelectedBlocks;
