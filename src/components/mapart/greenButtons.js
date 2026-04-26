@@ -16,6 +16,7 @@ class GreenButtons extends Component {
   state = {
     buttonWidth_viewOnline: 1,
     buttonWidth_NBT_Joined: 1,
+    buttonWidth_Litematic_Joined: 1,
     buttonWidth_NBT_Split: 1,
     buttonWidth_Mapdat_Split: 1,
     mapPreviewWorker_onFinishCallback: null,
@@ -27,6 +28,7 @@ class GreenButtons extends Component {
     this.setState({
       buttonWidth_viewOnline: 1,
       buttonWidth_NBT_Joined: 1,
+      buttonWidth_Litematic_Joined: 1,
       buttonWidth_NBT_Split: 1,
       buttonWidth_Mapdat_Split: 1,
     });
@@ -75,6 +77,10 @@ class GreenButtons extends Component {
           this.setState({ buttonWidth_NBT_Joined: e.data.body });
           break;
         }
+        case "PROGRESS_REPORT_CREATE_LITEMATIC_JOINED": {
+          this.setState({ buttonWidth_Litematic_Joined: e.data.body });
+          break;
+        }
         case "PROGRESS_REPORT_CREATE_NBT_SPLIT": {
           this.setState({ buttonWidth_NBT_Split: (numberOfSplitsCalculated + e.data.body) / (optionValue_mapSize_x * optionValue_mapSize_y) });
           break;
@@ -107,6 +113,15 @@ class GreenButtons extends Component {
             const downloadBlob = new Blob([NBT_Array_gzipped], { type: "application/x-minecraft-level" });
             downloadBlobFile(downloadBlob, `${uploadedImage_baseFilename}.nbt`);
           }
+          break;
+        }
+        case "LITEMATIC_ARRAY": {
+          const t1 = performance.now();
+          console.log(`Created Litematic by ${(t1 - t0).toString()}ms`);
+          const { Litematic_Bytes } = e.data.body;
+          const Litematic_Bytes_gzipped = gzip(Litematic_Bytes);
+          const downloadBlob = new Blob([Litematic_Bytes_gzipped], { type: "application/octet-stream" });
+          downloadBlobFile(downloadBlob, `${uploadedImage_baseFilename}.litematic`);
           break;
         }
         case "MAPDAT_BYTES": {
@@ -169,6 +184,10 @@ class GreenButtons extends Component {
 
   onGetNBTClicked = () => {
     this.getNBT_base("CREATE_NBT_JOINED");
+  };
+
+  onGetLitematicClicked = () => {
+    this.getNBT_base("CREATE_LITEMATIC_JOINED");
   };
 
   onGetNBTSplitClicked = () => {
@@ -258,7 +277,7 @@ class GreenButtons extends Component {
   }
 
   render() {
-    const { buttonWidth_viewOnline, buttonWidth_NBT_Joined, buttonWidth_NBT_Split, buttonWidth_Mapdat_Split } = this.state;
+    const { buttonWidth_viewOnline, buttonWidth_NBT_Joined, buttonWidth_Litematic_Joined, buttonWidth_NBT_Split, buttonWidth_Mapdat_Split } = this.state;
     const { getLocaleString, optionValue_modeNBTOrMapdat } = this.props;
     let buttons_mapModeConditional;
     // dummy text used in divs with absolutely positioned children to create correct container height
@@ -299,6 +318,19 @@ class GreenButtons extends Component {
                 className="greenButton_progressDiv"
                 style={{
                   width: `${Math.floor(buttonWidth_NBT_Split * 100)}%`,
+                }}
+              />
+            </div>
+          </Tooltip>
+          <br />
+          <Tooltip tooltipText={getLocaleString("DOWNLOAD/NBT-SPECIFIC/DOWNLOAD-LITEMATIC-TT")}>
+            <div className="greenButton" onClick={this.onGetLitematicClicked}>
+              <span className="greenButton_large_text_dummy">{getLocaleString("DOWNLOAD/NBT-SPECIFIC/DOWNLOAD-LITEMATIC")}</span>
+              <span className="greenButton_large_text">{getLocaleString("DOWNLOAD/NBT-SPECIFIC/DOWNLOAD-LITEMATIC")}</span>
+              <div
+                className="greenButton_progressDiv"
+                style={{
+                  width: `${Math.floor(buttonWidth_Litematic_Joined * 100)}%`,
                 }}
               />
             </div>

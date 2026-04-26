@@ -42,4 +42,5 @@ Visit [MapartCraft](https://rebane2001.com/mapartcraft) on [rebane2001.com](http
 - [OpenMoji](https://github.com/hfg-gmuend/openmoji) for flags
 - Translation credits can be seen on the translated pages
 - [SelfAdjointOperator](https://github.com/SelfAdjointOperator) for some extra features
+- [@cartographer/litematica](https://github.com/julienvincent/cartographer/tree/master/packages/litematica) for litematica support
 - Code contributors can be seen on the [contributions page](https://github.com/rebane2001/mapartcraft/graphs/contributors)
