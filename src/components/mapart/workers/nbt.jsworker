@@ -398,8 +398,12 @@ class Map_NBT {
       }
     }
 
-    // initialize noobline
-    physicalColumn.push(this.returnPhysicalBlock(columnNumber, currentHeight, 0, "NOOBLINE_ROW"));
+    const mapRowSouthOffset = optionValue_noSupportBlocksFirstRow ? 0 : 1;
+
+    // initialize noobline only when it is enabled
+    if (!optionValue_noSupportBlocksFirstRow) {
+      physicalColumn.push(this.returnPhysicalBlock(columnNumber, currentHeight, 0, "NOOBLINE_ROW"));
+    }
 
     for (let rowNumber = 0; rowNumber < mapColoursLayoutColumn.length; rowNumber++) {
       const coloursLayoutBlock = mapColoursLayoutColumn[rowNumber];
@@ -422,8 +426,11 @@ class Map_NBT {
         }
       }
 
-      physicalColumn.push(this.returnPhysicalBlock(columnNumber, currentHeight, rowNumber + 1, coloursLayoutBlock.colourSetId));
-      // the + 1 is because the noobline offsets everything South one block
+      const mapRowZ = rowNumber + mapRowSouthOffset;
+      const northFaceZ = mapRowZ - 1;
+
+      physicalColumn.push(this.returnPhysicalBlock(columnNumber, currentHeight, mapRowZ, coloursLayoutBlock.colourSetId));
+      // when noobline is enabled, map rows are offset South by one block
 
       // read docs/supportBlocks.md to know how this works
       switch (optionValue_whereSupportBlocks) {
@@ -433,7 +440,7 @@ class Map_NBT {
         case WhereSupportBlocksModes.IMPORTANT.uniqueId: {
           // Skip support blocks for the first row if the option is enabled
           if (!(optionValue_noSupportBlocksFirstRow && rowNumber === 0) && isSupportBlockMandatoryForColourSetIdAndTone(coloursLayoutBlock)) {
-            physicalColumn.push(this.returnPhysicalBlock(columnNumber, currentHeight - 1, rowNumber + 1, "NOOBLINE_SCAFFOLD"));
+            physicalColumn.push(this.returnPhysicalBlock(columnNumber, currentHeight - 1, mapRowZ, "NOOBLINE_SCAFFOLD"));
           }
           break;
         }
@@ -447,11 +454,11 @@ class Map_NBT {
                   (coloursLayoutBlock.tone === "normal" && isSupportBlockMandatoryForColourSetIdAndTone(coloursLayoutBlock))
                 ) {
                   // first under-support block
-                  physicalColumn.push(this.returnPhysicalBlock(columnNumber, previousHeight - 1, rowNumber, "NOOBLINE_SCAFFOLD"));
+                  physicalColumn.push(this.returnPhysicalBlock(columnNumber, previousHeight - 1, northFaceZ, "NOOBLINE_SCAFFOLD"));
                 }
                 if (coloursLayoutBlock.tone === "dark" && isSupportBlockMandatoryForColourSetIdAndTone(coloursLayoutBlock)) {
                   // second under-support block
-                  physicalColumn.push(this.returnPhysicalBlock(columnNumber, previousHeight - 2, rowNumber, "NOOBLINE_SCAFFOLD"));
+                  physicalColumn.push(this.returnPhysicalBlock(columnNumber, previousHeight - 2, northFaceZ, "NOOBLINE_SCAFFOLD"));
                 }
               }
               break;
@@ -465,11 +472,11 @@ class Map_NBT {
                 (coloursLayoutBlock.tone === "normal" && isSupportBlockMandatoryForColourSetIdAndTone(coloursLayoutBlock))
               ) {
                 // first under-support block
-                physicalColumn.push(this.returnPhysicalBlock(columnNumber, previousHeight - 1, rowNumber, "NOOBLINE_SCAFFOLD"));
+                physicalColumn.push(this.returnPhysicalBlock(columnNumber, previousHeight - 1, northFaceZ, "NOOBLINE_SCAFFOLD"));
               }
               if (coloursLayoutBlock.tone === "dark" && isSupportBlockMandatoryForColourSetIdAndTone(coloursLayoutBlock)) {
                 // second under-support block
-                physicalColumn.push(this.returnPhysicalBlock(columnNumber, previousHeight - 2, rowNumber, "NOOBLINE_SCAFFOLD"));
+                physicalColumn.push(this.returnPhysicalBlock(columnNumber, previousHeight - 2, northFaceZ, "NOOBLINE_SCAFFOLD"));
               }
               break;
             }
@@ -482,11 +489,11 @@ class Map_NBT {
                 (coloursLayoutBlock.tone === "normal" && isSupportBlockMandatoryForColourSetIdAndTone(coloursLayoutBlock_north))
               ) {
                 // first under-support block
-                physicalColumn.push(this.returnPhysicalBlock(columnNumber, currentHeight - 1, rowNumber + 1, "NOOBLINE_SCAFFOLD"));
+                physicalColumn.push(this.returnPhysicalBlock(columnNumber, currentHeight - 1, mapRowZ, "NOOBLINE_SCAFFOLD"));
               }
               if (coloursLayoutBlock.tone === "light" && isSupportBlockMandatoryForColourSetIdAndTone(coloursLayoutBlock_north)) {
                 // second under-support block
-                physicalColumn.push(this.returnPhysicalBlock(columnNumber, currentHeight - 2, rowNumber + 1, "NOOBLINE_SCAFFOLD"));
+                physicalColumn.push(this.returnPhysicalBlock(columnNumber, currentHeight - 2, mapRowZ, "NOOBLINE_SCAFFOLD"));
               }
             }
             // eslint-disable-next-line no-fallthrough
@@ -501,14 +508,14 @@ class Map_NBT {
                 (coloursLayoutBlock_inQuestion.tone === "normal" && isSupportBlockMandatoryForColourSetIdAndTone(coloursLayoutBlock_north))
               ) {
                 // first under-support block
-                physicalColumn.push(this.returnPhysicalBlock(columnNumber, previousHeight - 1, rowNumber, "NOOBLINE_SCAFFOLD"));
+                physicalColumn.push(this.returnPhysicalBlock(columnNumber, previousHeight - 1, northFaceZ, "NOOBLINE_SCAFFOLD"));
               }
               if (
                 (coloursLayoutBlock.tone === "dark" && isSupportBlockMandatoryForColourSetIdAndTone(coloursLayoutBlock)) ||
                 (coloursLayoutBlock_inQuestion.tone === "light" && isSupportBlockMandatoryForColourSetIdAndTone(coloursLayoutBlock_north))
               ) {
                 // second under-support block
-                physicalColumn.push(this.returnPhysicalBlock(columnNumber, previousHeight - 2, rowNumber, "NOOBLINE_SCAFFOLD"));
+                physicalColumn.push(this.returnPhysicalBlock(columnNumber, previousHeight - 2, northFaceZ, "NOOBLINE_SCAFFOLD"));
               }
               break;
             }
@@ -519,26 +526,26 @@ class Map_NBT {
           switch (rowNumber) {
             case 0: {
               if (!optionValue_noSupportBlocksFirstRow) {
-                physicalColumn.push(this.returnPhysicalBlock(columnNumber, previousHeight - 1, rowNumber, "NOOBLINE_SCAFFOLD"));
+                physicalColumn.push(this.returnPhysicalBlock(columnNumber, previousHeight - 1, northFaceZ, "NOOBLINE_SCAFFOLD"));
                 if (coloursLayoutBlock.tone === "dark") {
-                  physicalColumn.push(this.returnPhysicalBlock(columnNumber, previousHeight - 2, rowNumber, "NOOBLINE_SCAFFOLD"));
+                  physicalColumn.push(this.returnPhysicalBlock(columnNumber, previousHeight - 2, northFaceZ, "NOOBLINE_SCAFFOLD"));
                 }
               }
               break;
             }
             case mapColoursLayoutColumn.length - 1: {
-              physicalColumn.push(this.returnPhysicalBlock(columnNumber, currentHeight - 1, rowNumber + 1, "NOOBLINE_SCAFFOLD"));
+              physicalColumn.push(this.returnPhysicalBlock(columnNumber, currentHeight - 1, mapRowZ, "NOOBLINE_SCAFFOLD"));
               if (coloursLayoutBlock.tone === "light") {
-                physicalColumn.push(this.returnPhysicalBlock(columnNumber, currentHeight - 2, rowNumber + 1, "NOOBLINE_SCAFFOLD"));
+                physicalColumn.push(this.returnPhysicalBlock(columnNumber, currentHeight - 2, mapRowZ, "NOOBLINE_SCAFFOLD"));
               }
               // falls through
             }
             // eslint-disable-next-line no-fallthrough
             default: {
-              physicalColumn.push(this.returnPhysicalBlock(columnNumber, previousHeight - 1, rowNumber, "NOOBLINE_SCAFFOLD"));
+              physicalColumn.push(this.returnPhysicalBlock(columnNumber, previousHeight - 1, northFaceZ, "NOOBLINE_SCAFFOLD"));
               const coloursLayoutBlock_inQuestion = mapColoursLayoutColumn[rowNumber - 1];
               if (coloursLayoutBlock_inQuestion.tone === "light" || coloursLayoutBlock.tone === "dark") {
-                physicalColumn.push(this.returnPhysicalBlock(columnNumber, previousHeight - 2, rowNumber, "NOOBLINE_SCAFFOLD"));
+                physicalColumn.push(this.returnPhysicalBlock(columnNumber, previousHeight - 2, northFaceZ, "NOOBLINE_SCAFFOLD"));
               }
               break;
             }
@@ -647,10 +654,11 @@ class Map_NBT {
   }
 
   setNBT_json_size() {
+    const mapDepth = this.mapColoursLayout[0].length + (optionValue_noSupportBlocksFirstRow ? 0 : 1);
     this.NBT_json.value.size.value.value = [
       this.mapColoursLayout.length,
       this.columnHeightsCache.reduce((a, b) => (a > b ? a : b)) + 1,
-      this.mapColoursLayout[0].length + 1,
+      mapDepth,
     ];
   }
 
