@@ -16,6 +16,7 @@
   },
   "DESCRIPTION": {
     "1": "一個 Minecraft 地圖畫 schematic 及 map.dat 產生器，伺服器管理員和例如在 ",
+    "OR-SERVER": " 或 ",
     "2": "的生存玩家皆可使用，並直接在您的瀏覽器運行。",
     "3": "啟發自 ",
     "4": "Redstonehelper 製作的地圖畫產生器",

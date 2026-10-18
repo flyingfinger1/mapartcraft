@@ -16,6 +16,7 @@
   },
   "DESCRIPTION": {
     "1": "Un générateur de Mapart Minecraft: schematic et de map.dat, conçu pour être utilisable par les administrateurs de serveurs ainsi que par les joueurs en survie comme sur le serveur ",
+    "OR-SERVER": " ou ",
     "2": ", qui fonctionne sur navigateur web.",
     "3": "Inspiré par ",
     "4": "Redstonehelper's map art program",

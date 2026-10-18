@@ -16,6 +16,7 @@
   },
   "DESCRIPTION": {
     "1": "Un generatore di file schematic e map.dat per la realizzazione di mapart in Minecraft, progettato per essere utilizzabile sia da admin sia da giocatori survival su server come ",
+    "OR-SERVER": " o ",
     "2": " ed eseguibile nel tuo browser",
     "3": "Ispirato dal ",
     "4": "generatore di mapart di Redstonehelper",

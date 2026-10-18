@@ -16,6 +16,7 @@
   },
   "DESCRIPTION": {
     "1": "A Minecraft mapart schematic and map.dat generator, designed to be feasible for both server admins and survival players on servers like ",
+    "OR-SERVER": " or ",
     "2": ", running in your browser.",
     "3": "Inspired by ",
     "4": "Redstonehelper's map art program",

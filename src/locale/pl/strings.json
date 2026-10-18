@@ -16,6 +16,7 @@
   },
   "DESCRIPTION": {
     "1": "Minecraftowy generator mapartów używający plików schematic i map.dat, zaprojektowany do bycia przyjaznym dla adminów serwerów i graczy surwiwalowych na serwerach jak ",
+    "OR-SERVER": " lub ",
     "2": ", działający w twojej przeglądarce.",
     "3": "Inspirowany ",
     "4": "map art'owym programem Redstonehelper'a",

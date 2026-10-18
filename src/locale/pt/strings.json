@@ -16,6 +16,7 @@
   },
   "DESCRIPTION": {
     "1": "Um gerador de schematics de mapart e ficheiros map.dat para minecraft, feito para ser factível para ambos admins de servidores ou jogadores de modo sobrevivência em servidores como ",
+    "OR-SERVER": " ou ",
     "2": ", executado no seu Navegador",
     "3": "Inspirado pelo ",
     "4": "programa de map art de Redstonehelper",

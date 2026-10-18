@@ -16,6 +16,7 @@
   },
   "DESCRIPTION": {
     "1": "Un generador de map.dat y .schematic para Minecraft. Diseñado para ser utilizado tanto por administradores de servidores, como por jugadores en modo supervivencia en servidores como ",
+    "OR-SERVER": " o ",
     "2": ", ejecutándose en tu buscador.",
     "3": "Inspirado por el ",
     "4": "programa para map art de Redstonehelper",

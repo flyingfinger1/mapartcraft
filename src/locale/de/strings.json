@@ -15,7 +15,8 @@
     "VIDEO-TUTORIAL": "Erklärvideo"
   },
   "DESCRIPTION": {
-    "1": "Ein Generator zum Erstellen von Minecraft Mapart im Schematic und map.dat Format für sowohl Server-Admins, als auch Surival-Spieler auf Servern wie ",
+    "1": "Ein Generator zum Erstellen von Minecraft Mapart im Schematic und map.dat Format für sowohl Server-Admins, als auch Survival-Spieler auf Servern wie ",
+    "OR-SERVER": " oder auch ",
     "2": ", innerhalb Deines Browsers",
     "3": "Inspiriert durch ",
     "4": "Redstonehelpers Mapart-Programm",

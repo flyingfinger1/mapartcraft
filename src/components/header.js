@@ -30,6 +30,10 @@ class Header extends Component {
           <a href="https://www.reddit.com/r/2b2t/" target="_blank" rel="noopener noreferrer">
             2b2t
           </a>
+          {getLocaleString("DESCRIPTION/OR-SERVER")}
+          <a href="https://www.mixelpixel.net/" target="_blank" rel="noopener noreferrer">
+            mixelpixel.net
+          </a>
           {getLocaleString("DESCRIPTION/2")}
           <br></br>
           {getLocaleString("DESCRIPTION/3")}

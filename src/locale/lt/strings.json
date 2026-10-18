@@ -16,6 +16,7 @@
   },
   "DESCRIPTION": {
     "1": "Minecraft žemėlapių meno schematica ir map.dat generatorius, skirtas būti tikėtinas ir serverių adminams ir survivalo žaidėjams ant serverių kaip ",
+    "OR-SERVER": " arba ",
     "2": ", naudojamas jūsų internetinėje naršyklėje",
     "3": "Inspiruotas nuo ",
     "4": "Redstonehelper'io žemėlapių meno programos",

@@ -16,6 +16,7 @@
   },
   "DESCRIPTION": {
     "1": "Minecrafti kaardikunsti schematic'u ja map.dat failide generaator, loodud nii serveri administraatorite kui ka survival serverite jaoks, nagu ",
+    "OR-SERVER": " või ",
     "2": ", jooksmas sinu brauseris",
     "3": "Inspireeritud ",
     "4": "Redstonehelperi kaardikunsti programmi",
