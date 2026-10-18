@@ -9,7 +9,7 @@
   "FAQ": {
     "FAQ": "FAQ",
     "PLEASE-READ-1": "Bitte lies das ",
-    "PLEASE-READ-2": " bevor Du mich kontaktierst!",
+    "PLEASE-READ-2": ", bevor Du irgendwo Fragen stellst!",
     "HAVE-YOU-READ": "Hast Du das FAQ gelesen?",
     "HELP-IN-ENGLISH": "Hinweis: Hilfe kann ausschließlich auf Englisch bereitgestellt werden",
     "VIDEO-TUTORIAL": "Erklärvideo"
@@ -24,7 +24,8 @@
     "7": " oder Reddit ",
     "8": " erreichen. Bug-Reports und Featurewünsche können auf GitHub eingereicht werden: ",
     "9": null,
-    "10": null
+    "10": null,
+    "FORK": "Diese Version ist ein Fork des ursprünglichen MapartCraft von rebane2001, aktualisiert für aktuelle Minecraft-Versionen. Der Quellcode liegt auf "
   },
   "BLOCK-SELECTION": {
     "TITLE": "Blockauswahl",

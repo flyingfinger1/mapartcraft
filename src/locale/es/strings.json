@@ -24,7 +24,8 @@
     "7": " o Reddit ",
     "8": ". Las solicitudes de nuevas características y los reportes de fallos se pueden realizar en ",
     "9": "Nota: MapartCraft se ha actualizado a una nueva y flamante versión. Si algo no funciona, puedes utilizar la ",
-    "10": "versión clásica"
+    "10": "versión clásica",
+    "FORK": null
   },
   "BLOCK-SELECTION": {
     "TITLE": "Selección de bloques",
