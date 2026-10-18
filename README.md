@@ -12,8 +12,6 @@ MapartCraft is a static website written in ReactJS; running and building require
 2. Build using `npm run build`, or run a debug version with `npm run start`.
 3. Alternatively use the shell script `build.sh` for deployment on Linux. This will also copy a `.htaccess` file to the build folder for use with Apache.
 
-On Node 17 or newer, `react-scripts` 4 needs the legacy OpenSSL provider: set `NODE_OPTIONS=--openssl-legacy-provider` before building or starting.
-
 The default build settings assume the app is being hosted at https://YOUR-SITE-HERE.com/mapartcraft. To change the folder from which the site is hosted modify the following:
 
 - `homepage` in `package.json`
