@@ -8,7 +8,7 @@ services:
       - caddy-net
     # Caddy reverse proxy labels (remove if not using caddy-docker-proxy)
     labels:
-      caddy: mapartcraft.flyingfinger.de
+      caddy: mapartcraft.example.com   # your domain
       caddy.reverse_proxy: "{{upstreams 80}}"
 
 networks:

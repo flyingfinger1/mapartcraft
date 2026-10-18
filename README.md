@@ -20,7 +20,7 @@ The default build settings assume the app is being hosted at https://YOUR-SITE-H
 
 # Docker
 
-The `Dockerfile` builds the site and serves it with nginx at `/mapartcraft/` (requests to `/` are redirected there). Publishing a GitHub release runs `.github/workflows/release.yml`, which pushes the image to `ghcr.io/flyingfinger1/mapartcraft` tagged with the version and `latest`. `docker-compose.yml` runs that image behind caddy-docker-proxy on the external `caddy-net` network:
+The `Dockerfile` builds the site and serves it with nginx at `/mapartcraft/` (requests to `/` are redirected there). Publishing a GitHub release runs `.github/workflows/release.yml`, which pushes the image to `ghcr.io/flyingfinger1/mapartcraft` tagged with the version and `latest`. `docker-compose.yml` runs that image behind caddy-docker-proxy on the external `caddy-net` network; copy it to your server and replace `mapartcraft.example.com` with your domain:
 
 ```
 docker compose pull
