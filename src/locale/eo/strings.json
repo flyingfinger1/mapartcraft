@@ -163,13 +163,13 @@
   "DOWNLOAD": {
     "ERROR-NONE-SELECTED": "Elektu blokojn antaŭ enŝutado!",
     "NBT-SPECIFIC": {
-      "DOWNLOAD": "ENŜUTI",
+      "DOWNLOAD": "ENŜUTI NBT",
       "DOWNLOAD-TT": "Enŝuti la nbt-n",
-      "DOWNLOAD-SPLIT": "ENŜUTI KIEL 1x1 DIVIDAĴOJ",
+      "DOWNLOAD-SPLIT": "ENŜUTI NBT KIEL 1x1 DIVIDAĴOJ",
       "DOWNLOAD-SPLIT-TT": "Enŝuti la nbt-n dividitan laŭ 1x1 pecoj",
-      "DOWNLOAD-LITEMATIC": null,
+      "DOWNLOAD-LITEMATIC": "ENŜUTI LITEMATIC",
       "DOWNLOAD-LITEMATIC-TT": null,
-      "DOWNLOAD-LITEMATIC-SPLIT": null,
+      "DOWNLOAD-LITEMATIC-SPLIT": "ENŜUTI LITEMATIC KIEL 1x1 DIVIDAĴOJ",
       "DOWNLOAD-LITEMATIC-SPLIT-TT": null
     },
     "MAPDAT-SPECIFIC": {

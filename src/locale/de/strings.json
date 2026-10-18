@@ -163,9 +163,9 @@
   "DOWNLOAD": {
     "ERROR-NONE-SELECTED": "Wähle vor dem Herunterladen Blöcke aus!",
     "NBT-SPECIFIC": {
-      "DOWNLOAD": "DOWNLOAD",
+      "DOWNLOAD": "DOWNLOAD NBT",
       "DOWNLOAD-TT": "Die nbt-Datei herunterladen",
-      "DOWNLOAD-SPLIT": "DOWNLOAD ALS 1x1 TEILE",
+      "DOWNLOAD-SPLIT": "DOWNLOAD NBT ALS 1x1 TEILE",
       "DOWNLOAD-SPLIT-TT": "Die nbt-Datei getrennt in 1x1 Teile herunterladen",
       "DOWNLOAD-LITEMATIC": "DOWNLOAD LITEMATIC",
       "DOWNLOAD-LITEMATIC-TT": "Als .litematic-Datei herunterladen",

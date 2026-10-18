@@ -166,11 +166,11 @@
     "NBT-SPECIFIC": {
       "DOWNLOAD": "下载 NBT",
       "DOWNLOAD-TT": "下载 nbt 档",
-      "DOWNLOAD-SPLIT": "以1x1分割下载",
+      "DOWNLOAD-SPLIT": "以1x1分割下载 NBT",
       "DOWNLOAD-SPLIT-TT": "将 nbt 分成1x1区块来下载",
-      "DOWNLOAD-LITEMATIC": null,
+      "DOWNLOAD-LITEMATIC": "下载 LITEMATIC",
       "DOWNLOAD-LITEMATIC-TT": null,
-      "DOWNLOAD-LITEMATIC-SPLIT": null,
+      "DOWNLOAD-LITEMATIC-SPLIT": "以1x1分割下载 LITEMATIC",
       "DOWNLOAD-LITEMATIC-SPLIT-TT": null
     },
     "MAPDAT-SPECIFIC": {

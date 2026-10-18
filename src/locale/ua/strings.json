@@ -166,11 +166,11 @@
     "NBT-SPECIFIC": {
       "DOWNLOAD": "ЗАВАНТАЖИТИ NBT",
       "DOWNLOAD-TT": "Завантажити nbt",
-      "DOWNLOAD-SPLIT": "ЗАВАНТАЖИТИ ЯК ПОДІЛЕНЕ НА 1х1",
+      "DOWNLOAD-SPLIT": "ЗАВАНТАЖИТИ NBT ЯК ПОДІЛЕНЕ НА 1х1",
       "DOWNLOAD-SPLIT-TT": "Завантажити nbt поділене на мапи 1х1",
-      "DOWNLOAD-LITEMATIC": null,
+      "DOWNLOAD-LITEMATIC": "ЗАВАНТАЖИТИ LITEMATIC",
       "DOWNLOAD-LITEMATIC-TT": null,
-      "DOWNLOAD-LITEMATIC-SPLIT": null,
+      "DOWNLOAD-LITEMATIC-SPLIT": "ЗАВАНТАЖИТИ LITEMATIC ЯК ПОДІЛЕНЕ НА 1х1",
       "DOWNLOAD-LITEMATIC-SPLIT-TT": null
     },
     "MAPDAT-SPECIFIC": {

@@ -138,7 +138,7 @@ function FAQContent_de({ images }) {
       <b>Maße?</b>
       <p>
         Hier legst Du fest, aus wie vielen Karten Dein Bild besteht. Bei größeren Karten empfiehlt es sich, sie in mehrere Schematics aufzuteilen, damit große
-        3D-Karten nicht über die Bauhöhengrenze hinausragen. Das geht mit den Buttons "DOWNLOAD ALS 1x1 TEILE" und "DOWNLOAD LITEMATIC ALS 1x1 TEILE", die alle 1x1-NBTs bzw. -Litematics in einer .zip-Datei
+        3D-Karten nicht über die Bauhöhengrenze hinausragen. Das geht mit den Buttons "DOWNLOAD NBT ALS 1x1 TEILE" und "DOWNLOAD LITEMATIC ALS 1x1 TEILE", die alle 1x1-NBTs bzw. -Litematics in einer .zip-Datei
         herunterladen.
       </p>
 

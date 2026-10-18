@@ -163,13 +163,13 @@
   "DOWNLOAD": {
     "ERROR-NONE-SELECTED": "Выберите блоки перед загрузкой!",
     "NBT-SPECIFIC": {
-      "DOWNLOAD": "СКАЧАТЬ",
+      "DOWNLOAD": "СКАЧАТЬ NBT",
       "DOWNLOAD-TT": "Скачать nbt",
-      "DOWNLOAD-SPLIT": "СКАЧАТЬ УЧАСТОК 1х1",
+      "DOWNLOAD-SPLIT": "СКАЧАТЬ NBT УЧАСТОК 1х1",
       "DOWNLOAD-SPLIT-TT": "Скачать map.dat файл разделенный на карты 1х1",
-      "DOWNLOAD-LITEMATIC": null,
+      "DOWNLOAD-LITEMATIC": "СКАЧАТЬ LITEMATIC",
       "DOWNLOAD-LITEMATIC-TT": null,
-      "DOWNLOAD-LITEMATIC-SPLIT": null,
+      "DOWNLOAD-LITEMATIC-SPLIT": "СКАЧАТЬ LITEMATIC УЧАСТОК 1х1",
       "DOWNLOAD-LITEMATIC-SPLIT-TT": null
     },
     "MAPDAT-SPECIFIC": {

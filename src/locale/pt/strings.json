@@ -163,13 +163,13 @@
   "DOWNLOAD": {
     "ERROR-NONE-SELECTED": "Selecione blocos antes de descarregar!",
     "NBT-SPECIFIC": {
-      "DOWNLOAD": "DESCARREGAR",
+      "DOWNLOAD": "DESCARREGAR NBT",
       "DOWNLOAD-TT": "Descarregar o ficheiro nbt",
-      "DOWNLOAD-SPLIT": "Descarregar como 1x1 dividido",
+      "DOWNLOAD-SPLIT": "Descarregar NBT como 1x1 dividido",
       "DOWNLOAD-SPLIT-TT": "Descarregar o nbt dividido em chunks 1x1",
-      "DOWNLOAD-LITEMATIC": null,
+      "DOWNLOAD-LITEMATIC": "DESCARREGAR LITEMATIC",
       "DOWNLOAD-LITEMATIC-TT": null,
-      "DOWNLOAD-LITEMATIC-SPLIT": null,
+      "DOWNLOAD-LITEMATIC-SPLIT": "Descarregar LITEMATIC como 1x1 dividido",
       "DOWNLOAD-LITEMATIC-SPLIT-TT": null
     },
     "MAPDAT-SPECIFIC": {

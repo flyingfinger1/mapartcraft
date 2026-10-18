@@ -136,7 +136,7 @@ function FAQContent_en({ images }) {
       <b>Map size?</b>
       <p>
         This will define how many maps you will create for your picture. When creating bigger maps, it's recommended to split it into multiple schematics (lest
-        large staircased maps stretch above the world height limit). This can be done with the "DOWNLOAD AS 1X1 SPLIT" and "DOWNLOAD LITEMATIC AS 1x1 SPLIT" buttons, which download all the 1x1 NBTs or litematics in a
+        large staircased maps stretch above the world height limit). This can be done with the "DOWNLOAD NBT AS 1x1 SPLIT" and "DOWNLOAD LITEMATIC AS 1x1 SPLIT" buttons, which download all the 1x1 NBTs or litematics in a
         .zip file.
       </p>
 

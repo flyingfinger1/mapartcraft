@@ -163,13 +163,13 @@
   "DOWNLOAD": {
     "ERROR-NONE-SELECTED": "Vali plokid enne allalaadimist!",
     "NBT-SPECIFIC": {
-      "DOWNLOAD": "LAE ALLA",
+      "DOWNLOAD": "LAE ALLA NBT",
       "DOWNLOAD-TT": "Lae alla nbt",
-      "DOWNLOAD-SPLIT": "LAE ALLA 1x1 KAMAKATENA",
+      "DOWNLOAD-SPLIT": "LAE ALLA NBT 1x1 KAMAKATENA",
       "DOWNLOAD-SPLIT-TT": "Lae alla nbt lõhestatuna 1x1 kamakateks",
-      "DOWNLOAD-LITEMATIC": null,
+      "DOWNLOAD-LITEMATIC": "LAE ALLA LITEMATIC",
       "DOWNLOAD-LITEMATIC-TT": null,
-      "DOWNLOAD-LITEMATIC-SPLIT": null,
+      "DOWNLOAD-LITEMATIC-SPLIT": "LAE ALLA LITEMATIC 1x1 KAMAKATENA",
       "DOWNLOAD-LITEMATIC-SPLIT-TT": null
     },
     "MAPDAT-SPECIFIC": {

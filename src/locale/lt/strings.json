@@ -163,13 +163,13 @@
   "DOWNLOAD": {
     "ERROR-NONE-SELECTED": "Prieš atsiųsdami pasirinkite blokus!",
     "NBT-SPECIFIC": {
-      "DOWNLOAD": "PARSISIŲSTI",
+      "DOWNLOAD": "PARSISIŲSTI NBT",
       "DOWNLOAD-TT": "Parsisiųsti nbt",
-      "DOWNLOAD-SPLIT": "ATSISIŲSTI 1x1 PER PUSE",
+      "DOWNLOAD-SPLIT": "ATSISIŲSTI NBT 1x1 PER PUSE",
       "DOWNLOAD-SPLIT-TT": "Atsisiųskite nbt padalijimą į 1x1 dalis",
-      "DOWNLOAD-LITEMATIC": null,
+      "DOWNLOAD-LITEMATIC": "PARSISIŲSTI LITEMATIC",
       "DOWNLOAD-LITEMATIC-TT": null,
-      "DOWNLOAD-LITEMATIC-SPLIT": null,
+      "DOWNLOAD-LITEMATIC-SPLIT": "ATSISIŲSTI LITEMATIC 1x1 PER PUSE",
       "DOWNLOAD-LITEMATIC-SPLIT-TT": null
     },
     "MAPDAT-SPECIFIC": {

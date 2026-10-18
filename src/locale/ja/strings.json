@@ -165,11 +165,11 @@
     "NBT-SPECIFIC": {
       "DOWNLOAD": "NBTをダウンロード",
       "DOWNLOAD-TT": "nbtファイルをダウンロードします",
-      "DOWNLOAD-SPLIT": "1x1分割でダウンロード",
+      "DOWNLOAD-SPLIT": "NBTを1x1分割でダウンロード",
       "DOWNLOAD-SPLIT-TT": "地図単位に分割してnbtファイルをダウンロードします",
-      "DOWNLOAD-LITEMATIC": null,
+      "DOWNLOAD-LITEMATIC": "LITEMATICをダウンロード",
       "DOWNLOAD-LITEMATIC-TT": null,
-      "DOWNLOAD-LITEMATIC-SPLIT": null,
+      "DOWNLOAD-LITEMATIC-SPLIT": "LITEMATICを1x1分割でダウンロード",
       "DOWNLOAD-LITEMATIC-SPLIT-TT": null
     },
     "MAPDAT-SPECIFIC": {
