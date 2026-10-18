@@ -8,6 +8,7 @@ import MapModes from "./json/mapModes.json";
 import WhereSupportBlocksModes from "./json/whereSupportBlocksModes.json";
 
 import NBTWorker from "./workers/nbt.jsworker";
+import PhysicalLayoutScript from "./workers/physicalLayout.jsworker";
 
 import "./greenButtons.css";
 
@@ -171,6 +172,7 @@ class GreenButtons extends Component {
         optionValue_whereSupportBlocks: optionValue_whereSupportBlocks,
         optionValue_supportBlock: optionValue_supportBlock,
         optionValue_noSupportBlocksFirstRow: optionValue_noSupportBlocksFirstRow,
+        physicalLayoutScriptURL: new URL(PhysicalLayoutScript, window.location.href).href,
         pixelsData: currentMaterialsData.pixelsData,
         maps: currentMaterialsData.maps,
         currentSelectedBlocks: currentMaterialsData.currentSelectedBlocks,

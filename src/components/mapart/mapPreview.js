@@ -2,6 +2,7 @@ import React, { Component, createRef } from "react";
 
 import Tooltip from "../tooltip";
 import MapCanvasWorker from "./workers/mapCanvas.jsworker"; // FINALLY got this to work; .js gets imported as code, anything else as URL
+import PhysicalLayoutScript from "./workers/physicalLayout.jsworker";
 
 import BackgroundColourModes from "./json/backgroundColourModes.json";
 import CropModes from "./json/cropModes.json";
@@ -72,6 +73,7 @@ class MapPreview extends Component {
       prevProps.optionValue_cropImage_percent_y === newProps.optionValue_cropImage_percent_y,
       prevProps.optionValue_staircasing === newProps.optionValue_staircasing,
       prevProps.optionValue_whereSupportBlocks === newProps.optionValue_whereSupportBlocks,
+      prevProps.optionValue_noSupportBlocksFirstRow === newProps.optionValue_noSupportBlocksFirstRow,
       prevProps.optionValue_transparency === newProps.optionValue_transparency,
       prevProps.optionValue_transparencyTolerance === newProps.optionValue_transparencyTolerance,
       prevProps.optionValue_betterColour === newProps.optionValue_betterColour,
@@ -269,6 +271,7 @@ class MapPreview extends Component {
       optionValue_mapSize_y,
       optionValue_staircasing,
       optionValue_whereSupportBlocks,
+      optionValue_noSupportBlocksFirstRow,
       optionValue_transparency,
       optionValue_transparencyTolerance,
       optionValue_betterColour,
@@ -311,6 +314,8 @@ class MapPreview extends Component {
         optionValue_mapSize_y: optionValue_mapSize_y,
         optionValue_staircasing: optionValue_staircasing,
         optionValue_whereSupportBlocks: optionValue_whereSupportBlocks,
+        optionValue_noSupportBlocksFirstRow: optionValue_noSupportBlocksFirstRow,
+        physicalLayoutScriptURL: new URL(PhysicalLayoutScript, window.location.href).href,
         optionValue_transparency: optionValue_transparency,
         optionValue_transparencyTolerance: optionValue_transparencyTolerance,
         optionValue_betterColour: optionValue_betterColour,

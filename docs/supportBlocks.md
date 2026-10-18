@@ -93,15 +93,23 @@ These seven instances apply to the average block in a column, where a 'column' i
 - First (non-noobline) block: Only instances 1, 2, 3, 4, 6 apply
 - Last block: Only instances 1, 3, 5, 7 apply
 
-Some of these criteria require knowledge of the map block to the South of `B`, whether it is gravity affected and what tone it is. Hence if we are creating the colourSet and toneKeys, and counting support blocks at the same time in one for-loop for the map preview from North to South (as in `src/components/mapart/workers/mapCanvas.jsworker` so that progress reports feel accurate) we work 'one cycle behind' in counting support blocks; we switch based on the z-value of the pixel we have just worked out the colourSet and toneKey for:
+Some of these criteria require knowledge of the map block to the South of `B`, whether it is gravity affected and what tone it is. Hence while building a column from North to South (in `getPhysicalColumn` in `src/components/mapart/workers/physicalLayout.jsworker`) we work 'one cycle behind' in placing support blocks; we switch based on the row we have just placed:
 
 - Case 0: Check the relevant instances for whether the noobline needs support
 - Case 1: Check the relevant instances for whether the first non-noobline block needs support
 - Case 127: Check the relevant instances for whether the last block in the column needs support __and fallthrough to default case__
-- Default: Having calculated colourSet and toneKey for z-value `z`, check the instances for whether the block at z-value `z-1` needs support
+- Default: Having placed the block of row `z`, check the instances for whether the block of row `z-1` needs support
+
+The map preview counts support blocks by running the same `getPhysicalColumn`, so the materials list always matches the exported schematic.
 
 ## All blocks double (optimized)
 
 The reason for this mode is to enable the user to build all of the support blocks first instead of juggling many shulkers full of support blocks alongside each material required to build the visible map at the same time as in [All blocks (optimized)](#All-blocks-(optimized)). This mode requires a lot more support blocks, building an entire layer of 128*128 = 16384 at the minimum, however this is often not an issue for many players (collecting stacks of netherrack from 2b2t tunnels is easy). I (SelfAdjointOperator) have built 2x1 maps both in single and double mode before: although double mode can seem tedious at first, placing support blocks to seemingly no end, it is pleasant being able to then build the map colourSet by colourSet, with less inventory management problems. However, this was before single-blocks mode was optimized; I will compare in the future which I think is the best use of time.
 
 In effect we create a carbon-copy of the map structure as it would appear in [No blocks](#No-blocks) one block below the original, made entirely out of support blocks. We then only have to add extra support blocks for height changes as in instances 1 and 2 of [All blocks (optimized)](#All-blocks-(optimized)). This is a little easier to code than single-blocks mode, and `Case 1` does not need to be treated specially.
+
+## Overhangs in valley staircasing
+
+Each support block remembers why it was placed: either it holds up the block directly above it (instances that involve a gravity affected block, and every block in [All blocks double (optimized)](#All-blocks-double-(optimized))), or it is an anchor that sits next to a target block at the same height so that the target can be placed against it, for example `S` next to a block that steps down.
+
+Valley staircasing pulls plateaus and the valleys between them down by different amounts. All blocks with the same z-value move together, so a support block always keeps holding the block above it, but an anchor's target can end up at a different height. A support block whose reasons are all gone is an overhang that only costs material, and it is removed. Since an anchor can target another support block, this is repeated until nothing changes. A support block beneath a gravity affected block is never removed.

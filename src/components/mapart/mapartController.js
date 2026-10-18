@@ -817,6 +817,7 @@ class MapartController extends Component {
             optionValue_showGridOverlay={optionValue_showGridOverlay}
             optionValue_staircasing={optionValue_staircasing}
             optionValue_whereSupportBlocks={optionValue_whereSupportBlocks}
+            optionValue_noSupportBlocksFirstRow={optionValue_noSupportBlocksFirstRow}
             optionValue_transparency={optionValue_transparency}
             optionValue_transparencyTolerance={optionValue_transparencyTolerance}
             optionValue_betterColour={optionValue_betterColour}

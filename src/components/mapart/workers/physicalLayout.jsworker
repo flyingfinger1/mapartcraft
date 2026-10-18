@@ -1,0 +1,395 @@
+/*
+  Shared by nbt.jsworker (to build schematics) and mapCanvas.jsworker (to count support blocks for the materials list),
+  loaded into both with importScripts so that the materials list counts exactly the blocks that are exported.
+
+  getPhysicalColumn turns one column of a map (a list of { colourSetId, tone }, North to South) into physical blocks
+  { x, y, z, colourSetId } sorted by z ascending, then y descending. Besides real colourSetIds it uses the special
+  colourSetIds "NOOBLINE_ROW" (the noobline) and "NOOBLINE_SCAFFOLD" (support blocks).
+
+  Every support block records why it was placed (read docs/supportBlocks.md for the placement rules):
+  - HOLD: it is directly beneath a block that needs it there (a block with supportBlockMandatory, or every block in
+    All double mode). Blocks with the same z always move together, so this reason always stays valid.
+  - ANCHOR: it sits next to a target block at the same height, so that the target can be placed against it in survival.
+    The target is described relative to a map row: the block of that row (dy = 0) or the support beneath it (dy = -1).
+  Valley staircasing pulls plateaus and valleys down by different amounts, which can move an anchor's target away.
+  A support block whose reasons are all gone is an overhang and is removed.
+*/
+
+const SupportReason = {
+  HOLD: { type: "HOLD" },
+  anchor: (row, dy) => ({ type: "ANCHOR", row: row, dy: dy }),
+};
+
+function getPhysicalColumn(coloursLayoutColumn, columnNumber, settings) {
+  const { MapModes, WhereSupportBlocksModes, staircasing, whereSupportBlocks, noSupportBlocksFirstRow, isSupportBlockMandatory } = settings;
+
+  let physicalColumn = [];
+  const rowBlocks = new Map(); // map row number -> its block; -1 is the noobline
+  let currentHeight;
+  switch (staircasing) {
+    case MapModes.SCHEMATIC_NBT.staircaseModes.OFF.uniqueId: {
+      // start at y = 2 for flat maps; this covers the cases of support blocks 1 and or 2 blocks below
+      currentHeight = 2;
+      break;
+    }
+    case MapModes.SCHEMATIC_NBT.staircaseModes.CLASSIC.uniqueId:
+    case MapModes.SCHEMATIC_NBT.staircaseModes.VALLEY.uniqueId: {
+      // this doesn't matter
+      // in the classic case each column is later adjusted to have its global minimum at y = 0 so the map has a common base / is as short as possible
+      // in the valley case valleys are pulled down to y = 0
+      currentHeight = 0;
+      break;
+    }
+    case MapModes.SCHEMATIC_NBT.staircaseModes.FULL_DARK.uniqueId: {
+      // staircase descends from noobline southwards
+      currentHeight = 1 + coloursLayoutColumn.length;
+      break;
+    }
+    case MapModes.SCHEMATIC_NBT.staircaseModes.FULL_LIGHT.uniqueId: {
+      // staircase ascends from noobline southwards
+      currentHeight = 1;
+      break;
+    }
+    default: {
+      throw new Error("Unknown staircase mode");
+    }
+  }
+
+  const pushBlock = (y, z, colourSetId) => {
+    const block = { x: columnNumber, y: y, z: z, colourSetId: colourSetId };
+    physicalColumn.push(block);
+    return block;
+  };
+  const pushSupport = (y, z, reasons) => {
+    pushBlock(y, z, "NOOBLINE_SCAFFOLD").reasons = reasons;
+  };
+
+  const mapRowSouthOffset = noSupportBlocksFirstRow ? 0 : 1;
+
+  // initialize noobline only when it is enabled
+  if (!noSupportBlocksFirstRow) {
+    rowBlocks.set(-1, pushBlock(currentHeight, 0, "NOOBLINE_ROW"));
+  }
+
+  for (let rowNumber = 0; rowNumber < coloursLayoutColumn.length; rowNumber++) {
+    const coloursLayoutBlock = coloursLayoutColumn[rowNumber];
+
+    const previousHeight = currentHeight;
+    switch (coloursLayoutBlock.tone) {
+      case "dark": {
+        currentHeight -= 1;
+        break;
+      }
+      case "normal": {
+        break;
+      }
+      case "light": {
+        currentHeight += 1;
+        break;
+      }
+      default: {
+        throw new Error("Unknown tone type");
+      }
+    }
+
+    // when noobline is enabled, map rows are offset South by one block
+    const mapRowZ = rowNumber + mapRowSouthOffset;
+    const northFaceZ = mapRowZ - 1;
+
+    rowBlocks.set(rowNumber, pushBlock(currentHeight, mapRowZ, coloursLayoutBlock.colourSetId));
+
+    // read docs/supportBlocks.md to know how this works
+    switch (whereSupportBlocks) {
+      case WhereSupportBlocksModes.NONE.uniqueId: {
+        break;
+      }
+      case WhereSupportBlocksModes.IMPORTANT.uniqueId: {
+        // Skip support blocks for the first row if the option is enabled
+        if (!(noSupportBlocksFirstRow && rowNumber === 0) && isSupportBlockMandatory(coloursLayoutBlock)) {
+          pushSupport(currentHeight - 1, mapRowZ, [SupportReason.HOLD]);
+        }
+        break;
+      }
+      case WhereSupportBlocksModes.ALL_OPTIMIZED.uniqueId: {
+        switch (rowNumber) {
+          case 0: {
+            // Skip support blocks for the first row if the option is enabled
+            if (!noSupportBlocksFirstRow) {
+              // first under-support block, beneath the noobline
+              const reasons = [];
+              if (coloursLayoutBlock.tone === "dark") {
+                reasons.push(SupportReason.anchor(0, 0));
+              }
+              if (coloursLayoutBlock.tone === "normal" && isSupportBlockMandatory(coloursLayoutBlock)) {
+                reasons.push(SupportReason.anchor(0, -1));
+              }
+              if (reasons.length !== 0) {
+                pushSupport(previousHeight - 1, northFaceZ, reasons);
+              }
+              if (coloursLayoutBlock.tone === "dark" && isSupportBlockMandatory(coloursLayoutBlock)) {
+                // second under-support block
+                pushSupport(previousHeight - 2, northFaceZ, [SupportReason.anchor(0, -1)]);
+              }
+            }
+            break;
+          }
+          case 1: {
+            const coloursLayoutBlock_0 = coloursLayoutColumn[rowNumber - 1];
+            // first under-support block, beneath row 0
+            const reasons = [];
+            if (coloursLayoutBlock_0.tone === "light") {
+              reasons.push(SupportReason.anchor(-1, 0));
+            }
+            if (coloursLayoutBlock.tone === "dark") {
+              reasons.push(SupportReason.anchor(1, 0));
+            }
+            if (isSupportBlockMandatory(coloursLayoutBlock_0)) {
+              reasons.push(SupportReason.HOLD);
+            }
+            if (coloursLayoutBlock.tone === "normal" && isSupportBlockMandatory(coloursLayoutBlock)) {
+              reasons.push(SupportReason.anchor(1, -1));
+            }
+            if (reasons.length !== 0) {
+              pushSupport(previousHeight - 1, northFaceZ, reasons);
+            }
+            if (coloursLayoutBlock.tone === "dark" && isSupportBlockMandatory(coloursLayoutBlock)) {
+              // second under-support block
+              pushSupport(previousHeight - 2, northFaceZ, [SupportReason.anchor(1, -1)]);
+            }
+            break;
+          }
+          case coloursLayoutColumn.length - 1: {
+            // falls through
+            const coloursLayoutBlock_north = coloursLayoutColumn[rowNumber - 1];
+            // first under-support block, beneath this last row
+            const reasons = [];
+            if (coloursLayoutBlock.tone === "light") {
+              reasons.push(SupportReason.anchor(rowNumber - 1, 0));
+            }
+            if (isSupportBlockMandatory(coloursLayoutBlock)) {
+              reasons.push(SupportReason.HOLD);
+            }
+            if (coloursLayoutBlock.tone === "normal" && isSupportBlockMandatory(coloursLayoutBlock_north)) {
+              reasons.push(SupportReason.anchor(rowNumber - 1, -1));
+            }
+            if (reasons.length !== 0) {
+              pushSupport(currentHeight - 1, mapRowZ, reasons);
+            }
+            if (coloursLayoutBlock.tone === "light" && isSupportBlockMandatory(coloursLayoutBlock_north)) {
+              // second under-support block
+              pushSupport(currentHeight - 2, mapRowZ, [SupportReason.anchor(rowNumber - 1, -1)]);
+            }
+          }
+          // eslint-disable-next-line no-fallthrough
+          default: {
+            const coloursLayoutBlock_north = coloursLayoutColumn[rowNumber - 2];
+            const coloursLayoutBlock_inQuestion = coloursLayoutColumn[rowNumber - 1];
+            // first under-support block, beneath the previous row
+            const reasons = [];
+            if (coloursLayoutBlock_inQuestion.tone === "light") {
+              reasons.push(SupportReason.anchor(rowNumber - 2, 0));
+            }
+            if (coloursLayoutBlock.tone === "dark") {
+              reasons.push(SupportReason.anchor(rowNumber, 0));
+            }
+            if (isSupportBlockMandatory(coloursLayoutBlock_inQuestion)) {
+              reasons.push(SupportReason.HOLD);
+            }
+            if (coloursLayoutBlock.tone === "normal" && isSupportBlockMandatory(coloursLayoutBlock)) {
+              reasons.push(SupportReason.anchor(rowNumber, -1));
+            }
+            if (coloursLayoutBlock_inQuestion.tone === "normal" && isSupportBlockMandatory(coloursLayoutBlock_north)) {
+              reasons.push(SupportReason.anchor(rowNumber - 2, -1));
+            }
+            if (reasons.length !== 0) {
+              pushSupport(previousHeight - 1, northFaceZ, reasons);
+            }
+            // second under-support block
+            const reasons_second = [];
+            if (coloursLayoutBlock.tone === "dark" && isSupportBlockMandatory(coloursLayoutBlock)) {
+              reasons_second.push(SupportReason.anchor(rowNumber, -1));
+            }
+            if (coloursLayoutBlock_inQuestion.tone === "light" && isSupportBlockMandatory(coloursLayoutBlock_north)) {
+              reasons_second.push(SupportReason.anchor(rowNumber - 2, -1));
+            }
+            if (reasons_second.length !== 0) {
+              pushSupport(previousHeight - 2, northFaceZ, reasons_second);
+            }
+            break;
+          }
+        }
+        break;
+      }
+      case WhereSupportBlocksModes.ALL_DOUBLE_OPTIMIZED.uniqueId: {
+        switch (rowNumber) {
+          case 0: {
+            if (!noSupportBlocksFirstRow) {
+              pushSupport(previousHeight - 1, northFaceZ, [SupportReason.HOLD]);
+              if (coloursLayoutBlock.tone === "dark") {
+                pushSupport(previousHeight - 2, northFaceZ, [SupportReason.anchor(0, -1)]);
+              }
+            }
+            break;
+          }
+          case coloursLayoutColumn.length - 1: {
+            pushSupport(currentHeight - 1, mapRowZ, [SupportReason.HOLD]);
+            if (coloursLayoutBlock.tone === "light") {
+              pushSupport(currentHeight - 2, mapRowZ, [SupportReason.anchor(rowNumber - 1, -1)]);
+            }
+            // falls through
+          }
+          // eslint-disable-next-line no-fallthrough
+          default: {
+            pushSupport(previousHeight - 1, northFaceZ, [SupportReason.HOLD]);
+            const coloursLayoutBlock_inQuestion = coloursLayoutColumn[rowNumber - 1];
+            const reasons_second = [];
+            if (coloursLayoutBlock_inQuestion.tone === "light") {
+              reasons_second.push(SupportReason.anchor(rowNumber - 2, -1));
+            }
+            if (coloursLayoutBlock.tone === "dark") {
+              reasons_second.push(SupportReason.anchor(rowNumber, -1));
+            }
+            if (reasons_second.length !== 0) {
+              pushSupport(previousHeight - 2, northFaceZ, reasons_second);
+            }
+            break;
+          }
+        }
+        break;
+      }
+      default: {
+        throw new Error("Unknown support-blocks option");
+      }
+    }
+  }
+
+  // sort in terms of z and y, necessary for determining when a plateau has finished in valley mode, and correct noobline heights in map preview
+  physicalColumn.sort((elt1, elt2) => {
+    if (elt1.z < elt2.z) {
+      return -1;
+    } else if (elt1.z > elt2.z) {
+      // smaller Z first
+      return 1;
+    } else {
+      if (elt1.y > elt2.y) {
+        return -1;
+      } else {
+        // higher Y first
+        return 1;
+      }
+    }
+  });
+
+  switch (staircasing) {
+    case MapModes.SCHEMATIC_NBT.staircaseModes.VALLEY.uniqueId: {
+      let plateaus = [{ startIndex: 0, endIndex: 0 }];
+      // initial 0 width plateau useful just so we don't have a special case for the first proper plateau later
+      let ascending = false; // weakly ascending
+      let currentPlateauStartIndex = null;
+      let visibleBlocksHeight = physicalColumn[0].y; // initialise to noobline height
+      // visible blocks are blocks at the top height in a x-z column, the actual map blocks that give the colours
+
+      for (let i = 0; i < physicalColumn.length; i++) {
+        const physicalBlock = physicalColumn[i];
+        if (["NOOBLINE_SCAFFOLD", "NOOBLINE_ROW"].includes(physicalBlock.colourSetId)) {
+          continue;
+        }
+        if (ascending && physicalBlock.y < visibleBlocksHeight) {
+          // dark after ascent; plateau found
+          ascending = false;
+          plateaus.push({
+            startIndex: currentPlateauStartIndex,
+            endIndex: i,
+          });
+        } else if (physicalBlock.y > visibleBlocksHeight) {
+          // light
+          ascending = true;
+          currentPlateauStartIndex = i;
+        }
+        visibleBlocksHeight = physicalBlock.y;
+      }
+
+      plateaus.push({ startIndex: physicalColumn.length, endIndex: physicalColumn.length });
+
+      let nonPlateauPulldownHeights = [Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER];
+      while (plateaus.length !== 1) {
+        let pullDownHeight = Number.MAX_SAFE_INTEGER;
+        for (let i = plateaus[0].endIndex; i < plateaus[1].startIndex; i++) {
+          pullDownHeight = Math.min(physicalColumn[i].y, pullDownHeight);
+        }
+        for (let i = plateaus[0].endIndex; i < plateaus[1].startIndex; i++) {
+          physicalColumn[i].y -= pullDownHeight;
+        }
+        nonPlateauPulldownHeights[1] = pullDownHeight;
+        const plateauPulldownHeight = Math.min(...nonPlateauPulldownHeights);
+        // we pull down a plateau by the minimum of the two values the surrounding non-plateaus were pulled down by
+        for (let i = plateaus[0].startIndex; i < plateaus[0].endIndex; i++) {
+          physicalColumn[i].y -= plateauPulldownHeight;
+        }
+        plateaus.shift();
+        nonPlateauPulldownHeights[0] = nonPlateauPulldownHeights[1];
+      }
+
+      // pulling plateaus and valleys down by different amounts leaves overhangs: support blocks whose anchor targets moved away
+      physicalColumn = removeOverhangs(physicalColumn, rowBlocks);
+      break;
+    }
+    case MapModes.SCHEMATIC_NBT.staircaseModes.CLASSIC.uniqueId:
+    case MapModes.SCHEMATIC_NBT.staircaseModes.OFF.uniqueId: {
+      // make sure the column's global minimum is at y = 0; doing this for every column gives the map a common base.
+      // for OFF mode this removes the empty air layers that would otherwise appear below flat maps.
+      const columnMinimumY = physicalColumn.reduce((a, b) => (a.y < b.y ? a : b)).y;
+      physicalColumn.forEach((block) => {
+        block.y -= columnMinimumY;
+      });
+      break;
+    }
+    case MapModes.SCHEMATIC_NBT.staircaseModes.FULL_DARK.uniqueId:
+    case MapModes.SCHEMATIC_NBT.staircaseModes.FULL_LIGHT.uniqueId: {
+      break;
+    }
+    default: {
+      throw new Error("Unknown staircase mode");
+    }
+  }
+
+  return physicalColumn;
+}
+
+function removeOverhangs(physicalColumn, rowBlocks) {
+  // all blocks are in one x column, so a support block is identified by its y and z
+  const keptSupports = new Set(physicalColumn.filter((block) => block.reasons !== undefined));
+  const supportPositions = new Map();
+  keptSupports.forEach((block) => supportPositions.set(`${block.y},${block.z}`, block));
+
+  const isReasonValid = (support, reason) => {
+    if (reason.type === "HOLD") {
+      return true;
+    }
+    const rowBlock = rowBlocks.get(reason.row);
+    if (rowBlock === undefined) {
+      // anchored to the noobline while the noobline is excluded; keep it to be safe
+      return true;
+    }
+    const targetY = rowBlock.y + reason.dy;
+    if (support.y !== targetY) {
+      return false;
+    }
+    // dy = 0 anchors the row's block itself, which always exists; otherwise the support beneath it must still be there
+    return reason.dy === 0 || keptSupports.has(supportPositions.get(`${targetY},${rowBlock.z}`));
+  };
+
+  // removing one support can invalidate an anchor of another, so repeat until nothing changes
+  let changed = true;
+  while (changed) {
+    changed = false;
+    for (const support of keptSupports) {
+      if (!support.reasons.some((reason) => isReasonValid(support, reason))) {
+        keptSupports.delete(support);
+        changed = true;
+      }
+    }
+  }
+
+  return physicalColumn.filter((block) => block.reasons === undefined || keptSupports.has(block));
+}
