@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
 import Locale from "../locale/locale";
+import { rememberLanguage } from "../locale/preferredLanguage";
 
 import "./languages.css";
 
@@ -13,13 +14,13 @@ class Languages extends Component {
           <div className="language" key={language}>
             {language === "et" ? (
               <React.Fragment>
-                <Link to={`/${language}`}>
+                <Link to={`/${language}`} onClick={() => rememberLanguage(language)}>
                   <img src={Locale[language].flag} alt={language} className={`flag flag_${language}`} />
                   <img key="et_pop" src={Locale[language].flag_special} alt="et_pop" className={"flag flag_et_pop"} />
                 </Link>
               </React.Fragment>
             ) : (
-              <Link to={`/${language === "en" ? "" : language}`}>
+              <Link to={`/${language === "en" ? "" : language}`} onClick={() => rememberLanguage(language)}>
                 <img src={Locale[language].flag} alt={language} className={`flag flag_${language}`} />
               </Link>
             )}
