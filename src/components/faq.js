@@ -19,6 +19,25 @@ function FAQ(props) {
       </a>
 
       <h2>General</h2>
+      <b>Which Minecraft versions are supported?</b>
+      <p>
+        Java Edition 1.12.2 up to 26.3, selectable under <em>Settings</em>. If your version is not listed, pick the closest older one: Minecraft upgrades older
+        schematics and map files when it loads them. Blocks that do not exist in the selected version are hidden from the block selection.
+      </p>
+
+      <b>Where do I report bugs or request features?</b>
+      <p>
+        On{" "}
+        <a href="https://github.com/flyingfinger1/mapartcraft/issues" target="_blank" rel="noopener noreferrer">
+          GitHub
+        </a>
+        . This version is a fork of{" "}
+        <a href="https://github.com/rebane2001/mapartcraft" target="_blank" rel="noopener noreferrer">
+          rebane2001's MapartCraft
+        </a>
+        , so please report problems with it here rather than to the original project.
+      </p>
+
       <b>Why does the output change with the same image and settings?</b>
       <p>
         The JPEG decoding and scaling algorithms vary between browsers and get changed all the time. If you wish to be 100% sure your image stays the same,
@@ -31,21 +50,13 @@ function FAQ(props) {
 
       <b>How can I use the NBT file?</b>
       <p>
-        You can use it with programs like{" "}
+        You can load it with mods like{" "}
+        <a href="https://modrinth.com/mod/litematica" target="_blank" rel="noopener noreferrer">
+          Litematica
+        </a>{" "}
+        (for Litematica the <a href="#litematic">.litematic download</a> is more convenient) and with programs like{" "}
         <a href="https://cubical.xyz/" target="_blank" rel="noopener noreferrer">
           cubical.xyz
-        </a>
-        ,{" "}
-        <a href="https://www.mcedit-unified.net/" target="_blank" rel="noopener noreferrer">
-          MCEdit
-        </a>{" "}
-        and mods like{" "}
-        <a href="https://minecraft.curseforge.com/projects/schematica" target="_blank" rel="noopener noreferrer">
-          Schematica
-        </a>{" "}
-        /{" "}
-        <a href="https://minecraft.curseforge.com/projects/litematica" target="_blank" rel="noopener noreferrer">
-          Litematica
         </a>
         . You can also import them into your game directly with a structure block - although it might require a redstone power source (
         <a href="https://github.com/rebane2001/mapartcraft/issues/100" target="_blank" rel="noopener noreferrer">
@@ -64,7 +75,7 @@ function FAQ(props) {
         <a href="https://www.mcedit-unified.net/" target="_blank" rel="noopener noreferrer">
           MCEdit
         </a>{" "}
-        and export as .schematic. <em>Note that if you're using MCEdit or Cubical, you must export the map as 1.12.2.</em> You do not need a .schematic file for
+        and export as .schematic (only needed for old tools and versions). <em>Note that if you're using MCEdit or Cubical, you must export the map as 1.12.2.</em> You do not need a .schematic file for
         use with Baritone; use Schematica and the "#schematica" command.
       </p>
 
@@ -83,12 +94,36 @@ function FAQ(props) {
         Northern block is lower then a lighter tone shows, else a normal tone shows. Thus an extra row of blocks (colloquially known as a noobline) exists at
         the top of a map to shade the top row properly.
       </p>
+      <p>
+        If you leave it out with <em>Exclude support/noobline from first row</em>, the shading of the top row depends on whatever is North of the map in your
+        world, so only do this if you know what is there (for example when building next to an existing map).
+      </p>
 
       <b>How do I align the map?</b>
       <p>
         When you have found a suitable place to build your map (eg above an ocean) make sure to open the map first and find the bottom left corner for aligning
         your schematic. Maps in Minecraft align to a fixed 128x128 grid. North is always the up-direction on maps and you shouldn't need to rotate the schematic.
       </p>
+
+      <h2 id="litematic">Litematic (.litematic)</h2>
+      <b>What is the .litematic file?</b>
+      <p>
+        The native schematic format of the{" "}
+        <a href="https://modrinth.com/mod/litematica" target="_blank" rel="noopener noreferrer">
+          Litematica
+        </a>{" "}
+        mod. It contains the same blocks as the NBT download, including support blocks and the noobline, as one schematic for the whole map.
+      </p>
+
+      <b>How do I use it?</b>
+      <p>
+        Put the file into the <em>schematics</em> folder of your Minecraft directory, open the Litematica menu in-game (<em>M</em> by default), choose{" "}
+        <em>Load Schematics</em> and load it. Place it aligned to the map grid as described above. Litematica can then show the schematic layer by layer and
+        list the materials you still need.
+      </p>
+
+      <b>Can I download split .litematic files?</b>
+      <p>No, the .litematic download is always one schematic for the whole map. For split files, use the NBT .zip download.</p>
 
       <h2>Datafile (.dat)</h2>
       <b>What is a map.dat file?</b>
@@ -145,7 +180,8 @@ function FAQ(props) {
       <b>Add blocks under/Block to add?</b>
       <p>
         Here you can pick the block that will be put under either important blocks (eg carpets, sand, pressure plates) or all blocks. This block will also be
-        used for the noobline, which cannot be disabled.
+        used for the noobline. With 'Valley' staircasing, support blocks that no longer help placing anything are left out; support blocks under blocks that
+        need them are always kept. The support block count in <em>Materials</em> is exactly what the schematic contains.
       </p>
 
       <b>Presets?</b>

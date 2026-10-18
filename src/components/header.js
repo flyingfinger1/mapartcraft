@@ -24,10 +24,6 @@ class Header extends Component {
           <a href="https://discord.gg/r7Tuerq" target="_blank" rel="noopener noreferrer">
             2b2t Mapart Discord
           </a>
-          <span> | </span>
-          <a href="https://area51.selfadjointoperator.com/mapartcraft/" target="_blank" rel="noopener noreferrer">
-            Beta
-          </a>
         </h3>
         <p>
           {getLocaleString("DESCRIPTION/1")}
@@ -43,7 +39,7 @@ class Header extends Component {
           {getLocaleString("DESCRIPTION/5")}
           <br></br>
           {getLocaleString("DESCRIPTION/FORK")}
-          <a href="https://github.com/flyingfinger1/mapartcraft" target="_blank" rel="noopener noreferrer">
+          <a href="https://github.com/flyingfinger1/mapartcraft/issues" target="_blank" rel="noopener noreferrer">
             GitHub
           </a>
           {"."}

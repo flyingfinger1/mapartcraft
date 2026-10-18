@@ -29,7 +29,9 @@ docker compose up -d
 
 # Usage
 
-Visit [MapartCraft](https://rebane2001.com/mapartcraft) on [rebane2001.com](https://rebane2001.com) or use a mirror on [web.archive.org](https://web.archive.org/web/*/https://rebane2001.com/mapartcraft). However, it is recommended to use the [rebane2001.com](https://rebane2001.com/mapartcraft) site as it is always up to date with new features and bugfixes.
+This is a fork of [rebane2001/mapartcraft](https://github.com/rebane2001/mapartcraft) with support for Minecraft versions up to 26.3, more blocks, `.litematic` export and fewer support blocks in valley staircasing. Run it yourself with Docker (see above) or `npm run start`. Report bugs and feature requests for this fork in its [issue tracker](https://github.com/flyingfinger1/mapartcraft/issues).
+
+The original is available at [rebane2001.com](https://rebane2001.com/mapartcraft).
 
 # Credits/Thanks
 
