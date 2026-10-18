@@ -20,6 +20,15 @@ The default build settings assume the app is being hosted at https://YOUR-SITE-H
 - `basename` in the Router in `src/app.js`
 - The `RewriteRule` in `buildSources/apache/.htaccess` if using Apache
 
+# Docker
+
+The `Dockerfile` builds the site and serves it with nginx at `/mapartcraft/` (requests to `/` are redirected there). Publishing a GitHub release runs `.github/workflows/release.yml`, which pushes the image to `ghcr.io/flyingfinger1/mapartcraft` tagged with the version and `latest`. `docker-compose.yml` runs that image behind caddy-docker-proxy on the external `caddy-net` network:
+
+```
+docker compose pull
+docker compose up -d
+```
+
 # Usage
 
 Visit [MapartCraft](https://rebane2001.com/mapartcraft) on [rebane2001.com](https://rebane2001.com) or use a mirror on [web.archive.org](https://web.archive.org/web/*/https://rebane2001.com/mapartcraft). However, it is recommended to use the [rebane2001.com](https://rebane2001.com/mapartcraft) site as it is always up to date with new features and bugfixes.

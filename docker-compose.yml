@@ -1,0 +1,16 @@
+services:
+  mapartcraft:
+    image: ghcr.io/flyingfinger1/mapartcraft:latest
+    restart: unless-stopped
+    ports:
+      - "8080:80"   # remove this when using a reverse proxy
+    networks:
+      - caddy-net
+    # Caddy reverse proxy labels (remove if not using caddy-docker-proxy)
+    labels:
+      caddy: mapartcraft.flyingfinger.de
+      caddy.reverse_proxy: "{{upstreams 80}}"
+
+networks:
+  caddy-net:
+    external: true
