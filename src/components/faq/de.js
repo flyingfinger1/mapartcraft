@@ -192,11 +192,11 @@ function FAQContent_de({ images }) {
       <h2>Eigene Blöcke</h2>
       <p>
         Eigene Blöcke kannst Du unten in der Blockauswahl hinzufügen. Für denselben Blocknamen lassen sich verschiedene Versionen anlegen, z. B. für 1.12.2 und
-        1.13.2+. Im Abschnitt 'Examples' findest Du Beispiele. NBT-Tags bzw. Blockzustände findest Du im{" "}
+        1.13.2+. Im Abschnitt 'Beispiele' findest Du einige Muster. NBT-Tags bzw. Blockzustände findest Du im{" "}
         <a href="https://de.minecraft.wiki/w/Blockzustand" target="_blank" rel="noopener noreferrer">
           Minecraft Wiki
         </a>
-        . Um einen eigenen Block zu bearbeiten, wähle ihn aus, ändere Tags, Versionen usw. und klicke auf 'Add', um ihn zu überschreiben. Links zu Vorlagen
+        . Um einen eigenen Block zu bearbeiten, wähle ihn aus, ändere Tags, Versionen usw. und klicke auf 'Hinzufügen', um ihn zu überschreiben. Links zu Vorlagen
         enthalten keine eigenen Blöcke.
       </p>
 
