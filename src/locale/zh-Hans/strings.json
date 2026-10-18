@@ -169,7 +169,9 @@
       "DOWNLOAD-SPLIT": "以1x1分割下载",
       "DOWNLOAD-SPLIT-TT": "将 nbt 分成1x1区块来下载",
       "DOWNLOAD-LITEMATIC": null,
-      "DOWNLOAD-LITEMATIC-TT": null
+      "DOWNLOAD-LITEMATIC-TT": null,
+      "DOWNLOAD-LITEMATIC-SPLIT": null,
+      "DOWNLOAD-LITEMATIC-SPLIT-TT": null
     },
     "MAPDAT-SPECIFIC": {
       "DOWNLOAD": "下载 MAPDAT",

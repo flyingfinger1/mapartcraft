@@ -168,7 +168,9 @@
       "DOWNLOAD-SPLIT": "TÉLÉCHARGER EN SECTION 1x1",
       "DOWNLOAD-SPLIT-TT": "Télécharge le NBT en plusieurs séction de 1x1 map",
       "DOWNLOAD-LITEMATIC": null,
-      "DOWNLOAD-LITEMATIC-TT": null
+      "DOWNLOAD-LITEMATIC-TT": null,
+      "DOWNLOAD-LITEMATIC-SPLIT": null,
+      "DOWNLOAD-LITEMATIC-SPLIT-TT": null
     },
     "MAPDAT-SPECIFIC": {
       "DOWNLOAD": "TELECHARGER",

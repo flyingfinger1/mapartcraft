@@ -168,7 +168,9 @@
       "DOWNLOAD-SPLIT": "Descarregar como 1x1 dividido",
       "DOWNLOAD-SPLIT-TT": "Descarregar o nbt dividido em chunks 1x1",
       "DOWNLOAD-LITEMATIC": null,
-      "DOWNLOAD-LITEMATIC-TT": null
+      "DOWNLOAD-LITEMATIC-TT": null,
+      "DOWNLOAD-LITEMATIC-SPLIT": null,
+      "DOWNLOAD-LITEMATIC-SPLIT-TT": null
     },
     "MAPDAT-SPECIFIC": {
       "DOWNLOAD": "DESCARREGAR",

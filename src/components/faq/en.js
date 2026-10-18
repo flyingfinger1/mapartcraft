@@ -103,7 +103,7 @@ function FAQContent_en({ images }) {
         <a href="https://modrinth.com/mod/litematica" target="_blank" rel="noopener noreferrer">
           Litematica
         </a>{" "}
-        mod. It contains the same blocks as the NBT download, including support blocks and the noobline, as one schematic for the whole map.
+        mod. It contains the same blocks as the NBT download, including support blocks and the noobline.
       </p>
 
       <b>How do I use it?</b>
@@ -114,7 +114,10 @@ function FAQContent_en({ images }) {
       </p>
 
       <b>Can I download split .litematic files?</b>
-      <p>No, the .litematic download is always one schematic for the whole map. For split files, use the NBT .zip download.</p>
+      <p>
+        Yes: "DOWNLOAD LITEMATIC" gives you one schematic for the whole map, "DOWNLOAD LITEMATIC AS 1x1 SPLIT" a .zip file with one schematic per map,
+        just like the NBT download.
+      </p>
 
       <h2>Datafile (.dat)</h2>
       <b>What is a map.dat file?</b>
@@ -133,7 +136,8 @@ function FAQContent_en({ images }) {
       <b>Map size?</b>
       <p>
         This will define how many maps you will create for your picture. When creating bigger maps, it's recommended to split it into multiple schematics (lest
-        large staircased maps stretch above the world height limit). This can be done with the "DOWNLOAD AS 1X1 SPLIT" button which downloads all the 1x1 NBTs in a .zip file.
+        large staircased maps stretch above the world height limit). This can be done with the "DOWNLOAD AS 1X1 SPLIT" and "DOWNLOAD LITEMATIC AS 1x1 SPLIT" buttons, which download all the 1x1 NBTs or litematics in a
+        .zip file.
       </p>
 
       <b>My image is stretched!</b>

@@ -104,7 +104,7 @@ function FAQContent_de({ images }) {
         <a href="https://modrinth.com/mod/litematica" target="_blank" rel="noopener noreferrer">
           Litematica
         </a>
-        . Sie enthält dieselben Blöcke wie der NBT-Download, inklusive Stützblöcken und Noobline, als ein Schematic für die ganze Karte.
+        . Sie enthält dieselben Blöcke wie der NBT-Download, inklusive Stützblöcken und Noobline.
       </p>
 
       <b>Wie verwende ich sie?</b>
@@ -115,7 +115,10 @@ function FAQContent_de({ images }) {
       </p>
 
       <b>Kann ich geteilte .litematic-Dateien herunterladen?</b>
-      <p>Nein, der .litematic-Download ist immer ein Schematic für die ganze Karte. Für geteilte Dateien nimm den NBT-Download als .zip.</p>
+      <p>
+        Ja: "DOWNLOAD LITEMATIC" liefert ein Schematic für die ganze Karte, "DOWNLOAD LITEMATIC ALS 1x1 TEILE" eine .zip-Datei mit einem Schematic pro Karte,
+        genau wie beim NBT-Download.
+      </p>
 
       <h2>Kartendatei (.dat)</h2>
       <b>Was ist eine map.dat-Datei?</b>
@@ -135,7 +138,8 @@ function FAQContent_de({ images }) {
       <b>Maße?</b>
       <p>
         Hier legst Du fest, aus wie vielen Karten Dein Bild besteht. Bei größeren Karten empfiehlt es sich, sie in mehrere Schematics aufzuteilen, damit große
-        3D-Karten nicht über die Bauhöhengrenze hinausragen. Das geht mit dem Button "DOWNLOAD ALS 1x1 TEILE", der alle 1x1-NBTs in einer .zip-Datei herunterlädt.
+        3D-Karten nicht über die Bauhöhengrenze hinausragen. Das geht mit den Buttons "DOWNLOAD ALS 1x1 TEILE" und "DOWNLOAD LITEMATIC ALS 1x1 TEILE", die alle 1x1-NBTs bzw. -Litematics in einer .zip-Datei
+        herunterladen.
       </p>
 
       <b>Mein Bild ist verzerrt!</b>

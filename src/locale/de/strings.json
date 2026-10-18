@@ -168,7 +168,9 @@
       "DOWNLOAD-SPLIT": "DOWNLOAD ALS 1x1 TEILE",
       "DOWNLOAD-SPLIT-TT": "Die nbt-Datei getrennt in 1x1 Teile herunterladen",
       "DOWNLOAD-LITEMATIC": "DOWNLOAD LITEMATIC",
-      "DOWNLOAD-LITEMATIC-TT": "Als .litematic-Datei herunterladen"
+      "DOWNLOAD-LITEMATIC-TT": "Als .litematic-Datei herunterladen",
+      "DOWNLOAD-LITEMATIC-SPLIT": "DOWNLOAD LITEMATIC ALS 1x1 TEILE",
+      "DOWNLOAD-LITEMATIC-SPLIT-TT": "Die litematic-Datei getrennt in 1x1 Teile herunterladen"
     },
     "MAPDAT-SPECIFIC": {
       "DOWNLOAD": "DOWNLOAD",

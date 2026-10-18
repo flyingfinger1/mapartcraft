@@ -168,7 +168,9 @@
       "DOWNLOAD-SPLIT": "СКАЧАТЬ УЧАСТОК 1х1",
       "DOWNLOAD-SPLIT-TT": "Скачать map.dat файл разделенный на карты 1х1",
       "DOWNLOAD-LITEMATIC": null,
-      "DOWNLOAD-LITEMATIC-TT": null
+      "DOWNLOAD-LITEMATIC-TT": null,
+      "DOWNLOAD-LITEMATIC-SPLIT": null,
+      "DOWNLOAD-LITEMATIC-SPLIT-TT": null
     },
     "MAPDAT-SPECIFIC": {
       "DOWNLOAD": "СКАЧАТЬ",

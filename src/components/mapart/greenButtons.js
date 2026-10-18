@@ -19,6 +19,7 @@ class GreenButtons extends Component {
     buttonWidth_NBT_Joined: 1,
     buttonWidth_Litematic_Joined: 1,
     buttonWidth_NBT_Split: 1,
+    buttonWidth_Litematic_Split: 1,
     buttonWidth_Mapdat_Split: 1,
     mapPreviewWorker_onFinishCallback: null,
   };
@@ -31,6 +32,7 @@ class GreenButtons extends Component {
       buttonWidth_NBT_Joined: 1,
       buttonWidth_Litematic_Joined: 1,
       buttonWidth_NBT_Split: 1,
+      buttonWidth_Litematic_Split: 1,
       buttonWidth_Mapdat_Split: 1,
     });
   }
@@ -86,6 +88,10 @@ class GreenButtons extends Component {
           this.setState({ buttonWidth_NBT_Split: (numberOfSplitsCalculated + e.data.body) / (optionValue_mapSize_x * optionValue_mapSize_y) });
           break;
         }
+        case "PROGRESS_REPORT_CREATE_LITEMATIC_SPLIT": {
+          this.setState({ buttonWidth_Litematic_Split: (numberOfSplitsCalculated + e.data.body) / (optionValue_mapSize_x * optionValue_mapSize_y) });
+          break;
+        }
         case "PROGRESS_REPORT_CREATE_MAPDAT_SPLIT": {
           this.setState({ buttonWidth_Mapdat_Split: (numberOfSplitsCalculated + e.data.body) / (optionValue_mapSize_x * optionValue_mapSize_y) });
           break;
@@ -119,10 +125,20 @@ class GreenButtons extends Component {
         case "LITEMATIC_ARRAY": {
           const t1 = performance.now();
           console.log(`Created Litematic by ${(t1 - t0).toString()}ms`);
-          const { Litematic_Bytes } = e.data.body;
+          numberOfSplitsCalculated++;
+          const { Litematic_Bytes, whichMap_x, whichMap_y } = e.data.body;
           const Litematic_Bytes_gzipped = gzip(Litematic_Bytes);
-          const downloadBlob = new Blob([Litematic_Bytes_gzipped], { type: "application/octet-stream" });
-          downloadBlobFile(downloadBlob, `${uploadedImage_baseFilename}.litematic`);
+          if (workerHeader === "CREATE_LITEMATIC_SPLIT") {
+            zipFile.file(`${uploadedImage_baseFilename}_${whichMap_x}_${whichMap_y}.litematic`, Litematic_Bytes_gzipped);
+            if (numberOfSplitsCalculated === optionValue_mapSize_x * optionValue_mapSize_y) {
+              zipFile.generateAsync({ type: "blob" }).then((content) => {
+                downloadBlobFile(content, `${uploadedImage_baseFilename}.zip`);
+              });
+            }
+          } else {
+            const downloadBlob = new Blob([Litematic_Bytes_gzipped], { type: "application/octet-stream" });
+            downloadBlobFile(downloadBlob, `${uploadedImage_baseFilename}.litematic`);
+          }
           break;
         }
         case "MAPDAT_BYTES": {
@@ -173,6 +189,7 @@ class GreenButtons extends Component {
         optionValue_supportBlock: optionValue_supportBlock,
         optionValue_noSupportBlocksFirstRow: optionValue_noSupportBlocksFirstRow,
         physicalLayoutScriptURL: new URL(PhysicalLayoutScript, window.location.href).href,
+        schematicBaseName: uploadedImage_baseFilename,
         pixelsData: currentMaterialsData.pixelsData,
         maps: currentMaterialsData.maps,
         currentSelectedBlocks: currentMaterialsData.currentSelectedBlocks,
@@ -190,6 +207,10 @@ class GreenButtons extends Component {
 
   onGetLitematicClicked = () => {
     this.getNBT_base("CREATE_LITEMATIC_JOINED");
+  };
+
+  onGetLitematicSplitClicked = () => {
+    this.getNBT_base("CREATE_LITEMATIC_SPLIT");
   };
 
   onGetNBTSplitClicked = () => {
@@ -218,6 +239,7 @@ class GreenButtons extends Component {
       optionValue_staircasing,
       optionValue_whereSupportBlocks,
       optionValue_supportBlock,
+      optionValue_noSupportBlocksFirstRow,
       optionValue_transparency,
       optionValue_transparencyTolerance,
       optionValue_mapdatFilenameUseId,
@@ -245,6 +267,7 @@ class GreenButtons extends Component {
       prevProps.optionValue_staircasing !== optionValue_staircasing,
       prevProps.optionValue_whereSupportBlocks !== optionValue_whereSupportBlocks,
       prevProps.optionValue_supportBlock !== optionValue_supportBlock,
+      prevProps.optionValue_noSupportBlocksFirstRow !== optionValue_noSupportBlocksFirstRow,
       prevProps.optionValue_transparency !== optionValue_transparency,
       prevProps.optionValue_transparencyTolerance !== optionValue_transparencyTolerance,
       prevProps.optionValue_mapdatFilenameUseId !== optionValue_mapdatFilenameUseId,
@@ -279,7 +302,14 @@ class GreenButtons extends Component {
   }
 
   render() {
-    const { buttonWidth_viewOnline, buttonWidth_NBT_Joined, buttonWidth_Litematic_Joined, buttonWidth_NBT_Split, buttonWidth_Mapdat_Split } = this.state;
+    const {
+      buttonWidth_viewOnline,
+      buttonWidth_NBT_Joined,
+      buttonWidth_Litematic_Joined,
+      buttonWidth_NBT_Split,
+      buttonWidth_Litematic_Split,
+      buttonWidth_Mapdat_Split,
+    } = this.state;
     const { getLocaleString, optionValue_modeNBTOrMapdat } = this.props;
     let buttons_mapModeConditional;
     // dummy text used in divs with absolutely positioned children to create correct container height
@@ -333,6 +363,19 @@ class GreenButtons extends Component {
                 className="greenButton_progressDiv"
                 style={{
                   width: `${Math.floor(buttonWidth_Litematic_Joined * 100)}%`,
+                }}
+              />
+            </div>
+          </Tooltip>
+          <br />
+          <Tooltip tooltipText={getLocaleString("DOWNLOAD/NBT-SPECIFIC/DOWNLOAD-LITEMATIC-SPLIT-TT")}>
+            <div className="greenButton" onClick={this.onGetLitematicSplitClicked}>
+              <span className="greenButton_text_dummy">{`${getLocaleString("DOWNLOAD/NBT-SPECIFIC/DOWNLOAD-LITEMATIC-SPLIT")} .ZIP`}</span>
+              <span className="greenButton_text">{`${getLocaleString("DOWNLOAD/NBT-SPECIFIC/DOWNLOAD-LITEMATIC-SPLIT")} .ZIP`}</span>
+              <div
+                className="greenButton_progressDiv"
+                style={{
+                  width: `${Math.floor(buttonWidth_Litematic_Split * 100)}%`,
                 }}
               />
             </div>

@@ -10,6 +10,7 @@ var optionValue_noSupportBlocksFirstRow;
 var pixelsData;
 var maps;
 var currentSelectedBlocks;
+var schematicBaseName;
 // end onmessage variables
 
 var exactColourCache = new Map(); // for mapping RGB that exactly matches in coloursJSON to colourSetId and tone
@@ -444,8 +445,9 @@ function createPackedLongArray(volume, bitsPerEntry, indexToState) {
 }
 
 class Map_Litematic {
-  constructor(map) {
+  constructor(map, schematicName) {
     this.mapNBT = new Map_NBT(map);
+    this.schematicName = schematicName; // shown in Litematica's schematic list
   }
 
   setLitematicDataFromMapNBT() {
@@ -546,7 +548,7 @@ class Map_Litematic {
             },
             Name: {
               type: TagTypes.string,
-              value: "Map",
+              value: this.schematicName,
             },
           },
         },
@@ -827,6 +829,7 @@ onmessage = (e) => {
   pixelsData = e.data.body.pixelsData;
   maps = e.data.body.maps;
   currentSelectedBlocks = e.data.body.currentSelectedBlocks;
+  schematicBaseName = e.data.body.schematicBaseName;
 
   const headerMessage = e.data.head;
 
@@ -859,10 +862,12 @@ onmessage = (e) => {
       }
       break;
     }
-    case "CREATE_LITEMATIC_JOINED": {
+    case "CREATE_LITEMATIC_JOINED":
+    case "CREATE_LITEMATIC_SPLIT": {
       for (let whichMap_y = 0; whichMap_y < maps.length; whichMap_y++) {
         for (let whichMap_x = 0; whichMap_x < maps[0].length; whichMap_x++) {
-          const map_Litematic = new Map_Litematic(maps[whichMap_y][whichMap_x]);
+          const schematicName = headerMessage === "CREATE_LITEMATIC_SPLIT" ? `${schematicBaseName}_${whichMap_x}_${whichMap_y}` : schematicBaseName;
+          const map_Litematic = new Map_Litematic(maps[whichMap_y][whichMap_x], schematicName);
           const Litematic_Bytes = map_Litematic.getNBT();
           postMessage({
             head: "LITEMATIC_ARRAY",

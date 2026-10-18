@@ -168,7 +168,9 @@
       "DOWNLOAD-SPLIT": "1x1分割でダウンロード",
       "DOWNLOAD-SPLIT-TT": "地図単位に分割してnbtファイルをダウンロードします",
       "DOWNLOAD-LITEMATIC": null,
-      "DOWNLOAD-LITEMATIC-TT": null
+      "DOWNLOAD-LITEMATIC-TT": null,
+      "DOWNLOAD-LITEMATIC-SPLIT": null,
+      "DOWNLOAD-LITEMATIC-SPLIT-TT": null
     },
     "MAPDAT-SPECIFIC": {
       "DOWNLOAD": "MAPDATをダウンロード",
