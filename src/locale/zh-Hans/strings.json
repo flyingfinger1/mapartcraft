@@ -149,6 +149,7 @@
         "TITLE-TT": "专用于有透明背景的图像",
         "OFF": "关",
         "DITHERED": "开（抖动化）",
+        "SMOOTH": null,
         "FLAT": "开（一致化）"
       },
       "BACKGROUND-COLOUR": "颜色"
