@@ -117,7 +117,9 @@
         "ALL-DOUBLE-OPTIMIZED": "Ĉiuj duope (optimumigita)"
       },
       "SUPPORT-BLOCK-TO-ADD": "Bloko por aldoni",
-      "SUPPORT-BLOCK-TO-ADD-TT": "Rilatas al la antaŭa opcio"
+      "SUPPORT-BLOCK-TO-ADD-TT": "Rilatas al la antaŭa opcio",
+      "NO-SUPPORT-BLOCKS-FIRST-ROW": null,
+      "NO-SUPPORT-BLOCKS-FIRST-ROW-TT": null
     },
     "MAPDAT-SPECIFIC": {
       "UNOBTAINABLE-COLOURS": "Malakireblaj koloroj",
@@ -163,7 +165,9 @@
       "DOWNLOAD": "ENŜUTI",
       "DOWNLOAD-TT": "Enŝuti la nbt-n",
       "DOWNLOAD-SPLIT": "ENŜUTI KIEL 1x1 DIVIDAĴOJ",
-      "DOWNLOAD-SPLIT-TT": "Enŝuti la nbt-n dividitan laŭ 1x1 pecoj"
+      "DOWNLOAD-SPLIT-TT": "Enŝuti la nbt-n dividitan laŭ 1x1 pecoj",
+      "DOWNLOAD-LITEMATIC": null,
+      "DOWNLOAD-LITEMATIC-TT": null
     },
     "MAPDAT-SPECIFIC": {
       "DOWNLOAD": "ENŜUTI",

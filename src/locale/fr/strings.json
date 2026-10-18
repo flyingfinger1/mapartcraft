@@ -117,7 +117,9 @@
         "ALL-DOUBLE-OPTIMIZED": "Tout en double (optimisé)"
       },
       "SUPPORT-BLOCK-TO-ADD": "Bloc à ajouter",
-      "SUPPORT-BLOCK-TO-ADD-TT": "En rapport avec l'option précédente"
+      "SUPPORT-BLOCK-TO-ADD-TT": "En rapport avec l'option précédente",
+      "NO-SUPPORT-BLOCKS-FIRST-ROW": null,
+      "NO-SUPPORT-BLOCKS-FIRST-ROW-TT": null
     },
     "MAPDAT-SPECIFIC": {
       "UNOBTAINABLE-COLOURS": "Couleurs introuvables",
@@ -163,7 +165,9 @@
       "DOWNLOAD": "TÉLÉCHARGER",
       "DOWNLOAD-TT": "Télécharge le fichier nbt",
       "DOWNLOAD-SPLIT": "TÉLÉCHARGER EN SECTION 1x1",
-      "DOWNLOAD-SPLIT-TT": "Télécharge le NBT en plusieurs séction de 1x1 map"
+      "DOWNLOAD-SPLIT-TT": "Télécharge le NBT en plusieurs séction de 1x1 map",
+      "DOWNLOAD-LITEMATIC": null,
+      "DOWNLOAD-LITEMATIC-TT": null
     },
     "MAPDAT-SPECIFIC": {
       "DOWNLOAD": "TELECHARGER",

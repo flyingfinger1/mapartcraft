@@ -117,7 +117,9 @@
         "ALL-DOUBLE-OPTIMIZED": "Всі подвійні (оптимізовано)"
       },
       "SUPPORT-BLOCK-TO-ADD": "Блок, який треба додати",
-      "SUPPORT-BLOCK-TO-ADD-TT": "Відноситься до попереднього налаштування"
+      "SUPPORT-BLOCK-TO-ADD-TT": "Відноситься до попереднього налаштування",
+      "NO-SUPPORT-BLOCKS-FIRST-ROW": null,
+      "NO-SUPPORT-BLOCKS-FIRST-ROW-TT": null
     },
     "MAPDAT-SPECIFIC": {
       "UNOBTAINABLE-COLOURS": "Недоступні кольори",
@@ -163,7 +165,9 @@
       "DOWNLOAD": "ЗАВАНТАЖИТИ NBT",
       "DOWNLOAD-TT": "Завантажити nbt",
       "DOWNLOAD-SPLIT": "ЗАВАНТАЖИТИ ЯК ПОДІЛЕНЕ НА 1х1",
-      "DOWNLOAD-SPLIT-TT": "Завантажити nbt поділене на мапи 1х1"
+      "DOWNLOAD-SPLIT-TT": "Завантажити nbt поділене на мапи 1х1",
+      "DOWNLOAD-LITEMATIC": null,
+      "DOWNLOAD-LITEMATIC-TT": null
     },
     "MAPDAT-SPECIFIC": {
       "DOWNLOAD": "ЗАВАНТАЖИТИ DAT ФАЙЛ",

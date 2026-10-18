@@ -117,7 +117,9 @@
         "ALL-DOUBLE-OPTIMIZED": "Alle Blöcke, doppelt (optimiert)"
       },
       "SUPPORT-BLOCK-TO-ADD": "Platzierter Block",
-      "SUPPORT-BLOCK-TO-ADD-TT": "Siehe vorherige Option"
+      "SUPPORT-BLOCK-TO-ADD-TT": "Siehe vorherige Option",
+      "NO-SUPPORT-BLOCKS-FIRST-ROW": "Stützblöcke/Noobline in der ersten Reihe weglassen",
+      "NO-SUPPORT-BLOCKS-FIRST-ROW-TT": "Lässt Noobline und Stützblöcke der ersten Reihe weg, sodass die erste Reihe des Schematics nur aus Kartenblöcken besteht"
     },
     "MAPDAT-SPECIFIC": {
       "UNOBTAINABLE-COLOURS": "Nicht erhältliche Farben",
@@ -163,7 +165,9 @@
       "DOWNLOAD": "DOWNLOAD",
       "DOWNLOAD-TT": "Die nbt-Datei herunterladen",
       "DOWNLOAD-SPLIT": "DOWNLOAD ALS 1x1 TEILE",
-      "DOWNLOAD-SPLIT-TT": "Die nbt-Datei getrennt in 1x1 Teile herunterladen"
+      "DOWNLOAD-SPLIT-TT": "Die nbt-Datei getrennt in 1x1 Teile herunterladen",
+      "DOWNLOAD-LITEMATIC": "DOWNLOAD LITEMATIC",
+      "DOWNLOAD-LITEMATIC-TT": "Als .litematic-Datei herunterladen"
     },
     "MAPDAT-SPECIFIC": {
       "DOWNLOAD": "DOWNLOAD",

@@ -117,7 +117,9 @@
         "ALL-DOUBLE-OPTIMIZED": "所有雙層 (最佳化)"
       },
       "SUPPORT-BLOCK-TO-ADD": "要添加的方塊",
-      "SUPPORT-BLOCK-TO-ADD-TT": "與先前選項關聯"
+      "SUPPORT-BLOCK-TO-ADD-TT": "與先前選項關聯",
+      "NO-SUPPORT-BLOCKS-FIRST-ROW": null,
+      "NO-SUPPORT-BLOCKS-FIRST-ROW-TT": null
     },
     "MAPDAT-SPECIFIC": {
       "UNOBTAINABLE-COLOURS": "無法取得的顏色",
@@ -163,7 +165,9 @@
       "DOWNLOAD": "下載 NBT",
       "DOWNLOAD-TT": "下載 NBT",
       "DOWNLOAD-SPLIT": "分割為 1x1",
-      "DOWNLOAD-SPLIT-TT": "將 NBT 分割成 1x1 的區塊後下載"
+      "DOWNLOAD-SPLIT-TT": "將 NBT 分割成 1x1 的區塊後下載",
+      "DOWNLOAD-LITEMATIC": null,
+      "DOWNLOAD-LITEMATIC-TT": null
     },
     "MAPDAT-SPECIFIC": {
       "DOWNLOAD": "下載 MAPDAT",

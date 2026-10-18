@@ -117,7 +117,9 @@
         "ALL-DOUBLE-OPTIMIZED": "Wszystkie podwójnie (zoptymalizowany)"
       },
       "SUPPORT-BLOCK-TO-ADD": "Blok pod",
-      "SUPPORT-BLOCK-TO-ADD-TT": "Powiązane z poprzednią opcją"
+      "SUPPORT-BLOCK-TO-ADD-TT": "Powiązane z poprzednią opcją",
+      "NO-SUPPORT-BLOCKS-FIRST-ROW": null,
+      "NO-SUPPORT-BLOCKS-FIRST-ROW-TT": null
     },
     "MAPDAT-SPECIFIC": {
       "UNOBTAINABLE-COLOURS": "niedostępne kolory",
@@ -163,7 +165,9 @@
       "DOWNLOAD": "POBIERZ NBT",
       "DOWNLOAD-TT": "Pobierz nbt",
       "DOWNLOAD-SPLIT": "POBIERZ JAKO PODZIAŁ 1x1",
-      "DOWNLOAD-SPLIT-TT": "Pobierz nbt podzielone na chunki 1x1"
+      "DOWNLOAD-SPLIT-TT": "Pobierz nbt podzielone na chunki 1x1",
+      "DOWNLOAD-LITEMATIC": null,
+      "DOWNLOAD-LITEMATIC-TT": null
     },
     "MAPDAT-SPECIFIC": {
       "DOWNLOAD": "POBIERZ MAPDAT",

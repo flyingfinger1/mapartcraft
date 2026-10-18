@@ -117,7 +117,9 @@
         "ALL-DOUBLE-OPTIMIZED": "Tudo em Dobro (otimizado)"
       },
       "SUPPORT-BLOCK-TO-ADD": "Bloco a adicionar",
-      "SUPPORT-BLOCK-TO-ADD-TT": "Relacionado à opção anterior"
+      "SUPPORT-BLOCK-TO-ADD-TT": "Relacionado à opção anterior",
+      "NO-SUPPORT-BLOCKS-FIRST-ROW": null,
+      "NO-SUPPORT-BLOCKS-FIRST-ROW-TT": null
     },
     "MAPDAT-SPECIFIC": {
       "UNOBTAINABLE-COLOURS": "Cores inatingíveis",
@@ -163,7 +165,9 @@
       "DOWNLOAD": "DESCARREGAR",
       "DOWNLOAD-TT": "Descarregar o ficheiro nbt",
       "DOWNLOAD-SPLIT": "Descarregar como 1x1 dividido",
-      "DOWNLOAD-SPLIT-TT": "Descarregar o nbt dividido em chunks 1x1"
+      "DOWNLOAD-SPLIT-TT": "Descarregar o nbt dividido em chunks 1x1",
+      "DOWNLOAD-LITEMATIC": null,
+      "DOWNLOAD-LITEMATIC-TT": null
     },
     "MAPDAT-SPECIFIC": {
       "DOWNLOAD": "DESCARREGAR",

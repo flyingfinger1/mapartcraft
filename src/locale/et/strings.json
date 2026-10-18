@@ -117,7 +117,9 @@
         "ALL-DOUBLE-OPTIMIZED": "Kõik topelt (optimiseeritud)"
       },
       "SUPPORT-BLOCK-TO-ADD": "Plokk, mida lisada",
-      "SUPPORT-BLOCK-TO-ADD-TT": "Seotud eelneva valikuga"
+      "SUPPORT-BLOCK-TO-ADD-TT": "Seotud eelneva valikuga",
+      "NO-SUPPORT-BLOCKS-FIRST-ROW": null,
+      "NO-SUPPORT-BLOCKS-FIRST-ROW-TT": null
     },
     "MAPDAT-SPECIFIC": {
       "UNOBTAINABLE-COLOURS": "Saavutamatud värvid",
@@ -163,7 +165,9 @@
       "DOWNLOAD": "LAE ALLA",
       "DOWNLOAD-TT": "Lae alla nbt",
       "DOWNLOAD-SPLIT": "LAE ALLA 1x1 KAMAKATENA",
-      "DOWNLOAD-SPLIT-TT": "Lae alla nbt lõhestatuna 1x1 kamakateks"
+      "DOWNLOAD-SPLIT-TT": "Lae alla nbt lõhestatuna 1x1 kamakateks",
+      "DOWNLOAD-LITEMATIC": null,
+      "DOWNLOAD-LITEMATIC-TT": null
     },
     "MAPDAT-SPECIFIC": {
       "DOWNLOAD": "LAE ALLA",

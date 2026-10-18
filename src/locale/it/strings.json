@@ -117,7 +117,9 @@
         "ALL-DOUBLE-OPTIMIZED": "Tutti doppi (ottimizzato)"
       },
       "SUPPORT-BLOCK-TO-ADD": "Blocchi da aggiungere",
-      "SUPPORT-BLOCK-TO-ADD-TT": "Relativo all'opzione precedente"
+      "SUPPORT-BLOCK-TO-ADD-TT": "Relativo all'opzione precedente",
+      "NO-SUPPORT-BLOCKS-FIRST-ROW": null,
+      "NO-SUPPORT-BLOCKS-FIRST-ROW-TT": null
     },
     "MAPDAT-SPECIFIC": {
       "UNOBTAINABLE-COLOURS": "Colori non ottenibili",
@@ -163,7 +165,9 @@
       "DOWNLOAD": "SCARICA",
       "DOWNLOAD-TT": "Scarica l'nbt",
       "DOWNLOAD-SPLIT": "SCARICA DIVISO IN PORZIONI 1x1",
-      "DOWNLOAD-SPLIT-TT": "Scarica l'nbt diviso in porzioni 1x1"
+      "DOWNLOAD-SPLIT-TT": "Scarica l'nbt diviso in porzioni 1x1",
+      "DOWNLOAD-LITEMATIC": null,
+      "DOWNLOAD-LITEMATIC-TT": null
     },
     "MAPDAT-SPECIFIC": {
       "DOWNLOAD": "SCARICA",

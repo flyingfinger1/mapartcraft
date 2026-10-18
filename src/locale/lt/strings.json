@@ -117,7 +117,9 @@
         "ALL-DOUBLE-OPTIMIZED": "Visi dvigubai (optimazuota)"
       },
       "SUPPORT-BLOCK-TO-ADD": "Bloka pridėti",
-      "SUPPORT-BLOCK-TO-ADD-TT": "Susijęs su ankstesne pasirinktimi"
+      "SUPPORT-BLOCK-TO-ADD-TT": "Susijęs su ankstesne pasirinktimi",
+      "NO-SUPPORT-BLOCKS-FIRST-ROW": null,
+      "NO-SUPPORT-BLOCKS-FIRST-ROW-TT": null
     },
     "MAPDAT-SPECIFIC": {
       "UNOBTAINABLE-COLOURS": "Nepasiekiamos spalvos",
@@ -163,7 +165,9 @@
       "DOWNLOAD": "PARSISIŲSTI",
       "DOWNLOAD-TT": "Parsisiųsti nbt",
       "DOWNLOAD-SPLIT": "ATSISIŲSTI 1x1 PER PUSE",
-      "DOWNLOAD-SPLIT-TT": "Atsisiųskite nbt padalijimą į 1x1 dalis"
+      "DOWNLOAD-SPLIT-TT": "Atsisiųskite nbt padalijimą į 1x1 dalis",
+      "DOWNLOAD-LITEMATIC": null,
+      "DOWNLOAD-LITEMATIC-TT": null
     },
     "MAPDAT-SPECIFIC": {
       "DOWNLOAD": "PARSISIŲSTI",

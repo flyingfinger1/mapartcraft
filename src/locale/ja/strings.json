@@ -117,7 +117,9 @@
         "ALL-DOUBLE-OPTIMIZED": "すべて2層 (最適化)"
       },
       "SUPPORT-BLOCK-TO-ADD": "付加するブロック",
-      "SUPPORT-BLOCK-TO-ADD-TT": "前のオプションの関連設定"
+      "SUPPORT-BLOCK-TO-ADD-TT": "前のオプションの関連設定",
+      "NO-SUPPORT-BLOCKS-FIRST-ROW": null,
+      "NO-SUPPORT-BLOCKS-FIRST-ROW-TT": null
     },
     "MAPDAT-SPECIFIC": {
       "UNOBTAINABLE-COLOURS": "使用不可の色",
@@ -163,7 +165,9 @@
       "DOWNLOAD": "NBTをダウンロード",
       "DOWNLOAD-TT": "nbtファイルをダウンロードします",
       "DOWNLOAD-SPLIT": "1x1分割でダウンロード",
-      "DOWNLOAD-SPLIT-TT": "地図単位に分割してnbtファイルをダウンロードします"
+      "DOWNLOAD-SPLIT-TT": "地図単位に分割してnbtファイルをダウンロードします",
+      "DOWNLOAD-LITEMATIC": null,
+      "DOWNLOAD-LITEMATIC-TT": null
     },
     "MAPDAT-SPECIFIC": {
       "DOWNLOAD": "MAPDATをダウンロード",
