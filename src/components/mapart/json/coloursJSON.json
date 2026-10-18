@@ -2416,6 +2416,50 @@
                 "supportBlockMandatory": false,
                 "flammable": false,
                 "presetIndex": 4
+            },
+            "6": {
+                "displayName": "Pale Oak Planks",
+                "validVersions": {
+                    "1.21.4": {
+                        "NBTName": "pale_oak_planks",
+                        "NBTArgs": {}
+                    },
+                    "26.2": "&1.21.4",
+                    "26.3": "&1.21.4"
+                },
+                "supportBlockMandatory": false,
+                "flammable": true,
+                "presetIndex": 6
+            },
+            "7": {
+                "displayName": "Pale Oak Slab",
+                "validVersions": {
+                    "1.21.4": {
+                        "NBTName": "pale_oak_slab",
+                        "NBTArgs": {}
+                    },
+                    "26.2": "&1.21.4",
+                    "26.3": "&1.21.4"
+                },
+                "supportBlockMandatory": true,
+                "flammable": true,
+                "presetIndex": 7
+            },
+            "8": {
+                "displayName": "Pale Oak Log (Vertical)",
+                "validVersions": {
+                    "1.21.4": {
+                        "NBTName": "pale_oak_log",
+                        "NBTArgs": {
+                            "axis": "y"
+                        }
+                    },
+                    "26.2": "&1.21.4",
+                    "26.3": "&1.21.4"
+                },
+                "supportBlockMandatory": false,
+                "flammable": true,
+                "presetIndex": 8
             }
         },
         "mapdatId": 14,
@@ -2483,9 +2527,9 @@
                         "NBTArgs": {}
                     }
                 },
-                "supportBlockMandatory": false,
+                "supportBlockMandatory": true,
                 "flammable": true,
-                "presetIndex": 0
+                "presetIndex": 8
             },
             "2": {
                 "displayName": "White Carpet",
@@ -2585,9 +2629,9 @@
                         "NBTArgs": {}
                     }
                 },
-                "supportBlockMandatory": false,
+                "supportBlockMandatory": true,
                 "flammable": false,
-                "presetIndex": 0
+                "presetIndex": 9
             },
             "6": {
                 "displayName": "White Concrete Powder",
@@ -2699,50 +2743,6 @@
                 "supportBlockMandatory": true,
                 "flammable": false,
                 "presetIndex": 7
-            },
-            "10": {
-                "displayName": "Pale Oak Planks",
-                "validVersions": {
-                    "1.21.4": {
-                        "NBTName": "pale_oak_planks",
-                        "NBTArgs": {}
-                    },
-                    "26.2": "&1.21.4",
-                    "26.3": "&1.21.4"
-                },
-                "supportBlockMandatory": false,
-                "flammable": true,
-                "presetIndex": 8
-            },
-            "11": {
-                "displayName": "Pale Oak Slab",
-                "validVersions": {
-                    "1.21.4": {
-                        "NBTName": "pale_oak_slab",
-                        "NBTArgs": {}
-                    },
-                    "26.2": "&1.21.4",
-                    "26.3": "&1.21.4"
-                },
-                "supportBlockMandatory": false,
-                "flammable": true,
-                "presetIndex": 9
-            },
-            "12": {
-                "displayName": "Pale Oak Log (Vertical)",
-                "validVersions": {
-                    "1.21.4": {
-                        "NBTName": "pale_oak_log",
-                        "NBTArgs": {
-                            "axis": "y"
-                        }
-                    },
-                    "26.2": "&1.21.4",
-                    "26.3": "&1.21.4"
-                },
-                "supportBlockMandatory": false,
-                "flammable": true,
-                "presetIndex": 10
             }
         },
         "mapdatId": 8,
@@ -2810,9 +2810,9 @@
                         "NBTArgs": {}
                     }
                 },
-                "supportBlockMandatory": false,
+                "supportBlockMandatory": true,
                 "flammable": true,
-                "presetIndex": 0
+                "presetIndex": 20
             },
             "2": {
                 "displayName": "Orange Carpet",
@@ -2912,9 +2912,9 @@
                         "NBTArgs": {}
                     }
                 },
-                "supportBlockMandatory": false,
+                "supportBlockMandatory": true,
                 "flammable": false,
-                "presetIndex": 0
+                "presetIndex": 21
             },
             "6": {
                 "displayName": "Orange Concrete Powder",
@@ -3345,7 +3345,7 @@
                 },
                 "supportBlockMandatory": false,
                 "flammable": true,
-                "presetIndex": 0
+                "presetIndex": 22
             }
         },
         "mapdatId": 15,
@@ -3413,9 +3413,9 @@
                         "NBTArgs": {}
                     }
                 },
-                "supportBlockMandatory": false,
+                "supportBlockMandatory": true,
                 "flammable": true,
-                "presetIndex": 0
+                "presetIndex": 8
             },
             "2": {
                 "displayName": "Magenta Carpet",
@@ -3515,9 +3515,9 @@
                         "NBTArgs": {}
                     }
                 },
-                "supportBlockMandatory": false,
+                "supportBlockMandatory": true,
                 "flammable": false,
-                "presetIndex": 0
+                "presetIndex": 9
             },
             "6": {
                 "displayName": "Magenta Concrete Powder",
@@ -3690,9 +3690,9 @@
                         "NBTArgs": {}
                     }
                 },
-                "supportBlockMandatory": false,
+                "supportBlockMandatory": true,
                 "flammable": true,
-                "presetIndex": 0
+                "presetIndex": 6
             },
             "2": {
                 "displayName": "Light Blue Carpet",
@@ -3792,9 +3792,9 @@
                         "NBTArgs": {}
                     }
                 },
-                "supportBlockMandatory": false,
+                "supportBlockMandatory": true,
                 "flammable": false,
-                "presetIndex": 0
+                "presetIndex": 7
             },
             "6": {
                 "displayName": "Light Blue Concrete Powder",
@@ -3917,9 +3917,9 @@
                         "NBTArgs": {}
                     }
                 },
-                "supportBlockMandatory": false,
+                "supportBlockMandatory": true,
                 "flammable": true,
-                "presetIndex": 0
+                "presetIndex": 14
             },
             "2": {
                 "displayName": "Yellow Carpet",
@@ -4019,9 +4019,9 @@
                         "NBTArgs": {}
                     }
                 },
-                "supportBlockMandatory": false,
+                "supportBlockMandatory": true,
                 "flammable": false,
-                "presetIndex": 0
+                "presetIndex": 15
             },
             "6": {
                 "displayName": "Yellow Concrete Powder",
@@ -4243,7 +4243,7 @@
                 },
                 "supportBlockMandatory": true,
                 "flammable": false,
-                "presetIndex": 14
+                "presetIndex": 16
             },
             "17": {
                 "displayName": "Sulfur Slab",
@@ -4256,7 +4256,7 @@
                 },
                 "supportBlockMandatory": true,
                 "flammable": false,
-                "presetIndex": 15
+                "presetIndex": 17
             },
             "18": {
                 "displayName": "Sulfur Spike",
@@ -4269,7 +4269,7 @@
                 },
                 "supportBlockMandatory": true,
                 "flammable": false,
-                "presetIndex": 16
+                "presetIndex": 18
             },
             "19": {
                 "displayName": "Yellow Poplar Leaves",
@@ -4281,7 +4281,7 @@
                 },
                 "supportBlockMandatory": false,
                 "flammable": true,
-                "presetIndex": 0
+                "presetIndex": 19
             }
         },
         "mapdatId": 18,
@@ -4349,9 +4349,9 @@
                         "NBTArgs": {}
                     }
                 },
-                "supportBlockMandatory": false,
+                "supportBlockMandatory": true,
                 "flammable": true,
-                "presetIndex": 0
+                "presetIndex": 7
             },
             "2": {
                 "displayName": "Lime Carpet",
@@ -4451,9 +4451,9 @@
                         "NBTArgs": {}
                     }
                 },
-                "supportBlockMandatory": false,
+                "supportBlockMandatory": true,
                 "flammable": false,
-                "presetIndex": 0
+                "presetIndex": 8
             },
             "6": {
                 "displayName": "Lime Concrete Powder",
@@ -4604,9 +4604,9 @@
                         "NBTArgs": {}
                     }
                 },
-                "supportBlockMandatory": false,
+                "supportBlockMandatory": true,
                 "flammable": true,
-                "presetIndex": 0
+                "presetIndex": 8
             },
             "2": {
                 "displayName": "Pink Carpet",
@@ -4706,9 +4706,9 @@
                         "NBTArgs": {}
                     }
                 },
-                "supportBlockMandatory": false,
+                "supportBlockMandatory": true,
                 "flammable": true,
-                "presetIndex": 0
+                "presetIndex": 9
             },
             "6": {
                 "displayName": "Pink Concrete Powder",
@@ -4868,9 +4868,9 @@
                         "NBTArgs": {}
                     }
                 },
-                "supportBlockMandatory": false,
+                "supportBlockMandatory": true,
                 "flammable": true,
-                "presetIndex": 0
+                "presetIndex": 12
             },
             "2": {
                 "displayName": "Gray Carpet",
@@ -4970,9 +4970,9 @@
                         "NBTArgs": {}
                     }
                 },
-                "supportBlockMandatory": false,
+                "supportBlockMandatory": true,
                 "flammable": false,
-                "presetIndex": 0
+                "presetIndex": 13
             },
             "6": {
                 "displayName": "Gray Concrete Powder",
@@ -5235,9 +5235,9 @@
                         "NBTArgs": {}
                     }
                 },
-                "supportBlockMandatory": false,
+                "supportBlockMandatory": true,
                 "flammable": true,
-                "presetIndex": 0
+                "presetIndex": 6
             },
             "2": {
                 "displayName": "Light Gray Carpet",
@@ -5337,9 +5337,9 @@
                         "NBTArgs": {}
                     }
                 },
-                "supportBlockMandatory": false,
+                "supportBlockMandatory": true,
                 "flammable": false,
-                "presetIndex": 0
+                "presetIndex": 7
             },
             "6": {
                 "displayName": "Light Gray Concrete Powder",
@@ -5411,7 +5411,7 @@
                 },
                 "supportBlockMandatory": false,
                 "flammable": true,
-                "presetIndex": 6
+                "presetIndex": 8
             },
             "9": {
                 "displayName": "Pale Moss Carpet",
@@ -5423,9 +5423,9 @@
                     "26.2": "&1.21.4",
                     "26.3": "&1.21.4"
                 },
-                "supportBlockMandatory": false,
+                "supportBlockMandatory": true,
                 "flammable": true,
-                "presetIndex": 7
+                "presetIndex": 9
             },
             "10": {
                 "displayName": "Poplar Log (vertical)",
@@ -5439,7 +5439,7 @@
                 },
                 "supportBlockMandatory": false,
                 "flammable": true,
-                "presetIndex": 0
+                "presetIndex": 10
             },
             "11": {
                 "displayName": "Poplar Planks",
@@ -5451,7 +5451,7 @@
                 },
                 "supportBlockMandatory": false,
                 "flammable": true,
-                "presetIndex": 0
+                "presetIndex": 11
             },
             "12": {
                 "displayName": "Poplar Slab",
@@ -5461,9 +5461,9 @@
                         "NBTArgs": {}
                     }
                 },
-                "supportBlockMandatory": false,
+                "supportBlockMandatory": true,
                 "flammable": true,
-                "presetIndex": 0
+                "presetIndex": 12
             },
             "13": {
                 "displayName": "Poplar Pressure Plate",
@@ -5473,9 +5473,9 @@
                         "NBTArgs": {}
                     }
                 },
-                "supportBlockMandatory": false,
+                "supportBlockMandatory": true,
                 "flammable": true,
-                "presetIndex": 0
+                "presetIndex": 13
             }
         },
         "mapdatId": 22,
@@ -5543,9 +5543,9 @@
                         "NBTArgs": {}
                     }
                 },
-                "supportBlockMandatory": false,
+                "supportBlockMandatory": true,
                 "flammable": true,
-                "presetIndex": 0
+                "presetIndex": 8
             },
             "2": {
                 "displayName": "Cyan Carpet",
@@ -5645,9 +5645,9 @@
                         "NBTArgs": {}
                     }
                 },
-                "supportBlockMandatory": false,
+                "supportBlockMandatory": true,
                 "flammable": false,
-                "presetIndex": 0
+                "presetIndex": 9
             },
             "6": {
                 "displayName": "Cyan Concrete Powder",
@@ -5819,9 +5819,9 @@
                         "NBTArgs": {}
                     }
                 },
-                "supportBlockMandatory": false,
+                "supportBlockMandatory": true,
                 "flammable": true,
-                "presetIndex": 0
+                "presetIndex": 8
             },
             "2": {
                 "displayName": "Purple Carpet",
@@ -5921,9 +5921,9 @@
                         "NBTArgs": {}
                     }
                 },
-                "supportBlockMandatory": false,
+                "supportBlockMandatory": true,
                 "flammable": true,
-                "presetIndex": 0
+                "presetIndex": 9
             },
             "6": {
                 "displayName": "Purple Concrete Powder",
@@ -6091,9 +6091,9 @@
                         "NBTArgs": {}
                     }
                 },
-                "supportBlockMandatory": false,
+                "supportBlockMandatory": true,
                 "flammable": true,
-                "presetIndex": 0
+                "presetIndex": 6
             },
             "2": {
                 "displayName": "Blue Carpet",
@@ -6193,9 +6193,9 @@
                         "NBTArgs": {}
                     }
                 },
-                "supportBlockMandatory": false,
+                "supportBlockMandatory": true,
                 "flammable": false,
-                "presetIndex": 0
+                "presetIndex": 7
             },
             "6": {
                 "displayName": "Blue Concrete Powder",
@@ -6318,9 +6318,9 @@
                         "NBTArgs": {}
                     }
                 },
-                "supportBlockMandatory": false,
+                "supportBlockMandatory": true,
                 "flammable": true,
-                "presetIndex": 0
+                "presetIndex": 13
             },
             "2": {
                 "displayName": "Brown Carpet",
@@ -6420,9 +6420,9 @@
                         "NBTArgs": {}
                     }
                 },
-                "supportBlockMandatory": false,
+                "supportBlockMandatory": true,
                 "flammable": true,
-                "presetIndex": 0
+                "presetIndex": 14
             },
             "6": {
                 "displayName": "Brown Concrete Powder",
@@ -6741,9 +6741,9 @@
                         "NBTArgs": {}
                     }
                 },
-                "supportBlockMandatory": false,
+                "supportBlockMandatory": true,
                 "flammable": true,
-                "presetIndex": 0
+                "presetIndex": 7
             },
             "2": {
                 "displayName": "Green Carpet",
@@ -6843,9 +6843,9 @@
                         "NBTArgs": {}
                     }
                 },
-                "supportBlockMandatory": false,
+                "supportBlockMandatory": true,
                 "flammable": false,
-                "presetIndex": 0
+                "presetIndex": 8
             },
             "6": {
                 "displayName": "Green Concrete Powder",
@@ -6943,7 +6943,7 @@
                 },
                 "supportBlockMandatory": false,
                 "flammable": true,
-                "presetIndex": 7
+                "presetIndex": 9
             },
             "10": {
                 "displayName": "Moss Carpet",
@@ -6961,9 +6961,9 @@
                     "26.2": "&1.17.1",
                     "26.3": "&1.17.1"
                 },
-                "supportBlockMandatory": false,
+                "supportBlockMandatory": true,
                 "flammable": true,
-                "presetIndex": 8
+                "presetIndex": 10
             }
         },
         "mapdatId": 27,
@@ -7031,9 +7031,9 @@
                         "NBTArgs": {}
                     }
                 },
-                "supportBlockMandatory": false,
+                "supportBlockMandatory": true,
                 "flammable": true,
-                "presetIndex": 0
+                "presetIndex": 14
             },
             "2": {
                 "displayName": "Red Carpet",
@@ -7133,9 +7133,9 @@
                         "NBTArgs": {}
                     }
                 },
-                "supportBlockMandatory": false,
+                "supportBlockMandatory": true,
                 "flammable": false,
-                "presetIndex": 0
+                "presetIndex": 15
             },
             "6": {
                 "displayName": "Red Concrete Powder",
@@ -7381,7 +7381,7 @@
                 },
                 "supportBlockMandatory": true,
                 "flammable": false,
-                "presetIndex": 14
+                "presetIndex": 16
             },
             "17": {
                 "displayName": "Cinnabar Slab",
@@ -7394,7 +7394,7 @@
                 },
                 "supportBlockMandatory": true,
                 "flammable": false,
-                "presetIndex": 15
+                "presetIndex": 17
             },
             "18": {
                 "displayName": "Red Poplar Leaves",
@@ -7406,7 +7406,7 @@
                 },
                 "supportBlockMandatory": false,
                 "flammable": true,
-                "presetIndex": 0
+                "presetIndex": 18
             }
         },
         "mapdatId": 28,
@@ -7474,9 +7474,9 @@
                         "NBTArgs": {}
                     }
                 },
-                "supportBlockMandatory": false,
+                "supportBlockMandatory": true,
                 "flammable": true,
-                "presetIndex": 0
+                "presetIndex": 17
             },
             "2": {
                 "displayName": "Black Carpet",
@@ -7576,9 +7576,9 @@
                         "NBTArgs": {}
                     }
                 },
-                "supportBlockMandatory": false,
+                "supportBlockMandatory": true,
                 "flammable": false,
-                "presetIndex": 0
+                "presetIndex": 18
             },
             "6": {
                 "displayName": "Black Concrete Powder",
@@ -8559,7 +8559,7 @@
                 },
                 "supportBlockMandatory": false,
                 "flammable": true,
-                "presetIndex": 0
+                "presetIndex": 9
             }
         },
         "mapdatId": 34,
@@ -9029,7 +9029,7 @@
                     "26.2": "&1.21.4",
                     "26.3": "&1.21.4"
                 },
-                "supportBlockMandatory": false,
+                "supportBlockMandatory": true,
                 "flammable": false,
                 "presetIndex": 4
             }
@@ -9485,9 +9485,9 @@
                     "26.2": "&1.21",
                     "26.3": "&1.21"
                 },
-                "supportBlockMandatory": false,
+                "supportBlockMandatory": true,
                 "flammable": false,
-                "presetIndex": 1
+                "presetIndex": 4
             }
         },
         "mapdatId": 43,
