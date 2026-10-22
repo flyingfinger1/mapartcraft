@@ -137,7 +137,11 @@
     "DITHERING": {
       "TITLE": "Gradiente (dithering)",
       "TITLE-TT": "Añade píxeles aleatorios para dar mayor sensación de color",
-      "NONE": "Sin gradiente (dithering)"
+      "NONE": "Sin gradiente (dithering)",
+      "STRENGTH": null,
+      "STRENGTH-TT": null,
+      "SERPENTINE": null,
+      "SERPENTINE-TT": null
     },
     "PREPROCESSING": {
       "TITLE": "Preprocesamiento de imagen",

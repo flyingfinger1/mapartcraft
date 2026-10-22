@@ -58,6 +58,10 @@ class MapSettings extends Component {
       onOptionChange_BetterColour,
       optionValue_dithering,
       onOptionChange_dithering,
+      optionValue_ditheringStrength,
+      onOptionChange_ditheringStrength,
+      optionValue_ditheringSerpentine,
+      onOptionChange_ditheringSerpentine,
       optionValue_preprocessingEnabled,
       onOptionChange_PreProcessingEnabled,
       preProcessingValue_brightness,
@@ -478,6 +482,46 @@ class MapSettings extends Component {
           ))}
         </select>
         <br />
+        {optionValue_dithering !== DitherMethods.None.uniqueId && (
+          <React.Fragment>
+            <Tooltip tooltipText={getLocaleString("MAP-SETTINGS/DITHERING/STRENGTH-TT")}>
+              <b>
+                {getLocaleString("MAP-SETTINGS/DITHERING/STRENGTH")}
+                {":"}
+              </b>
+            </Tooltip>{" "}
+            <input
+              type="range"
+              min="0"
+              max="100"
+              value={optionValue_ditheringStrength}
+              onChange={(e) => onOptionChange_ditheringStrength(parseInt(e.target.value))}
+            />{" "}
+            <BufferedNumberInput
+              min="0"
+              max="100"
+              step="1"
+              value={optionValue_ditheringStrength}
+              validators={[(t) => !isNaN(t), (t) => t >= 0, (t) => t <= 100]}
+              onValidInput={onOptionChange_ditheringStrength}
+              style={{ width: "3em" }}
+            />
+            {" %"}
+            <br />
+          </React.Fragment>
+        )}
+        {Object.values(DitherMethods).some((ditherMethod) => ditherMethod.uniqueId === optionValue_dithering && "ditherDivisor" in ditherMethod) && (
+          <React.Fragment>
+            <Tooltip tooltipText={getLocaleString("MAP-SETTINGS/DITHERING/SERPENTINE-TT")}>
+              <b>
+                {getLocaleString("MAP-SETTINGS/DITHERING/SERPENTINE")}
+                {":"}
+              </b>
+            </Tooltip>{" "}
+            <input type="checkbox" checked={optionValue_ditheringSerpentine} onChange={onOptionChange_ditheringSerpentine} />
+            <br />
+          </React.Fragment>
+        )}
       </React.Fragment>
     );
     const setting_preprocessing = (

@@ -137,7 +137,11 @@
     "DITHERING": {
       "TITLE": "Dithering",
       "TITLE-TT": "Schafft die Illusion von mehr Farben durch das Hinzufügen scheinbar zufälliger Pixel",
-      "NONE": "Aus"
+      "NONE": "Aus",
+      "STRENGTH": "Stärke",
+      "STRENGTH-TT": "Wie stark gedithert wird; niedrigere Werte ergeben ruhigere Flächen",
+      "SERPENTINE": "Serpentine",
+      "SERPENTINE-TT": "Wechselt in jeder Zeile die Richtung und vermeidet so schräge Streifen"
     },
     "PREPROCESSING": {
       "TITLE": "Bildvorbereitung",

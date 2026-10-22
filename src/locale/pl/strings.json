@@ -137,7 +137,11 @@
     "DITHERING": {
       "TITLE": "Tryb towrzenia",
       "TITLE-TT": "Dodaje pozornie losowe pixele dające iluzje większej ilości kolorów",
-      "NONE": "Nic"
+      "NONE": "Nic",
+      "STRENGTH": null,
+      "STRENGTH-TT": null,
+      "SERPENTINE": null,
+      "SERPENTINE-TT": null
     },
     "PREPROCESSING": {
       "TITLE": "Wstępne przetwarzanie obrazu",

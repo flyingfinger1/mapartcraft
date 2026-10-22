@@ -137,7 +137,11 @@
     "DITHERING": {
       "TITLE": "Konfuzado",
       "TITLE-TT": "Tio aldonas ŝajne hazardajn rastrumerojn por iluzio de pli multe da koloroj",
-      "NONE": "Nula"
+      "NONE": "Nula",
+      "STRENGTH": null,
+      "STRENGTH-TT": null,
+      "SERPENTINE": null,
+      "SERPENTINE-TT": null
     },
     "PREPROCESSING": {
       "TITLE": null,

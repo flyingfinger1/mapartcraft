@@ -179,6 +179,11 @@ function FAQContent_de({ images }) {
         Damit bekommt Dein Bild eine Körnung, die es deutlich weicher wirken lässt. Floyd-Steinberg ist am genauesten, Ordered/Bayer-Dithering erzeugt meist
         weniger Artefakte und gibt dem Bild einen eigenen Stil. Für Bilder mit flächigen Farben empfiehlt es sich meist, Dithering auszuschalten.
       </p>
+      <p>
+        <em>Stärke</em> legt fest, wie stark gedithert wird: Mit etwa 50-70 % bleiben Verläufe weich, während einfarbige Flächen deutlich weniger rauschen,
+        was die Karte auch leichter baubar macht. <em>Serpentine</em> (bei Floyd-Steinberg und den anderen Verfahren mit Fehlerverteilung) wechselt in jeder
+        Zeile die Richtung und vermeidet so die schrägen Streifen, die diese Verfahren sonst erzeugen.
+      </p>
 
       <b>Platziere Blöcke unter / Platzierter Block?</b>
       <p>

@@ -78,6 +78,8 @@ class MapPreview extends Component {
       prevProps.optionValue_transparencyTolerance === newProps.optionValue_transparencyTolerance,
       prevProps.optionValue_betterColour === newProps.optionValue_betterColour,
       prevProps.optionValue_dithering === newProps.optionValue_dithering,
+      prevProps.optionValue_ditheringStrength === newProps.optionValue_ditheringStrength,
+      prevProps.optionValue_ditheringSerpentine === newProps.optionValue_ditheringSerpentine,
       prevProps.optionValue_preprocessingEnabled === newProps.optionValue_preprocessingEnabled,
       prevProps.preProcessingValue_brightness === newProps.preProcessingValue_brightness,
       prevProps.preProcessingValue_contrast === newProps.preProcessingValue_contrast,
@@ -276,6 +278,8 @@ class MapPreview extends Component {
       optionValue_transparencyTolerance,
       optionValue_betterColour,
       optionValue_dithering,
+      optionValue_ditheringStrength,
+      optionValue_ditheringSerpentine,
       onGetMapMaterials,
       onMapPreviewWorker_begin,
     } = this.props;
@@ -320,6 +324,8 @@ class MapPreview extends Component {
         optionValue_transparencyTolerance: optionValue_transparencyTolerance,
         optionValue_betterColour: optionValue_betterColour,
         optionValue_dithering: optionValue_dithering,
+        optionValue_ditheringStrength: optionValue_ditheringStrength,
+        optionValue_ditheringSerpentine: optionValue_ditheringSerpentine,
       },
     });
   }

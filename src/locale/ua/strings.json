@@ -138,7 +138,11 @@
     "DITHERING": {
       "TITLE": "Дитеринг",
       "TITLE-TT": "Додає на перший погляд випадкові пікселі для ілюзії більшої кількості кольорів",
-      "NONE": "Відсутній"
+      "NONE": "Відсутній",
+      "STRENGTH": null,
+      "STRENGTH-TT": null,
+      "SERPENTINE": null,
+      "SERPENTINE-TT": null
     },
     "PREPROCESSING": {
       "TITLE": "Обробка зображення",

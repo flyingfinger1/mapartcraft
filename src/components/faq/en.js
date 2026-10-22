@@ -171,6 +171,11 @@ function FAQContent_en({ images }) {
         This will add grain to your image to make it look a lot smoother. Floyd-Steinberg dithering is the most accurate, but the Ordered/Bayer dithering will
         usually have less artifacts and gives the image an unique style. It is usually recommended to disable dithering for flat-colored artwork.
       </p>
+      <p>
+        <em>Strength</em> sets how strongly to dither: around 50-70% keeps gradients smooth while flat areas get much less noise, which also makes the map
+        easier to build. <em>Serpentine</em> (for Floyd-Steinberg and the other error diffusion methods) alternates the direction every row and avoids the
+        diagonal streaks these methods otherwise produce.
+      </p>
 
       <b>Add blocks under/Block to add?</b>
       <p>

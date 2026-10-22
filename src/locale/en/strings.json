@@ -137,7 +137,11 @@
     "DITHERING": {
       "TITLE": "Dithering",
       "TITLE-TT": "Adds seemingly random pixels for the illusion of more colors",
-      "NONE": "None"
+      "NONE": "None",
+      "STRENGTH": "Strength",
+      "STRENGTH-TT": "How strongly to dither; lower values give calmer flat areas",
+      "SERPENTINE": "Serpentine",
+      "SERPENTINE-TT": "Alternate the direction every row, which avoids diagonal streaks"
     },
     "PREPROCESSING": {
       "TITLE": "Image preprocessing",

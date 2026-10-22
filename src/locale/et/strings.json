@@ -137,7 +137,11 @@
     "DITHERING": {
       "TITLE": "Värelemine",
       "TITLE-TT": "Lisab näiliselt suvalisi piksleid, tekitades illusiooni rohkematest värvidest",
-      "NONE": "Puudub"
+      "NONE": "Puudub",
+      "STRENGTH": null,
+      "STRENGTH-TT": null,
+      "SERPENTINE": null,
+      "SERPENTINE-TT": null
     },
     "PREPROCESSING": {
       "TITLE": "Pilditöötlus",

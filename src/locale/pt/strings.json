@@ -137,7 +137,11 @@
     "DITHERING": {
       "TITLE": "Dithering",
       "TITLE-TT": "Adiciona pixeis aleatórios para dar uma preceção de mais cor",
-      "NONE": "Nenhuma"
+      "NONE": "Nenhuma",
+      "STRENGTH": null,
+      "STRENGTH-TT": null,
+      "SERPENTINE": null,
+      "SERPENTINE-TT": null
     },
     "PREPROCESSING": {
       "TITLE": null,

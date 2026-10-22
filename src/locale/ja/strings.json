@@ -137,7 +137,11 @@
     "DITHERING": {
       "TITLE": "ディザリング",
       "TITLE-TT": "見かけ上ランダムなピクセルを追加し，より多くの色を錯覚させます",
-      "NONE": "なし"
+      "NONE": "なし",
+      "STRENGTH": null,
+      "STRENGTH-TT": null,
+      "SERPENTINE": null,
+      "SERPENTINE-TT": null
     },
     "PREPROCESSING": {
       "TITLE": "画像の前処理",

@@ -137,7 +137,11 @@
     "DITHERING": {
       "TITLE": "Dithering",
       "TITLE-TT": "Ajoute des pixels aléatoires pour une illusion de couleurs",
-      "NONE": "Rien"
+      "NONE": "Rien",
+      "STRENGTH": null,
+      "STRENGTH-TT": null,
+      "SERPENTINE": null,
+      "SERPENTINE-TT": null
     },
     "PREPROCESSING": {
       "TITLE": "Image en cours de traitement",

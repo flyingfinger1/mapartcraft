@@ -45,6 +45,8 @@ class MapartController extends Component {
     optionValue_mapdatFilenameIdStart: 0,
     optionValue_betterColour: true,
     optionValue_dithering: DitherMethods.FloydSteinberg.uniqueId,
+    optionValue_ditheringStrength: 100,
+    optionValue_ditheringSerpentine: true,
     optionValue_preprocessingEnabled: false,
     preProcessingValue_brightness: 100,
     preProcessingValue_contrast: 100,
@@ -330,6 +332,14 @@ class MapartController extends Component {
   onOptionChange_dithering = (e) => {
     const ditheringValue = parseInt(e.target.value);
     this.setState({ optionValue_dithering: ditheringValue });
+  };
+
+  onOptionChange_ditheringStrength = (value) => {
+    this.setState({ optionValue_ditheringStrength: value });
+  };
+
+  onOptionChange_ditheringSerpentine = () => {
+    this.setState({ optionValue_ditheringSerpentine: !this.state.optionValue_ditheringSerpentine });
   };
 
   onOptionChange_WhereSupportBlocks = (e) => {
@@ -764,6 +774,8 @@ class MapartController extends Component {
       optionValue_mapdatFilenameIdStart,
       optionValue_betterColour,
       optionValue_dithering,
+      optionValue_ditheringStrength,
+      optionValue_ditheringSerpentine,
       optionValue_preprocessingEnabled,
       preProcessingValue_brightness,
       preProcessingValue_contrast,
@@ -822,6 +834,8 @@ class MapartController extends Component {
             optionValue_transparencyTolerance={optionValue_transparencyTolerance}
             optionValue_betterColour={optionValue_betterColour}
             optionValue_dithering={optionValue_dithering}
+            optionValue_ditheringStrength={optionValue_ditheringStrength}
+            optionValue_ditheringSerpentine={optionValue_ditheringSerpentine}
             optionValue_preprocessingEnabled={optionValue_preprocessingEnabled}
             preProcessingValue_brightness={preProcessingValue_brightness}
             preProcessingValue_contrast={preProcessingValue_contrast}
@@ -875,6 +889,10 @@ class MapartController extends Component {
               onOptionChange_BetterColour={this.onOptionChange_BetterColour}
               optionValue_dithering={optionValue_dithering}
               onOptionChange_dithering={this.onOptionChange_dithering}
+              optionValue_ditheringStrength={optionValue_ditheringStrength}
+              onOptionChange_ditheringStrength={this.onOptionChange_ditheringStrength}
+              optionValue_ditheringSerpentine={optionValue_ditheringSerpentine}
+              onOptionChange_ditheringSerpentine={this.onOptionChange_ditheringSerpentine}
               optionValue_preprocessingEnabled={optionValue_preprocessingEnabled}
               onOptionChange_PreProcessingEnabled={this.onOptionChange_PreProcessingEnabled}
               preProcessingValue_brightness={preProcessingValue_brightness}
@@ -912,6 +930,8 @@ class MapartController extends Component {
               optionValue_mapdatFilenameIdStart={optionValue_mapdatFilenameIdStart}
               optionValue_betterColour={optionValue_betterColour}
               optionValue_dithering={optionValue_dithering}
+              optionValue_ditheringStrength={optionValue_ditheringStrength}
+              optionValue_ditheringSerpentine={optionValue_ditheringSerpentine}
               optionValue_preprocessingEnabled={optionValue_preprocessingEnabled}
               preProcessingValue_brightness={preProcessingValue_brightness}
               preProcessingValue_contrast={preProcessingValue_contrast}

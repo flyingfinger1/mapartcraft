@@ -137,7 +137,11 @@
     "DITHERING": {
       "TITLE": "抖动像素化",
       "TITLE-TT": "添加看似随机的像素以产生更多颜色的错觉",
-      "NONE": "没有"
+      "NONE": "没有",
+      "STRENGTH": null,
+      "STRENGTH-TT": null,
+      "SERPENTINE": null,
+      "SERPENTINE-TT": null
     },
     "PREPROCESSING": {
       "TITLE": "图像预处理",

@@ -14,6 +14,8 @@ var optionValue_transparency;
 var optionValue_transparencyTolerance;
 var optionValue_betterColour;
 var optionValue_dithering;
+var optionValue_ditheringStrength; // 0 to 100, percent of the dithering effect
+var optionValue_ditheringSerpentine; // error diffusion alternates its direction every row
 
 var colourSetsToUse = []; // colourSetIds and shades to use in map
 var exactColourCache = new Map(); // for mapping RGB that exactly matches in coloursJSON to colourSetId and tone
@@ -223,177 +225,126 @@ function getMapartImageDataAndMaterials() {
   ) {
     divisor = chosenDitherMethod.ditherDivisor;
   }
-  for (let i = 0; i < canvasImageData.data.length; i += 4) {
-    const indexR = i;
-    const indexG = i + 1;
-    const indexB = i + 2;
-    const indexA = i + 3;
+  const ditheringStrength = optionValue_ditheringStrength / 100;
+  const multimapWidth = optionValue_mapSize_x * 128;
+  const multimapHeight = optionValue_mapSize_y * 128;
+  for (let multimap_y = 0; multimap_y < multimapHeight; multimap_y++) {
+    postMessage({
+      head: "PROGRESS_REPORT",
+      body: multimap_y / multimapHeight,
+    });
+    // with serpentine scanning, error diffusion runs right to left on odd rows (with a mirrored matrix),
+    // which avoids the diagonal 'worm' artifacts of always diffusing in one direction
+    const direction = optionValue_ditheringSerpentine && multimap_y % 2 === 1 ? -1 : 1;
+    for (let step = 0; step < multimapWidth; step++) {
+      const multimap_x = direction === 1 ? step : multimapWidth - 1 - step;
+      const i = 4 * (multimap_y * multimapWidth + multimap_x);
+      const indexR = i;
+      const indexG = i + 1;
+      const indexB = i + 2;
+      const indexA = i + 3;
 
-    const multimapWidth = optionValue_mapSize_x * 128;
-    const multimap_x = (i / 4) % multimapWidth;
-    const multimap_y = (i / 4 - multimap_x) / multimapWidth;
-    const whichMap_x = Math.floor(multimap_x / 128);
-    const whichMap_y = Math.floor(multimap_y / 128);
-    if (multimap_x === 0) {
-      postMessage({
-        head: "PROGRESS_REPORT",
-        body: multimap_y / (128 * optionValue_mapSize_y),
-      });
-    }
+      const whichMap_x = Math.floor(multimap_x / 128);
+      const whichMap_y = Math.floor(multimap_y / 128);
 
-    let closestColourSetIdAndTone;
-    if (
-      optionValue_modeNBTOrMapdat === MapModes.MAPDAT.uniqueId &&
-      optionValue_transparency &&
-      canvasImageData.data[indexA] < optionValue_transparencyTolerance
-    ) {
-      // we specially reserve 0,0,0,0 for transparent in mapdats
-      canvasImageData.data[indexR] = 0;
-      canvasImageData.data[indexG] = 0;
-      canvasImageData.data[indexB] = 0;
-      canvasImageData.data[indexA] = 0;
-    } else {
-      canvasImageData.data[indexA] = 255; // full opacity
-      const oldPixel = [canvasImageData.data[indexR], canvasImageData.data[indexG], canvasImageData.data[indexB]];
-      switch (chosenDitherMethod.uniqueId) {
-        // Switch statement that checks the dither method every pixel;
-        // I have tested a refactor that only checks once however the time difference is negligible and code quality deteriorates
-        case DitherMethods.None.uniqueId: {
-          closestColourSetIdAndTone = findClosestColourSetIdAndToneAndRGBTo(oldPixel);
-          const closestColour = colourSetIdAndToneToRGB(closestColourSetIdAndTone.colourSetId, closestColourSetIdAndTone.tone);
-          canvasImageData.data[indexR] = closestColour[0];
-          canvasImageData.data[indexG] = closestColour[1];
-          canvasImageData.data[indexB] = closestColour[2];
-          break;
-        }
-        case DitherMethods.Bayer44.uniqueId:
-        case DitherMethods.Bayer22.uniqueId:
-        case DitherMethods.Ordered33.uniqueId: {
-          const newPixels = findClosest2ColourSetIdAndToneAndRGBTo(oldPixel);
-          // newPixels = [shortestDistance1, shortestDistance2, newPixel1, newPixel2]
-          if (
-            (newPixels[0] * (ditherMatrix[0].length * ditherMatrix.length + 1)) / newPixels[1] >
-            ditherMatrix[multimap_x % ditherMatrix[0].length][multimap_y % ditherMatrix.length]
-          ) {
-            closestColourSetIdAndTone = newPixels[3];
-          } else {
-            closestColourSetIdAndTone = newPixels[2];
+      let closestColourSetIdAndTone;
+      if (
+        optionValue_modeNBTOrMapdat === MapModes.MAPDAT.uniqueId &&
+        optionValue_transparency &&
+        canvasImageData.data[indexA] < optionValue_transparencyTolerance
+      ) {
+        // we specially reserve 0,0,0,0 for transparent in mapdats
+        canvasImageData.data[indexR] = 0;
+        canvasImageData.data[indexG] = 0;
+        canvasImageData.data[indexB] = 0;
+        canvasImageData.data[indexA] = 0;
+      } else {
+        canvasImageData.data[indexA] = 255; // full opacity
+        const oldPixel = [canvasImageData.data[indexR], canvasImageData.data[indexG], canvasImageData.data[indexB]];
+        switch (chosenDitherMethod.uniqueId) {
+          // Switch statement that checks the dither method every pixel;
+          // I have tested a refactor that only checks once however the time difference is negligible and code quality deteriorates
+          case DitherMethods.None.uniqueId: {
+            closestColourSetIdAndTone = findClosestColourSetIdAndToneAndRGBTo(oldPixel);
+            const closestColour = colourSetIdAndToneToRGB(closestColourSetIdAndTone.colourSetId, closestColourSetIdAndTone.tone);
+            canvasImageData.data[indexR] = closestColour[0];
+            canvasImageData.data[indexG] = closestColour[1];
+            canvasImageData.data[indexB] = closestColour[2];
+            break;
           }
-          const closestColour = colourSetIdAndToneToRGB(closestColourSetIdAndTone.colourSetId, closestColourSetIdAndTone.tone);
-          canvasImageData.data[indexR] = closestColour[0];
-          canvasImageData.data[indexG] = closestColour[1];
-          canvasImageData.data[indexB] = closestColour[2];
-          break;
-        }
-        //Error diffusion algorithms
-        case DitherMethods.FloydSteinberg.uniqueId:
-        case DitherMethods.MinAvgErr.uniqueId:
-        case DitherMethods.Burkes.uniqueId:
-        case DitherMethods.SierraLite.uniqueId:
-        case DitherMethods.Stucki.uniqueId:
-        case DitherMethods.Atkinson.uniqueId: {
-          closestColourSetIdAndTone = findClosestColourSetIdAndToneAndRGBTo(oldPixel);
-          const closestColour = colourSetIdAndToneToRGB(closestColourSetIdAndTone.colourSetId, closestColourSetIdAndTone.tone);
-          canvasImageData.data[indexR] = closestColour[0];
-          canvasImageData.data[indexG] = closestColour[1];
-          canvasImageData.data[indexB] = closestColour[2];
-          const quant_error = [oldPixel[0] - closestColour[0], oldPixel[1] - closestColour[1], oldPixel[2] - closestColour[2]];
-
-          try {
-            // ditherMatrix [0][0...2] should always be zero, and can thus be skipped
-            if (multimap_x + 1 < multimapWidth) {
-              // Make sure to not carry over error from one side to the other
-              const weight = ditherMatrix[0][3] / divisor; // 1 right
-              canvasImageData.data[i + 4] += quant_error[0] * weight;
-              canvasImageData.data[i + 5] += quant_error[1] * weight;
-              canvasImageData.data[i + 6] += quant_error[2] * weight;
-              if (multimap_x + 2 < multimapWidth) {
-                const weight = ditherMatrix[0][4] / divisor; // 2 right
-                canvasImageData.data[i + 8] += quant_error[0] * weight;
-                canvasImageData.data[i + 9] += quant_error[1] * weight;
-                canvasImageData.data[i + 10] += quant_error[2] * weight;
-              }
+          case DitherMethods.Bayer44.uniqueId:
+          case DitherMethods.Bayer22.uniqueId:
+          case DitherMethods.Ordered33.uniqueId: {
+            const newPixels = findClosest2ColourSetIdAndToneAndRGBTo(oldPixel);
+            // newPixels = [shortestDistance1, shortestDistance2, newPixel1, newPixel2]
+            if (
+              (ditheringStrength * newPixels[0] * (ditherMatrix[0].length * ditherMatrix.length + 1)) / newPixels[1] >
+              ditherMatrix[multimap_x % ditherMatrix[0].length][multimap_y % ditherMatrix.length]
+            ) {
+              closestColourSetIdAndTone = newPixels[3];
+            } else {
+              closestColourSetIdAndTone = newPixels[2];
             }
-
-            // First row below
-            if (multimap_x > 0) {
-              // Order reversed, to allow nesting of 'if' blocks
-              const weight = ditherMatrix[1][1] / divisor; // 1 down, 1 left
-              canvasImageData.data[i + multimapWidth * 4 - 4] += quant_error[0] * weight;
-              canvasImageData.data[i + multimapWidth * 4 - 3] += quant_error[1] * weight;
-              canvasImageData.data[i + multimapWidth * 4 - 2] += quant_error[2] * weight;
-              if (multimap_x > 1) {
-                const weight = ditherMatrix[1][0] / divisor; // 1 down, 2 left
-                canvasImageData.data[i + multimapWidth * 4 - 8] += quant_error[0] * weight;
-                canvasImageData.data[i + multimapWidth * 4 - 7] += quant_error[1] * weight;
-                canvasImageData.data[i + multimapWidth * 4 - 6] += quant_error[2] * weight;
-              }
-            }
-            let weight = ditherMatrix[1][2] / divisor; // 1 down
-            canvasImageData.data[i + multimapWidth * 4 + 0] += quant_error[0] * weight;
-            canvasImageData.data[i + multimapWidth * 4 + 1] += quant_error[1] * weight;
-            canvasImageData.data[i + multimapWidth * 4 + 2] += quant_error[2] * weight;
-            if (multimap_x + 1 < multimapWidth) {
-              const weight = ditherMatrix[1][3] / divisor; // 1 down, 1 right
-              canvasImageData.data[i + multimapWidth * 4 + 4] += quant_error[0] * weight;
-              canvasImageData.data[i + multimapWidth * 4 + 5] += quant_error[1] * weight;
-              canvasImageData.data[i + multimapWidth * 4 + 6] += quant_error[2] * weight;
-              if (multimap_x + 2 < multimapWidth) {
-                const weight = ditherMatrix[1][4] / divisor; // 1 down, 2 right
-                canvasImageData.data[i + multimapWidth * 4 + 8] += quant_error[0] * weight;
-                canvasImageData.data[i + multimapWidth * 4 + 9] += quant_error[1] * weight;
-                canvasImageData.data[i + multimapWidth * 4 + 10] += quant_error[2] * weight;
-              }
-            }
-
-            // Second row below
-            if (multimap_x > 0) {
-              const weight = ditherMatrix[2][1] / divisor; // 2 down, 1 left
-              canvasImageData.data[i + multimapWidth * 8 - 4] += quant_error[0] * weight;
-              canvasImageData.data[i + multimapWidth * 8 - 3] += quant_error[1] * weight;
-              canvasImageData.data[i + multimapWidth * 8 - 2] += quant_error[2] * weight;
-              if (multimap_x > 1) {
-                const weight = ditherMatrix[2][0] / divisor; // 2 down, 2 left
-                canvasImageData.data[i + multimapWidth * 8 - 8] += quant_error[0] * weight;
-                canvasImageData.data[i + multimapWidth * 8 - 7] += quant_error[1] * weight;
-                canvasImageData.data[i + multimapWidth * 8 - 6] += quant_error[2] * weight;
-              }
-            }
-            weight = ditherMatrix[2][2] / divisor; // 2 down
-            canvasImageData.data[i + multimapWidth * 8 + 0] += quant_error[0] * weight;
-            canvasImageData.data[i + multimapWidth * 8 + 1] += quant_error[1] * weight;
-            canvasImageData.data[i + multimapWidth * 8 + 2] += quant_error[2] * weight;
-            if (multimap_x + 1 < multimapWidth) {
-              const weight = ditherMatrix[2][3] / divisor; // 2 down, 1 right
-              canvasImageData.data[i + multimapWidth * 8 + 4] += quant_error[0] * weight;
-              canvasImageData.data[i + multimapWidth * 8 + 5] += quant_error[1] * weight;
-              canvasImageData.data[i + multimapWidth * 8 + 6] += quant_error[2] * weight;
-              if (multimap_x + 2 < multimapWidth) {
-                const weight = ditherMatrix[2][4] / divisor; // 2 down, 2 right
-                canvasImageData.data[i + multimapWidth * 8 + 8] += quant_error[0] * weight;
-                canvasImageData.data[i + multimapWidth * 8 + 9] += quant_error[1] * weight;
-                canvasImageData.data[i + multimapWidth * 8 + 10] += quant_error[2] * weight;
-              }
-            }
-          } catch (e) {
-            console.log(e); // ???
+            const closestColour = colourSetIdAndToneToRGB(closestColourSetIdAndTone.colourSetId, closestColourSetIdAndTone.tone);
+            canvasImageData.data[indexR] = closestColour[0];
+            canvasImageData.data[indexG] = closestColour[1];
+            canvasImageData.data[indexB] = closestColour[2];
+            break;
           }
-          break;
-        }
-        default:
-          break;
-      }
+          //Error diffusion algorithms
+          case DitherMethods.FloydSteinberg.uniqueId:
+          case DitherMethods.MinAvgErr.uniqueId:
+          case DitherMethods.Burkes.uniqueId:
+          case DitherMethods.SierraLite.uniqueId:
+          case DitherMethods.Stucki.uniqueId:
+          case DitherMethods.Atkinson.uniqueId: {
+            closestColourSetIdAndTone = findClosestColourSetIdAndToneAndRGBTo(oldPixel);
+            const closestColour = colourSetIdAndToneToRGB(closestColourSetIdAndTone.colourSetId, closestColourSetIdAndTone.tone);
+            canvasImageData.data[indexR] = closestColour[0];
+            canvasImageData.data[indexG] = closestColour[1];
+            canvasImageData.data[indexB] = closestColour[2];
+            const quant_error = [
+              (oldPixel[0] - closestColour[0]) * ditheringStrength,
+              (oldPixel[1] - closestColour[1]) * ditheringStrength,
+              (oldPixel[2] - closestColour[2]) * ditheringStrength,
+            ];
 
-      // materials count: mapdat can skip this
-      if (optionValue_modeNBTOrMapdat === MapModes.SCHEMATIC_NBT.uniqueId) {
-        maps[whichMap_y][whichMap_x].materials[closestColourSetIdAndTone.colourSetId] += 1;
+            // ditherMatrix is 3 rows (this row, 1 down, 2 down) by 5 columns (2 left to 2 right of this pixel);
+            // the entries up to and including this pixel in its own row are always zero
+            for (let matrixRow = 0; matrixRow < 3; matrixRow++) {
+              const target_y = multimap_y + matrixRow;
+              if (target_y >= multimapHeight) {
+                break;
+              }
+              for (let matrixColumn = matrixRow === 0 ? 3 : 0; matrixColumn < 5; matrixColumn++) {
+                const weight = ditherMatrix[matrixRow][matrixColumn] / divisor;
+                const target_x = multimap_x + direction * (matrixColumn - 2);
+                if (weight === 0 || target_x < 0 || target_x >= multimapWidth) {
+                  // never carry error over from one side of the image to the other
+                  continue;
+                }
+                const target_i = 4 * (target_y * multimapWidth + target_x);
+                canvasImageData.data[target_i] += quant_error[0] * weight;
+                canvasImageData.data[target_i + 1] += quant_error[1] * weight;
+                canvasImageData.data[target_i + 2] += quant_error[2] * weight;
+              }
+            }
+            break;
+          }
+          default:
+            break;
+        }
+
+        // materials count: mapdat can skip this
+        if (optionValue_modeNBTOrMapdat === MapModes.SCHEMATIC_NBT.uniqueId) {
+          maps[whichMap_y][whichMap_x].materials[closestColourSetIdAndTone.colourSetId] += 1;
+        }
       }
     }
   }
 
   // support blocks are counted from the same physical layout that nbt.jsworker exports
   if (optionValue_modeNBTOrMapdat === MapModes.SCHEMATIC_NBT.uniqueId) {
-    const multimapWidth = optionValue_mapSize_x * 128;
     const physicalColumnSettings = {
       MapModes: MapModes,
       WhereSupportBlocksModes: WhereSupportBlocksModes,
@@ -443,6 +394,8 @@ onmessage = (e) => {
   optionValue_transparencyTolerance = e.data.body.optionValue_transparencyTolerance;
   optionValue_betterColour = e.data.body.optionValue_betterColour;
   optionValue_dithering = e.data.body.optionValue_dithering;
+  optionValue_ditheringStrength = e.data.body.optionValue_ditheringStrength;
+  optionValue_ditheringSerpentine = e.data.body.optionValue_ditheringSerpentine;
 
   setupColourSetsToUse();
   setupExactColourCache();

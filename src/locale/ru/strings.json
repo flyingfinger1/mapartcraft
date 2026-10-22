@@ -137,7 +137,11 @@
     "DITHERING": {
       "TITLE": "Смешивание",
       "TITLE-TT": "Добавляет случайные пиксели для иллюзии большего количества цветов",
-      "NONE": "Без смешения"
+      "NONE": "Без смешения",
+      "STRENGTH": null,
+      "STRENGTH-TT": null,
+      "SERPENTINE": null,
+      "SERPENTINE-TT": null
     },
     "PREPROCESSING": {
       "TITLE": "Предварительная обработка изображения",

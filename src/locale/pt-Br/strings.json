@@ -137,7 +137,11 @@
     "DITHERING": {
       "TITLE": "Pontilhado",
       "TITLE-TT": "Adiciona pixeis aparentemente aleatórios para criar a ilusão de mais cores",
-      "NONE": "Nenhum"
+      "NONE": "Nenhum",
+      "STRENGTH": null,
+      "STRENGTH-TT": null,
+      "SERPENTINE": null,
+      "SERPENTINE-TT": null
     },
     "PREPROCESSING": {
       "TITLE": "Pré-processamento da imagem",
