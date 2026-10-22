@@ -71,6 +71,7 @@
   },
   "MAP-PREVIEW": {
     "TITLE": "地図プレビュー",
+    "NO-BLOCKS-SELECTED": "ブロックがまだ選択されていないため、プレビューには元の画像がそのまま表示されています。「{blockSelection}」でブロックを選ぶか、プリセット「{preset}」を選択してください。",
     "BEST-RESOLUTION-TT": "この解像度の画像が最適です",
     "ASPECT-RATIO-MISMATCH-TT": "画像と地図の縦横比が一致しません",
     "SCALE-MINUS-TT": "プレビューを小さく",

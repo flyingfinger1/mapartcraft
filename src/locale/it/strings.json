@@ -71,6 +71,7 @@
   },
   "MAP-PREVIEW": {
     "TITLE": "Anteprima",
+    "NO-BLOCKS-SELECTED": "Nessun blocco selezionato: l'anteprima mostra l'immagine senza modifiche. Scegli i blocchi in {blockSelection} oppure il preset \"{preset}\".",
     "BEST-RESOLUTION-TT": "Un'immagine sorgente con questa risoluzione funzionerà al meglio",
     "ASPECT-RATIO-MISMATCH-TT": "L'immagine non rispetta le proporzioni della mappa",
     "SCALE-MINUS-TT": "Ridurre l'anteprima",

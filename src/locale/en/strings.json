@@ -71,6 +71,7 @@
   },
   "MAP-PREVIEW": {
     "TITLE": "Map preview",
+    "NO-BLOCKS-SELECTED": "No blocks selected yet, so the preview shows your image unchanged. Pick blocks under {blockSelection}, or choose the preset \"{preset}\".",
     "BEST-RESOLUTION-TT": "A source image with this resolution will work the best",
     "ASPECT-RATIO-MISMATCH-TT": "Image doesn't match map's aspect ratio",
     "SCALE-MINUS-TT": "Make preview smaller",

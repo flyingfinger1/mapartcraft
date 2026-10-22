@@ -349,6 +349,7 @@ class MapPreview extends Component {
   render() {
     const {
       getLocaleString,
+      selectedBlocks,
       optionValue_mapSize_x, // map size in maps
       optionValue_mapSize_y,
       optionValue_cropImage,
@@ -357,9 +358,18 @@ class MapPreview extends Component {
       uploadedImage,
     } = this.props;
     const { mapPreviewSizeScale, workerProgress } = this.state;
+    // without any block there is nothing to match colours to, so the preview just shows the uploaded image
+    const noBlocksSelected = Object.values(selectedBlocks).every((blockId) => blockId === "-1");
     return (
       <div className="section mapPreviewDiv">
         <h2>{getLocaleString("MAP-PREVIEW/TITLE")}</h2>
+        {noBlocksSelected && (
+          <p className="mapPreviewHint">
+            {getLocaleString("MAP-PREVIEW/NO-BLOCKS-SELECTED")
+              .replace("{blockSelection}", getLocaleString("BLOCK-SELECTION/TITLE"))
+              .replace("{preset}", getLocaleString("BLOCK-SELECTION/PRESETS/EVERYTHING"))}
+          </p>
+        )}
         <input type="file" className="imgUpload" ref={this.fileInputRef} onChange={onFileDialogEvent} />
         <div>
           <span

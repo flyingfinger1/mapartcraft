@@ -71,6 +71,7 @@
   },
   "MAP-PREVIEW": {
     "TITLE": "Mapa antaŭvido",
+    "NO-BLOCKS-SELECTED": "Ankoraŭ neniuj blokoj elektitaj, do la antaŭrigardo montras vian bildon senŝanĝe. Elektu blokojn en {blockSelection} aŭ la antaŭagordon \"{preset}\".",
     "BEST-RESOLUTION-TT": "Origina bildo kun ĉi tia amplekso laboros la plej bone",
     "ASPECT-RATIO-MISMATCH-TT": "Bildo ne sekvas la flankproporcion de mapo",
     "SCALE-MINUS-TT": "Malpligrandigi la antaŭvidon",

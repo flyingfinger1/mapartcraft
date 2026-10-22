@@ -1,3 +1,12 @@
+.mapPreviewHint {
+  max-width: 256px;
+  margin: 0 0 8px;
+  padding: 6px 8px;
+  border: 1px solid orange;
+  color: orange;
+  text-align: left;
+}
+
 .imgUpload {
   display: none;
 }

@@ -71,6 +71,7 @@
   },
   "MAP-PREVIEW": {
     "TITLE": "Kaardi eelvaade",
+    "NO-BLOCKS-SELECTED": "Plokke pole veel valitud, seega näitab eelvaade pilti muutmata kujul. Vali plokid jaotises {blockSelection} või eelseade \"{preset}\".",
     "BEST-RESOLUTION-TT": "Sellise resolutsiooniga pilt töötab kõige paremini",
     "ASPECT-RATIO-MISMATCH-TT": "Pildi külgede suhe ei ühtu kaardi omaga",
     "SCALE-MINUS-TT": "Tee eelvaade väiksemaks",

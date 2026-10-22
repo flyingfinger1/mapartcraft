@@ -71,6 +71,7 @@
   },
   "MAP-PREVIEW": {
     "TITLE": "Žemėlapio peržiūra",
+    "NO-BLOCKS-SELECTED": "Blokai dar nepasirinkti, todėl peržiūroje rodomas nepakeistas paveikslėlis. Pasirinkite blokus skiltyje {blockSelection} arba šabloną „{preset}“.",
     "BEST-RESOLUTION-TT": "Šaltinio vaiždas su šia raiška veiks geriausiai",
     "ASPECT-RATIO-MISMATCH-TT": "Vaizdas neatitinka žemėlapio kraštinių santykio",
     "SCALE-MINUS-TT": "Padaryti peržiūra mažesne",

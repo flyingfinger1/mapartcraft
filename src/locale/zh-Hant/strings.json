@@ -71,6 +71,7 @@
   },
   "MAP-PREVIEW": {
     "TITLE": "地圖預覽",
+    "NO-BLOCKS-SELECTED": "尚未選擇方塊，因此預覽顯示的是未經處理的原圖。請在「{blockSelection}」中選擇方塊，或選擇預設「{preset}」。",
     "BEST-RESOLUTION-TT": "建議使用此解析度的圖片",
     "ASPECT-RATIO-MISMATCH-TT": "圖片與地圖的長寬比不相符",
     "SCALE-MINUS-TT": "縮小預覽",

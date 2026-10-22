@@ -71,6 +71,7 @@
   },
   "MAP-PREVIEW": {
     "TITLE": "Aperçu de la map",
+    "NO-BLOCKS-SELECTED": "Aucun bloc sélectionné : l'aperçu affiche votre image sans modification. Choisissez des blocs dans {blockSelection} ou le préréglage « {preset} ».",
     "BEST-RESOLUTION-TT": "Une image de cette résolution de base fonctionnera mieux",
     "ASPECT-RATIO-MISMATCH-TT": "L'image ne correspond pas au format de la map",
     "SCALE-MINUS-TT": "Aperçu plus petit",

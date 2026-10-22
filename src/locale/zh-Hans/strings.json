@@ -71,6 +71,7 @@
   },
   "MAP-PREVIEW": {
     "TITLE": "地图预览",
+    "NO-BLOCKS-SELECTED": "尚未选择方块，因此预览显示的是未经处理的原图。请在“{blockSelection}”中选择方块，或选择预设“{preset}”。",
     "BEST-RESOLUTION-TT": "具有此分辨率的源图像效果最佳",
     "ASPECT-RATIO-MISMATCH-TT": "图片与地图的长宽比例不符",
     "SCALE-MINUS-TT": "缩小预览",

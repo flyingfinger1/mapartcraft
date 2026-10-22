@@ -71,6 +71,7 @@
   },
   "MAP-PREVIEW": {
     "TITLE": "Map-Vorschau",
+    "NO-BLOCKS-SELECTED": "Noch keine Blöcke ausgewählt, deshalb zeigt die Vorschau Dein Bild unverändert. Wähle Blöcke unter {blockSelection} oder die Vorlage \"{preset}\".",
     "BEST-RESOLUTION-TT": "Ein Bild mit dieser Auflösung wird am besten funktionieren",
     "ASPECT-RATIO-MISMATCH-TT": "Das Bild stimmt nicht mit dem Seitenverhältnis der Map überein",
     "SCALE-MINUS-TT": "Vorschau verkleinern",

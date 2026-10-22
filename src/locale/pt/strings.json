@@ -71,6 +71,7 @@
   },
   "MAP-PREVIEW": {
     "TITLE": "Pré-Visualização do mapa",
+    "NO-BLOCKS-SELECTED": "Ainda não há blocos selecionados, por isso a pré-visualização mostra a imagem sem alterações. Escolha blocos em {blockSelection} ou a predefinição \"{preset}\".",
     "BEST-RESOLUTION-TT": "Uma imagem fonte com esta resolução funcionará melhor",
     "ASPECT-RATIO-MISMATCH-TT": "A imagem não corresponde à proporção do mapa",
     "SCALE-MINUS-TT": "Tornar a pré-visualização menor",

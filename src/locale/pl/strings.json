@@ -71,6 +71,7 @@
   },
   "MAP-PREVIEW": {
     "TITLE": "Podgląd mapy",
+    "NO-BLOCKS-SELECTED": "Nie wybrano jeszcze bloków, więc podgląd pokazuje obraz bez zmian. Wybierz bloki w sekcji {blockSelection} lub ustawienie \"{preset}\".",
     "BEST-RESOLUTION-TT": "Źródłowy obraz z tą rozdzielczością będzie działał lepiej",
     "ASPECT-RATIO-MISMATCH-TT": "Obraz nie pasuje do rozmiaru mapy",
     "SCALE-MINUS-TT": "Zrób podgląd mniejszy",
