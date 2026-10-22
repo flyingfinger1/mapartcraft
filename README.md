@@ -27,6 +27,16 @@ docker compose pull
 docker compose up -d
 ```
 
+## Visitor statistics
+
+nginx writes one access log per day to the `logs` volume, with the visitor's address taken from the proxy's `X-Forwarded-For` header. The `goaccess` service turns these logs into a report every 10 minutes (`REPORT_INTERVAL`) and deletes logs older than 30 days (`LOG_RETENTION_DAYS`), since they contain IP addresses. There is no tracking script and no cookie on the site; crawlers are left out of the report.
+
+The report is served at `/stats/` behind a password. Create the password file next to `docker-compose.yml` before the first start (otherwise Docker creates a directory in its place and `/stats/` answers with an error):
+
+```
+printf 'admin:%s\n' "$(openssl passwd -apr1)" > stats.htpasswd
+```
+
 # Usage
 
 This is a fork of [rebane2001/mapartcraft](https://github.com/rebane2001/mapartcraft) with support for Minecraft versions up to 26.3, more blocks, `.litematic` export and fewer support blocks in valley staircasing. Run it yourself with Docker (see above) or `npm run start`. Report bugs and feature requests for this fork in its [issue tracker](https://github.com/flyingfinger1/mapartcraft/issues).

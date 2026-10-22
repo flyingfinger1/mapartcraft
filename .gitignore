@@ -13,3 +13,6 @@ __pycache__/
 /gitignore Extras
 
 *.nbt
+
+# password file for /stats/ (see README)
+stats.htpasswd

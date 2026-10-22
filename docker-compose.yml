@@ -4,12 +4,48 @@ services:
     restart: unless-stopped
     ports:
       - "8080:80"   # remove this when using a reverse proxy
+    volumes:
+      - logs:/var/log/mapartcraft
+      - stats:/var/www/stats:ro
+      # password for /stats/, create it before the first start (see README)
+      - ./stats.htpasswd:/etc/nginx/stats.htpasswd:ro
     networks:
       - caddy-net
     # Caddy reverse proxy labels (remove if not using caddy-docker-proxy)
     labels:
       caddy: mapartcraft.example.com   # your domain
       caddy.reverse_proxy: "{{upstreams 80}}"
+
+  # Turns the access logs into the report at /stats/ and deletes old logs.
+  goaccess:
+    image: allinurl/goaccess:1.12
+    restart: unless-stopped
+    # start after mapartcraft, so that the logs volume is created with the
+    # ownership nginx needs to write to it
+    depends_on:
+      - mapartcraft
+    environment:
+      LOG_RETENTION_DAYS: 30   # keep access logs (with IP addresses) this many days
+      REPORT_INTERVAL: 600     # seconds between report updates
+    volumes:
+      - logs:/logs
+      - stats:/report
+    entrypoint: ["sh", "-c"]
+    command:
+      - |
+        while true; do
+          find /logs -name 'access-*.log' -mtime +"$$LOG_RETENTION_DAYS" -delete
+          if ls /logs/access-*.log >/dev/null 2>&1; then
+            goaccess /logs/access-*.log --log-format=COMBINED --ignore-crawlers \
+              --html-report-title="MapartCraft" --no-progress -o /report/.next.html \
+              && mv /report/.next.html /report/index.html
+          fi
+          sleep "$$REPORT_INTERVAL"
+        done
+
+volumes:
+  logs:
+  stats:
 
 networks:
   caddy-net:
