@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import Tooltip from "../tooltip";
+import InvisibleBlocks from "./json/invisibleBlocks.json";
 
 import BlockImage from "./blockImage";
 
@@ -58,6 +59,19 @@ class Materials extends Component {
     return supportBlockCount;
   }
 
+  getMaterialsCount_nooblineBlock() {
+    const { currentMaterialsData } = this.props;
+    const { onlyMaxPerSplit } = this.state;
+    let nooblineBlockCount = 0;
+    currentMaterialsData.maps.forEach((row) => {
+      row.forEach((map) => {
+        const count = map.nooblineBlockCount || 0;
+        nooblineBlockCount = onlyMaxPerSplit ? Math.max(nooblineBlockCount, count) : nooblineBlockCount + count;
+      });
+    });
+    return nooblineBlockCount;
+  }
+
   formatMaterialCount = (count) => {
     const numberOfStacks = Math.floor(count / 64);
     const remainder = count % 64;
@@ -100,6 +114,8 @@ class Materials extends Component {
     const nonZeroMaterialsItems = this.getMaterialsCount_nonZeroMaterialsItems();
     const supportBlockCount = this.getMaterialsCount_supportBlock();
     const supportBlockIds = this.colourSetIdAndBlockIdFromNBTName(optionValue_supportBlock);
+    const nooblineBlockCount = this.getMaterialsCount_nooblineBlock();
+    const nooblineBlockIds = this.colourSetIdAndBlockIdFromNBTName(InvisibleBlocks.nooblineFallback);
     return (
       <div className="section materialsDiv">
         <h2>{getLocaleString("MATERIALS/TITLE")}</h2>
@@ -125,11 +141,26 @@ class Materials extends Component {
                       getLocaleString={getLocaleString}
                       coloursJSON={coloursJSON}
                       colourSetId={supportBlockIds === null ? "64" : supportBlockIds.colourSetId}
-                      blockId={supportBlockIds === null ? "2" : supportBlockIds.blockId}
+                      blockId={supportBlockIds === null ? (optionValue_supportBlock === "glass" ? "6" : "2") : supportBlockIds.blockId}
                     />
                   </Tooltip>
                 </th>
                 <th>{this.formatMaterialCount(supportBlockCount)}</th>
+              </tr>
+            )}
+            {nooblineBlockCount !== 0 && (
+              <tr>
+                <th>
+                  <Tooltip tooltipText={getLocaleString("MATERIALS/NOOBLINE-BLOCK-TT")}>
+                    <BlockImage
+                      getLocaleString={getLocaleString}
+                      coloursJSON={coloursJSON}
+                      colourSetId={nooblineBlockIds === null ? "64" : nooblineBlockIds.colourSetId}
+                      blockId={nooblineBlockIds === null ? "2" : nooblineBlockIds.blockId}
+                    />
+                  </Tooltip>
+                </th>
+                <th>{this.formatMaterialCount(nooblineBlockCount)}</th>
               </tr>
             )}
             {nonZeroMaterialsItems.map(([colourSetId, materialCount]) => {

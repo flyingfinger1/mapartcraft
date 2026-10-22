@@ -127,11 +127,19 @@
       "UNOBTAINABLE-COLOURS": "Saavutamatud värvid",
       "UNOBTAINABLE-COLOURS-TT": "Lülitab sisse map.dat failid, mida schematic'utega ei saa",
       "TRANSPARENCY": "Läbipaistvus",
-      "TRANSPARENCY-TT": "Lubab läbipaistvuse map.dat failidel",
+      "TRANSPARENCY-TT": null,
       "TRANSPARENCY-TOLERANCE": null,
       "MAPDAT-FILENAME-USE-ID": null,
       "MAPDAT-FILENAME-USE-ID-TT": null,
       "MAPDAT-FILENAME-ID-RANGE": null
+    },
+    "TRANSPARENCY": {
+      "SOURCE": null,
+      "SOURCE-PNG": null,
+      "SOURCE-KEY-COLOUR": null,
+      "KEY-COLOUR": null,
+      "KEY-COLOUR-TT": null,
+      "SCHEMATIC-HINT": null
     },
     "BETTER-COLOUR": "Paremad värvid",
     "BETTER-COLOUR-TT": "Annab parema värvitäpsuse",
@@ -188,6 +196,7 @@
     "BLOCK": "Plokk",
     "AMOUNT": "Kogus",
     "PLACEHOLDER-BLOCK-TT": "Kohatäite Plokk",
+    "NOOBLINE-BLOCK-TT": null,
     "SHOW-PER-SPLIT": "Näita maksimaalseid materjale ühe lõhestuse kohta",
     "SHOW-PER-SPLIT-TT": "Materjalide taaskasutamiseks lukustatud kaartidega",
     "REFRESH-MATERIALS": "VÄRSKENDA MATERJALE",

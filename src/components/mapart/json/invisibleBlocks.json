@@ -1,0 +1,12 @@
+{
+  "_comment": "Blocks without a map colour. As support block they are fine, but the noobline has to be visible on the map, so it is built from nooblineFallback instead.",
+  "blocks": [
+    "glass",
+    "glass_pane",
+    "barrier",
+    "light",
+    "structure_void",
+    "air"
+  ],
+  "nooblineFallback": "cobblestone"
+}

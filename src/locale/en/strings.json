@@ -127,11 +127,19 @@
       "UNOBTAINABLE-COLOURS": "Unobtainiable colors",
       "UNOBTAINABLE-COLOURS-TT": "Enables map.dat colors unobtainiable in schematics",
       "TRANSPARENCY": "Transparency",
-      "TRANSPARENCY-TT": "Enables transparency for map.dat",
+      "TRANSPARENCY-TT": "Makes parts of the map transparent",
       "TRANSPARENCY-TOLERANCE": "Tolerance",
       "MAPDAT-FILENAME-USE-ID": "Numerical Filename",
       "MAPDAT-FILENAME-USE-ID-TT": "Save mapdats as 'map_#.dat'",
       "MAPDAT-FILENAME-ID-RANGE": "Range"
+    },
+    "TRANSPARENCY": {
+      "SOURCE": "Transparent parts",
+      "SOURCE-PNG": "Transparency of the image (PNG)",
+      "SOURCE-KEY-COLOUR": "Key colour",
+      "KEY-COLOUR": "Key colour",
+      "KEY-COLOUR-TT": "Pixels of this colour (within the tolerance) become transparent",
+      "SCHEMATIC-HINT": "Transparent maps must be built above a floor that is invisible on maps (void, glass or barrier) all the way down to the bottom of the world. The row below a transparent part always shows its light tone. Details:"
     },
     "BETTER-COLOUR": "Better color",
     "BETTER-COLOUR-TT": "Gives you better color accuracy",
@@ -188,6 +196,7 @@
     "BLOCK": "Block",
     "AMOUNT": "Amount",
     "PLACEHOLDER-BLOCK-TT": "Placeholder Block",
+    "NOOBLINE-BLOCK-TT": "Noobline: glass and other blocks without map colour are invisible on maps, so the noobline is built from this block",
     "SHOW-PER-SPLIT": "Only show max mats per split",
     "SHOW-PER-SPLIT-TT": "For material reuse with locked maps",
     "REFRESH-MATERIALS": "REFRESH MATERIALS",

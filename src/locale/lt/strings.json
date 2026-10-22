@@ -133,6 +133,14 @@
       "MAPDAT-FILENAME-USE-ID-TT": null,
       "MAPDAT-FILENAME-ID-RANGE": null
     },
+    "TRANSPARENCY": {
+      "SOURCE": null,
+      "SOURCE-PNG": null,
+      "SOURCE-KEY-COLOUR": null,
+      "KEY-COLOUR": null,
+      "KEY-COLOUR-TT": null,
+      "SCHEMATIC-HINT": null
+    },
     "BETTER-COLOUR": "Geresnės spalvos",
     "BETTER-COLOUR-TT": "Suteikia geresnį spalvų tikslumą",
     "DITHERING": {
@@ -188,6 +196,7 @@
     "BLOCK": "Blokai",
     "AMOUNT": "Kiekis",
     "PLACEHOLDER-BLOCK-TT": "Vietos rezervavimo blokas",
+    "NOOBLINE-BLOCK-TT": null,
     "SHOW-PER-SPLIT": null,
     "SHOW-PER-SPLIT-TT": null,
     "REFRESH-MATERIALS": "ATNAUJINTI MEDŽIAGAS",

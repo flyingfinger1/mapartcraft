@@ -9,15 +9,25 @@ var optionValue_mapSize_x;
 var optionValue_mapSize_y;
 var optionValue_staircasing;
 var optionValue_whereSupportBlocks;
+var optionValue_supportBlock;
+var InvisibleBlocks;
 var optionValue_noSupportBlocksFirstRow;
 var optionValue_transparency;
 var optionValue_transparencyTolerance;
+var TransparencySources;
+var optionValue_transparencySource;
+var optionValue_transparencyKeyColour; // "#rrggbb"
+var optionValue_transparencyKeyTolerance;
 var optionValue_betterColour;
 var optionValue_dithering;
 var optionValue_ditheringStrength; // 0 to 100, percent of the dithering effect
 var optionValue_ditheringSerpentine; // error diffusion alternates its direction every row
 
 var colourSetsToUse = []; // colourSetIds and shades to use in map
+// In schematics, a pixel directly South of a transparent pixel always shows its light tone: Minecraft compares it with the
+// height of the transparent column, which is the bottom of the world. These pixels can only use the light tones.
+var lightColourSetsToUse = [];
+var lightColourCache = new Map();
 var exactColourCache = new Map(); // for mapping RGB that exactly matches in coloursJSON to colourSetId and tone
 var colourCache = new Map(); // cache for reusing colours in identical pixels
 var labCache = new Map();
@@ -66,15 +76,15 @@ function squaredEuclideanMetricColours(pixel1, pixel2) {
   return r * r + g * g + b * b; // actually L*a*b* if optionValue_betterColour but metric is calculated the same
 }
 
-function findClosestColourSetIdAndToneAndRGBTo(pixelRGB) {
+function findClosestColourSetIdAndToneAndRGBTo(pixelRGB, palette = colourSetsToUse, cache = colourCache) {
   let RGBBinary = (pixelRGB[0] << 16) + (pixelRGB[1] << 8) + pixelRGB[2]; // injective mapping RGB to concatenated binaries
-  if (colourCache.has(RGBBinary)) {
-    return colourCache.get(RGBBinary);
+  if (cache.has(RGBBinary)) {
+    return cache.get(RGBBinary);
   } else {
     let shortestDistance = 9999999;
     let closestPixel;
 
-    colourSetsToUse.forEach((colourSet) => {
+    palette.forEach((colourSet) => {
       Object.keys(colourSet.tonesRGB).forEach((toneKey) => {
         const toneRGB = colourSet.tonesRGB[toneKey];
         let squareDistance = squaredEuclideanMetricColours(toneRGB, pixelRGB);
@@ -87,22 +97,22 @@ function findClosestColourSetIdAndToneAndRGBTo(pixelRGB) {
         }
       });
     });
-    colourCache.set(RGBBinary, closestPixel);
+    cache.set(RGBBinary, closestPixel);
     return closestPixel;
   }
 }
 
-function findClosest2ColourSetIdAndToneAndRGBTo(pixelRGB) {
+function findClosest2ColourSetIdAndToneAndRGBTo(pixelRGB, palette = colourSetsToUse, cache = colourCache) {
   let RGBBinary = (pixelRGB[0] << 16) + (pixelRGB[1] << 8) + pixelRGB[2];
-  if (colourCache.has(RGBBinary)) {
-    return colourCache.get(RGBBinary);
+  if (cache.has(RGBBinary)) {
+    return cache.get(RGBBinary);
   } else {
     let shortestDistance1 = 9999999;
     let shortestDistance2 = 9999999;
     let closestPixel1 = { colourSetId: null, tone: null }; // best colour
     let closestPixel2 = { colourSetId: null, tone: null }; // second best colour
 
-    colourSetsToUse.forEach((colourSet) => {
+    palette.forEach((colourSet) => {
       Object.keys(colourSet.tonesRGB).forEach((toneKey) => {
         const toneRGB = colourSet.tonesRGB[toneKey];
         let squareDistance = squaredEuclideanMetricColours(toneRGB, pixelRGB);
@@ -132,7 +142,7 @@ function findClosest2ColourSetIdAndToneAndRGBTo(pixelRGB) {
       closestPixel2 = closestPixel1; // if closestPixel1 is a better fit to closestPixel2 than closestPixel2 is to the actual pixel
     }
     let newPixels = [shortestDistance1, shortestDistance2, closestPixel1, closestPixel2];
-    colourCache.set(RGBBinary, newPixels);
+    cache.set(RGBBinary, newPixels);
     return newPixels;
   }
 }
@@ -159,7 +169,37 @@ function setupColourSetsToUse() {
       colourSetId: colourSetId,
       tonesRGB: tonesRGB,
     });
+    lightColourSetsToUse.push({
+      colourSetId: colourSetId,
+      tonesRGB: { light: coloursJSON[colourSetId].tonesRGB.light },
+    });
   }
+}
+
+function getTransparencyMask(width, height) {
+  // decided on the original image, before dithering changes any pixel
+  const mask = new Uint8Array(width * height);
+  if (!optionValue_transparency) {
+    return mask;
+  }
+  const data = canvasImageData.data;
+  const keyColour = [1, 3, 5].map((offset) => parseInt(optionValue_transparencyKeyColour.slice(offset, offset + 2), 16));
+  for (let p = 0; p < width * height; p++) {
+    const i = 4 * p;
+    if (optionValue_transparencySource === TransparencySources.KEY_COLOUR.uniqueId) {
+      // fully transparent pixels count as transparent too, their colour is meaningless
+      mask[p] =
+        data[i + 3] === 0 ||
+        (Math.abs(data[i] - keyColour[0]) <= optionValue_transparencyKeyTolerance &&
+          Math.abs(data[i + 1] - keyColour[1]) <= optionValue_transparencyKeyTolerance &&
+          Math.abs(data[i + 2] - keyColour[2]) <= optionValue_transparencyKeyTolerance)
+          ? 1
+          : 0;
+    } else {
+      mask[p] = data[i + 3] < optionValue_transparencyTolerance ? 1 : 0;
+    }
+  }
+  return mask;
 }
 
 function setupExactColourCache() {
@@ -193,7 +233,7 @@ function getMapartImageDataAndMaterials() {
   for (let y = 0; y < optionValue_mapSize_y; y++) {
     let mapsRowToAdd = [];
     for (let x = 0; x < optionValue_mapSize_x; x++) {
-      let mapEntryToAdd = { materials: {}, supportBlockCount: 0 };
+      let mapEntryToAdd = { materials: {}, supportBlockCount: 0, nooblineBlockCount: 0 };
       colourSetsToUse.forEach((colourSet) => {
         mapEntryToAdd.materials[colourSet.colourSetId] = 0;
       });
@@ -228,6 +268,7 @@ function getMapartImageDataAndMaterials() {
   const ditheringStrength = optionValue_ditheringStrength / 100;
   const multimapWidth = optionValue_mapSize_x * 128;
   const multimapHeight = optionValue_mapSize_y * 128;
+  const transparencyMask = getTransparencyMask(multimapWidth, multimapHeight);
   for (let multimap_y = 0; multimap_y < multimapHeight; multimap_y++) {
     postMessage({
       head: "PROGRESS_REPORT",
@@ -248,12 +289,15 @@ function getMapartImageDataAndMaterials() {
       const whichMap_y = Math.floor(multimap_y / 128);
 
       let closestColourSetIdAndTone;
-      if (
-        optionValue_modeNBTOrMapdat === MapModes.MAPDAT.uniqueId &&
-        optionValue_transparency &&
-        canvasImageData.data[indexA] < optionValue_transparencyTolerance
-      ) {
-        // we specially reserve 0,0,0,0 for transparent in mapdats
+      // see lightColourSetsToUse; map.dat files store colours directly, so there any tone works
+      const onlyLightTones =
+        optionValue_modeNBTOrMapdat === MapModes.SCHEMATIC_NBT.uniqueId &&
+        multimap_y > 0 &&
+        transparencyMask[(multimap_y - 1) * multimapWidth + multimap_x] === 1;
+      const palette = onlyLightTones ? lightColourSetsToUse : colourSetsToUse;
+      const paletteCache = onlyLightTones ? lightColourCache : colourCache;
+      if (transparencyMask[multimap_y * multimapWidth + multimap_x] === 1) {
+        // we specially reserve 0,0,0,0 for transparent pixels
         canvasImageData.data[indexR] = 0;
         canvasImageData.data[indexG] = 0;
         canvasImageData.data[indexB] = 0;
@@ -265,7 +309,7 @@ function getMapartImageDataAndMaterials() {
           // Switch statement that checks the dither method every pixel;
           // I have tested a refactor that only checks once however the time difference is negligible and code quality deteriorates
           case DitherMethods.None.uniqueId: {
-            closestColourSetIdAndTone = findClosestColourSetIdAndToneAndRGBTo(oldPixel);
+            closestColourSetIdAndTone = findClosestColourSetIdAndToneAndRGBTo(oldPixel, palette, paletteCache);
             const closestColour = colourSetIdAndToneToRGB(closestColourSetIdAndTone.colourSetId, closestColourSetIdAndTone.tone);
             canvasImageData.data[indexR] = closestColour[0];
             canvasImageData.data[indexG] = closestColour[1];
@@ -275,7 +319,7 @@ function getMapartImageDataAndMaterials() {
           case DitherMethods.Bayer44.uniqueId:
           case DitherMethods.Bayer22.uniqueId:
           case DitherMethods.Ordered33.uniqueId: {
-            const newPixels = findClosest2ColourSetIdAndToneAndRGBTo(oldPixel);
+            const newPixels = findClosest2ColourSetIdAndToneAndRGBTo(oldPixel, palette, paletteCache);
             // newPixels = [shortestDistance1, shortestDistance2, newPixel1, newPixel2]
             if (
               (ditheringStrength * newPixels[0] * (ditherMatrix[0].length * ditherMatrix.length + 1)) / newPixels[1] >
@@ -298,7 +342,7 @@ function getMapartImageDataAndMaterials() {
           case DitherMethods.SierraLite.uniqueId:
           case DitherMethods.Stucki.uniqueId:
           case DitherMethods.Atkinson.uniqueId: {
-            closestColourSetIdAndTone = findClosestColourSetIdAndToneAndRGBTo(oldPixel);
+            closestColourSetIdAndTone = findClosestColourSetIdAndToneAndRGBTo(oldPixel, palette, paletteCache);
             const closestColour = colourSetIdAndToneToRGB(closestColourSetIdAndTone.colourSetId, closestColourSetIdAndTone.tone);
             canvasImageData.data[indexR] = closestColour[0];
             canvasImageData.data[indexG] = closestColour[1];
@@ -319,8 +363,8 @@ function getMapartImageDataAndMaterials() {
               for (let matrixColumn = matrixRow === 0 ? 3 : 0; matrixColumn < 5; matrixColumn++) {
                 const weight = ditherMatrix[matrixRow][matrixColumn] / divisor;
                 const target_x = multimap_x + direction * (matrixColumn - 2);
-                if (weight === 0 || target_x < 0 || target_x >= multimapWidth) {
-                  // never carry error over from one side of the image to the other
+                if (weight === 0 || target_x < 0 || target_x >= multimapWidth || transparencyMask[target_y * multimapWidth + target_x] === 1) {
+                  // never carry error over from one side of the image to the other, or into transparent pixels
                   continue;
                 }
                 const target_i = 4 * (target_y * multimapWidth + target_x);
@@ -356,19 +400,30 @@ function getMapartImageDataAndMaterials() {
     for (let whichMap_y = 0; whichMap_y < optionValue_mapSize_y; whichMap_y++) {
       for (let whichMap_x = 0; whichMap_x < optionValue_mapSize_x; whichMap_x++) {
         let supportBlockCount = 0;
+        let nooblineBlockCount = 0;
+        // the noobline is counted on its own when it is not made of the support block (see getNooblineBlock)
+        const nooblineIsSupportBlock = getNooblineBlock(optionValue_supportBlock, InvisibleBlocks) === optionValue_supportBlock.toLowerCase();
         for (let columnNumber = 0; columnNumber < 128; columnNumber++) {
           const coloursLayoutColumn = [];
           for (let rowNumber = 0; rowNumber < 128; rowNumber++) {
-            const pixelIndex = 4 * (multimapWidth * (128 * whichMap_y + rowNumber) + 128 * whichMap_x + columnNumber);
+            const pixelNumber = multimapWidth * (128 * whichMap_y + rowNumber) + 128 * whichMap_x + columnNumber;
+            const pixelIndex = 4 * pixelNumber;
             coloursLayoutColumn.push(
-              exactRGBToColourSetIdAndTone([canvasImageData.data[pixelIndex], canvasImageData.data[pixelIndex + 1], canvasImageData.data[pixelIndex + 2]])
+              transparencyMask[pixelNumber] === 1
+                ? { colourSetId: "-1", tone: "normal" }
+                : exactRGBToColourSetIdAndTone([canvasImageData.data[pixelIndex], canvasImageData.data[pixelIndex + 1], canvasImageData.data[pixelIndex + 2]])
             );
           }
-          supportBlockCount += getPhysicalColumn(coloursLayoutColumn, columnNumber, physicalColumnSettings).filter((block) =>
-            ["NOOBLINE_SCAFFOLD", "NOOBLINE_ROW"].includes(block.colourSetId)
-          ).length;
+          getPhysicalColumn(coloursLayoutColumn, columnNumber, physicalColumnSettings).forEach((block) => {
+            if (block.colourSetId === "NOOBLINE_SCAFFOLD" || (block.colourSetId === "NOOBLINE_ROW" && nooblineIsSupportBlock)) {
+              supportBlockCount++;
+            } else if (block.colourSetId === "NOOBLINE_ROW") {
+              nooblineBlockCount++;
+            }
+          });
         }
         maps[whichMap_y][whichMap_x].supportBlockCount = supportBlockCount;
+        maps[whichMap_y][whichMap_x].nooblineBlockCount = nooblineBlockCount;
       }
     }
   }
@@ -389,9 +444,15 @@ onmessage = (e) => {
   optionValue_mapSize_y = e.data.body.optionValue_mapSize_y;
   optionValue_staircasing = e.data.body.optionValue_staircasing;
   optionValue_whereSupportBlocks = e.data.body.optionValue_whereSupportBlocks;
+  optionValue_supportBlock = e.data.body.optionValue_supportBlock;
+  InvisibleBlocks = e.data.body.InvisibleBlocks;
   optionValue_noSupportBlocksFirstRow = e.data.body.optionValue_noSupportBlocksFirstRow;
   optionValue_transparency = e.data.body.optionValue_transparency;
   optionValue_transparencyTolerance = e.data.body.optionValue_transparencyTolerance;
+  TransparencySources = e.data.body.TransparencySources;
+  optionValue_transparencySource = e.data.body.optionValue_transparencySource;
+  optionValue_transparencyKeyColour = e.data.body.optionValue_transparencyKeyColour;
+  optionValue_transparencyKeyTolerance = e.data.body.optionValue_transparencyKeyTolerance;
   optionValue_betterColour = e.data.body.optionValue_betterColour;
   optionValue_dithering = e.data.body.optionValue_dithering;
   optionValue_ditheringStrength = e.data.body.optionValue_ditheringStrength;

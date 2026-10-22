@@ -1,0 +1,10 @@
+{
+  "PNG": {
+    "uniqueId": 0,
+    "localeKey": "MAP-SETTINGS/TRANSPARENCY/SOURCE-PNG"
+  },
+  "KEY_COLOUR": {
+    "uniqueId": 1,
+    "localeKey": "MAP-SETTINGS/TRANSPARENCY/SOURCE-KEY-COLOUR"
+  }
+}

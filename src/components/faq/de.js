@@ -120,6 +120,39 @@ function FAQContent_de({ images }) {
         genau wie beim NBT-Download.
       </p>
 
+      <h2 id="transparent">Transparente Karten</h2>
+      <b>Wie mache ich Teile einer Karte transparent?</b>
+      <p>
+        Aktiviere unter <em>Einstellungen</em> die <em>Transparenz</em> und wähle, woher die transparenten Bereiche kommen: aus der Transparenz des Bildes
+        (ein PNG mit transparenten Flächen) oder über eine <em>Schlüsselfarbe</em>. Für die Schlüsselfarbe füllst Du alles, was transparent werden soll, mit
+        einer Farbe, die im Bild sonst nicht vorkommt, zum Beispiel knalligem Magenta, und wählst diese Farbe aus; die Toleranz erfasst auch leicht
+        abweichende Töne. Die Vorschau zeigt transparente Pixel als Schachbrettmuster. Schalte die Option <em>Hintergrund</em> der Bildvorbereitung aus, sie
+        füllt transparente Flächen auf.
+      </p>
+
+      <b>Wo muss ich eine transparente Karte bauen?</b>
+      <p>
+        Ein Kartenpixel bleibt nur transparent, wenn unter ihm bis zum Weltboden nichts mit Kartenfarbe liegt. Glas, Glasscheiben, Barrieren und Luft haben
+        keine Kartenfarbe. Eine Karte kann also im Void gebaut werden (zum Beispiel im End) oder auf einer Glasschicht oder einem Barriere-Boden, solange
+        darunter nichts anderes liegt. Buntglas und getöntes Glas haben dagegen eine Kartenfarbe. Zum Prüfen erstellst Du vor dem Bauen an der Stelle eine neue
+        Karte: Sie sollte leer bleiben.
+      </p>
+
+      <b>Warum ist die Reihe unter einem transparenten Bereich heller?</b>
+      <p>
+        Minecraft schattiert jeden Pixel, indem es seine Höhe mit dem Pixel nördlich davon vergleicht. Für einen transparenten Pixel nimmt es den Weltboden,
+        deshalb liegt der Pixel direkt südlich davon immer höher und zeigt seinen hellen Farbton, auch auf flachen Karten. MapartCraft berücksichtigt das: Diese
+        Pixel nutzen nur helle Farbtöne, und die Vorschau zeigt genau, wie die Karte aussehen wird. Dafür darf die Treppe nach einem transparenten Bereich auf
+        beliebiger Höhe neu beginnen, was 3D-Karten niedriger hält.
+      </p>
+
+      <b>Welche Stützblöcke werden verwendet?</b>
+      <p>
+        Die, die Du unter <em>Platzierter Block</em> gewählt hast; dort, wo die Karte transparent sein soll, wird nie etwas platziert. <em>glass</em> ist
+        generell ein praktischer Stützblock, denn es ist auf Karten unsichtbar. Genau deshalb wird die Noobline aus Cobblestone gebaut, wenn der
+        Stützblock Glas (oder ein anderer Block ohne Kartenfarbe) ist: Die oberste Reihe wird an ihr schattiert, sie muss also sichtbar sein.
+      </p>
+
       <h2>Kartendatei (.dat)</h2>
       <b>Was ist eine map.dat-Datei?</b>
       <p>

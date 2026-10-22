@@ -127,11 +127,19 @@
       "UNOBTAINABLE-COLOURS": "Недоступные цвета",
       "UNOBTAINABLE-COLOURS-TT": "Включает цвета map.dat, недоступные в schematic-файлах",
       "TRANSPARENCY": "Прозрачность",
-      "TRANSPARENCY-TT": "Включает прозрачность для map.dat",
+      "TRANSPARENCY-TT": null,
       "TRANSPARENCY-TOLERANCE": "Допуск",
       "MAPDAT-FILENAME-USE-ID": "Числовое имя файла",
       "MAPDAT-FILENAME-USE-ID-TT": "Сохраняет dat файлы под названием 'map_#.dat'",
       "MAPDAT-FILENAME-ID-RANGE": "Диапазон"
+    },
+    "TRANSPARENCY": {
+      "SOURCE": null,
+      "SOURCE-PNG": null,
+      "SOURCE-KEY-COLOUR": null,
+      "KEY-COLOUR": null,
+      "KEY-COLOUR-TT": null,
+      "SCHEMATIC-HINT": null
     },
     "BETTER-COLOUR": "Улучшенный цвет",
     "BETTER-COLOUR-TT": "Обеспечивает лучшую точность цветопередачи",
@@ -188,6 +196,7 @@
     "BLOCK": "Блок",
     "AMOUNT": "Количество",
     "PLACEHOLDER-BLOCK-TT": "Заменяющий блок",
+    "NOOBLINE-BLOCK-TT": null,
     "SHOW-PER-SPLIT": "Показывать макс. количество материалов только на 1 карту",
     "SHOW-PER-SPLIT-TT": "Для повторного использования материалов с заблокированными картами",
     "REFRESH-MATERIALS": "ОБНОВИТЬ МАТЕРИАЛЫ",

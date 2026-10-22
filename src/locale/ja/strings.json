@@ -127,11 +127,19 @@
       "UNOBTAINABLE-COLOURS": "使用不可の色",
       "UNOBTAINABLE-COLOURS-TT": "schematicでは使用できない色を有効にします",
       "TRANSPARENCY": "透明度",
-      "TRANSPARENCY-TT": "map.datの透明度を有効にします",
+      "TRANSPARENCY-TT": null,
       "TRANSPARENCY-TOLERANCE": "許容値",
       "MAPDAT-FILENAME-USE-ID": "ファイル名の番号",
       "MAPDAT-FILENAME-USE-ID-TT": "地図データを 'map_#.dat' として保存します",
       "MAPDAT-FILENAME-ID-RANGE": "範囲"
+    },
+    "TRANSPARENCY": {
+      "SOURCE": null,
+      "SOURCE-PNG": null,
+      "SOURCE-KEY-COLOUR": null,
+      "KEY-COLOUR": null,
+      "KEY-COLOUR-TT": null,
+      "SCHEMATIC-HINT": null
     },
     "BETTER-COLOUR": "色の改善",
     "BETTER-COLOUR-TT": "色の精度を高めます",
@@ -188,6 +196,7 @@
     "BLOCK": "ブロック",
     "AMOUNT": "数",
     "PLACEHOLDER-BLOCK-TT": "プレースホルダ",
+    "NOOBLINE-BLOCK-TT": null,
     "SHOW-PER-SPLIT": "各地図で最大の必要数のみ表示",
     "SHOW-PER-SPLIT-TT": "地図をロックして材料を使いまわす場合",
     "REFRESH-MATERIALS": "材料を更新",

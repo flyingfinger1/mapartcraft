@@ -3,11 +3,13 @@ import React, { Component, createRef } from "react";
 import Tooltip from "../tooltip";
 import MapCanvasWorker from "./workers/mapCanvas.jsworker"; // FINALLY got this to work; .js gets imported as code, anything else as URL
 import PhysicalLayoutScript from "./workers/physicalLayout.jsworker";
+import InvisibleBlocks from "./json/invisibleBlocks.json";
 
 import BackgroundColourModes from "./json/backgroundColourModes.json";
 import CropModes from "./json/cropModes.json";
 import DitherMethods from "./json/ditherMethods.json";
 import MapModes from "./json/mapModes.json";
+import TransparencySources from "./json/transparencySources.json";
 import WhereSupportBlocksModes from "./json/whereSupportBlocksModes.json";
 
 import IMG_Null from "../../images/null.png";
@@ -73,9 +75,13 @@ class MapPreview extends Component {
       prevProps.optionValue_cropImage_percent_y === newProps.optionValue_cropImage_percent_y,
       prevProps.optionValue_staircasing === newProps.optionValue_staircasing,
       prevProps.optionValue_whereSupportBlocks === newProps.optionValue_whereSupportBlocks,
+      prevProps.optionValue_supportBlock === newProps.optionValue_supportBlock,
       prevProps.optionValue_noSupportBlocksFirstRow === newProps.optionValue_noSupportBlocksFirstRow,
       prevProps.optionValue_transparency === newProps.optionValue_transparency,
       prevProps.optionValue_transparencyTolerance === newProps.optionValue_transparencyTolerance,
+      prevProps.optionValue_transparencySource === newProps.optionValue_transparencySource,
+      prevProps.optionValue_transparencyKeyColour === newProps.optionValue_transparencyKeyColour,
+      prevProps.optionValue_transparencyKeyTolerance === newProps.optionValue_transparencyKeyTolerance,
       prevProps.optionValue_betterColour === newProps.optionValue_betterColour,
       prevProps.optionValue_dithering === newProps.optionValue_dithering,
       prevProps.optionValue_ditheringStrength === newProps.optionValue_ditheringStrength,
@@ -273,9 +279,13 @@ class MapPreview extends Component {
       optionValue_mapSize_y,
       optionValue_staircasing,
       optionValue_whereSupportBlocks,
+      optionValue_supportBlock,
       optionValue_noSupportBlocksFirstRow,
       optionValue_transparency,
       optionValue_transparencyTolerance,
+      optionValue_transparencySource,
+      optionValue_transparencyKeyColour,
+      optionValue_transparencyKeyTolerance,
       optionValue_betterColour,
       optionValue_dithering,
       optionValue_ditheringStrength,
@@ -318,10 +328,16 @@ class MapPreview extends Component {
         optionValue_mapSize_y: optionValue_mapSize_y,
         optionValue_staircasing: optionValue_staircasing,
         optionValue_whereSupportBlocks: optionValue_whereSupportBlocks,
+        optionValue_supportBlock: optionValue_supportBlock,
         optionValue_noSupportBlocksFirstRow: optionValue_noSupportBlocksFirstRow,
         physicalLayoutScriptURL: new URL(PhysicalLayoutScript, window.location.href).href,
+        InvisibleBlocks: InvisibleBlocks,
         optionValue_transparency: optionValue_transparency,
         optionValue_transparencyTolerance: optionValue_transparencyTolerance,
+        TransparencySources: TransparencySources,
+        optionValue_transparencySource: optionValue_transparencySource,
+        optionValue_transparencyKeyColour: optionValue_transparencyKeyColour,
+        optionValue_transparencyKeyTolerance: optionValue_transparencyKeyTolerance,
         optionValue_betterColour: optionValue_betterColour,
         optionValue_dithering: optionValue_dithering,
         optionValue_ditheringStrength: optionValue_ditheringStrength,

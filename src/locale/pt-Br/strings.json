@@ -127,11 +127,19 @@
       "UNOBTAINABLE-COLOURS": "Cores não obteníveis",
       "UNOBTAINABLE-COLOURS-TT": "Habilita cores no map.dat não obteníveis em esquemas",
       "TRANSPARENCY": "Transparência",
-      "TRANSPARENCY-TT": "Habilita transparência no map.dat",
+      "TRANSPARENCY-TT": null,
       "TRANSPARENCY-TOLERANCE": "Tolerância",
       "MAPDAT-FILENAME-USE-ID": "Nome de arquivo numérico",
       "MAPDAT-FILENAME-USE-ID-TT": "Salva arquivos map.dat como 'map_#.dat'",
       "MAPDAT-FILENAME-ID-RANGE": "Intervalo"
+    },
+    "TRANSPARENCY": {
+      "SOURCE": null,
+      "SOURCE-PNG": null,
+      "SOURCE-KEY-COLOUR": null,
+      "KEY-COLOUR": null,
+      "KEY-COLOUR-TT": null,
+      "SCHEMATIC-HINT": null
     },
     "BETTER-COLOUR": "Cores melhores",
     "BETTER-COLOUR-TT": "Provê uma maior precisão nas cores",
@@ -188,6 +196,7 @@
     "BLOCK": "Bloco",
     "AMOUNT": "Quantidade",
     "PLACEHOLDER-BLOCK-TT": "Bloco de apoio",
+    "NOOBLINE-BLOCK-TT": null,
     "SHOW-PER-SPLIT": "Mostrar apenas o máximo de materiais por pedaço",
     "SHOW-PER-SPLIT-TT": "Para o reuso de materiais com mapas trancados",
     "REFRESH-MATERIALS": "REFRESH MATERIALS",

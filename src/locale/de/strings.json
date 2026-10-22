@@ -127,11 +127,19 @@
       "UNOBTAINABLE-COLOURS": "Nicht erhältliche Farben",
       "UNOBTAINABLE-COLOURS-TT": "Aktiviert map.dat exklusive Farben, die in Schematics nicht verfügbar sind",
       "TRANSPARENCY": "Transparenz",
-      "TRANSPARENCY-TT": "Aktiviert Transparenz für map.dat",
+      "TRANSPARENCY-TT": "Macht Teile der Karte transparent",
       "TRANSPARENCY-TOLERANCE": "Toleranz",
       "MAPDAT-FILENAME-USE-ID": "Nummerierte Dateinamen",
       "MAPDAT-FILENAME-USE-ID-TT": "Speichert die map.dat-Dateien als 'map_#.dat'",
       "MAPDAT-FILENAME-ID-RANGE": "Bereich"
+    },
+    "TRANSPARENCY": {
+      "SOURCE": "Transparente Bereiche",
+      "SOURCE-PNG": "Transparenz des Bildes (PNG)",
+      "SOURCE-KEY-COLOUR": "Schlüsselfarbe",
+      "KEY-COLOUR": "Schlüsselfarbe",
+      "KEY-COLOUR-TT": "Pixel in dieser Farbe (innerhalb der Toleranz) werden transparent",
+      "SCHEMATIC-HINT": "Transparente Karten müssen über einem Untergrund gebaut werden, der auf Karten unsichtbar ist (Void, Glas oder Barriere), und zwar bis zum Weltboden. Die Reihe unter einem transparenten Bereich zeigt immer ihren hellen Farbton. Details:"
     },
     "BETTER-COLOUR": "Verbesserte Farben",
     "BETTER-COLOUR-TT": "Aktiviert eine optimierte Farbgenauigkeit",
@@ -188,6 +196,7 @@
     "BLOCK": "Block",
     "AMOUNT": "Anzahl",
     "PLACEHOLDER-BLOCK-TT": "Platzhalter-Block",
+    "NOOBLINE-BLOCK-TT": "Noobline: Glas und andere Blöcke ohne Kartenfarbe sind auf Karten unsichtbar, deshalb wird die Noobline aus diesem Block gebaut",
     "SHOW-PER-SPLIT": "Nur maximale Materialienveränderung zeigen:",
     "SHOW-PER-SPLIT-TT": "Für Materialwiderverwertung bei feststellbaren Karten",
     "REFRESH-MATERIALS": "MATERIALIEN AKTUALISIEREN",

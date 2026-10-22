@@ -6,6 +6,7 @@ var optionValue_version;
 var optionValue_staircasing;
 var optionValue_whereSupportBlocks;
 var optionValue_supportBlock;
+var InvisibleBlocks;
 var optionValue_noSupportBlocksFirstRow;
 var pixelsData;
 var maps;
@@ -319,7 +320,7 @@ class Map_NBT {
       } else if (colourSetId === "NOOBLINE_ROW") {
         paletteItemToPush.Name = {
           type: TagTypes.string,
-          value: optionValue_noSupportBlocksFirstRow ? "minecraft:air" : `minecraft:${optionValue_supportBlock.toLowerCase()}`,
+          value: optionValue_noSupportBlocksFirstRow ? "minecraft:air" : `minecraft:${getNooblineBlock(optionValue_supportBlock, InvisibleBlocks)}`,
         };
       } else {
         let blockNBTData = coloursJSON[colourSetId].blocks[currentSelectedBlocks[colourSetId]].validVersions[optionValue_version.MCVersion];
@@ -825,6 +826,7 @@ onmessage = (e) => {
   optionValue_staircasing = e.data.body.optionValue_staircasing;
   optionValue_whereSupportBlocks = e.data.body.optionValue_whereSupportBlocks;
   optionValue_supportBlock = e.data.body.optionValue_supportBlock;
+  InvisibleBlocks = e.data.body.InvisibleBlocks;
   optionValue_noSupportBlocksFirstRow = e.data.body.optionValue_noSupportBlocksFirstRow;
   pixelsData = e.data.body.pixelsData;
   maps = e.data.body.maps;

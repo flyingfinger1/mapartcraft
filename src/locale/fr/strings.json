@@ -127,11 +127,19 @@
       "UNOBTAINABLE-COLOURS": "Couleurs introuvables",
       "UNOBTAINABLE-COLOURS-TT": "Permet map.dat d'obtenir des couleurs impossibles à obtenir avec schematics",
       "TRANSPARENCY": "Transparence",
-      "TRANSPARENCY-TT": "Tolérance",
+      "TRANSPARENCY-TT": null,
       "TRANSPARENCY-TOLERANCE": "Tolérance",
       "MAPDAT-FILENAME-USE-ID": "Nom du fichier",
       "MAPDAT-FILENAME-USE-ID-TT": "Sauvgarde mapdats en tant que 'map_#.dat'",
       "MAPDAT-FILENAME-ID-RANGE": "Distance"
+    },
+    "TRANSPARENCY": {
+      "SOURCE": null,
+      "SOURCE-PNG": null,
+      "SOURCE-KEY-COLOUR": null,
+      "KEY-COLOUR": null,
+      "KEY-COLOUR-TT": null,
+      "SCHEMATIC-HINT": null
     },
     "BETTER-COLOUR": "Meilleure couleur",
     "BETTER-COLOUR-TT": "Donne une meilleure précision des couleurs",
@@ -188,6 +196,7 @@
     "BLOCK": "Bloc",
     "AMOUNT": "Quantité",
     "PLACEHOLDER-BLOCK-TT": "Placeholder Bloc",
+    "NOOBLINE-BLOCK-TT": null,
     "SHOW-PER-SPLIT": "Afficher le nombres max de matériaux par section",
     "SHOW-PER-SPLIT-TT": "Pour réutiliser les blocs une fois la carte verrouillée",
     "REFRESH-MATERIALS": "ACTUALISER LES MATÉRIAUX",

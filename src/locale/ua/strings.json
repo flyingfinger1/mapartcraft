@@ -128,11 +128,19 @@
       "UNOBTAINABLE-COLOURS": "Недоступні кольори",
       "UNOBTAINABLE-COLOURS-TT": "Вмикає кольори в map.dat, які неможливо отримати в схематиках",
       "TRANSPARENCY": "Прозорість",
-      "TRANSPARENCY-TT": "Вмикає прозорість для map.dat",
+      "TRANSPARENCY-TT": null,
       "TRANSPARENCY-TOLERANCE": "Допуск",
       "MAPDAT-FILENAME-USE-ID": "Числове ім'я файла",
       "MAPDAT-FILENAME-USE-ID-TT": "Зберігає dat файли під назвою 'map_#.dat'",
       "MAPDAT-FILENAME-ID-RANGE": "Діапазон"
+    },
+    "TRANSPARENCY": {
+      "SOURCE": null,
+      "SOURCE-PNG": null,
+      "SOURCE-KEY-COLOUR": null,
+      "KEY-COLOUR": null,
+      "KEY-COLOUR-TT": null,
+      "SCHEMATIC-HINT": null
     },
     "BETTER-COLOUR": "Кращі кольори",
     "BETTER-COLOUR-TT": "Дає більшу точність кольорів",
@@ -189,6 +197,7 @@
     "BLOCK": "Блок",
     "AMOUNT": "К-сть",
     "PLACEHOLDER-BLOCK-TT": "Заміняючий блок",
+    "NOOBLINE-BLOCK-TT": null,
     "SHOW-PER-SPLIT": "Тільки показувати макс. кількість матеріалів на 1 мапу",
     "SHOW-PER-SPLIT-TT": "Для повторного використання з ламінованими мапами",
     "REFRESH-MATERIALS": "ОНОВИТИ МАТЕРІАЛИ",

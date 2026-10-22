@@ -11,6 +11,7 @@ import CropModes from "./json/cropModes.json";
 import DitherMethods from "./json/ditherMethods.json";
 import MapModes from "./json/mapModes.json";
 import SupportedVersions from "./json/supportedVersions.json";
+import TransparencySources from "./json/transparencySources.json";
 import WhereSupportBlocksModes from "./json/whereSupportBlocksModes.json";
 
 import "./mapSettings.css";
@@ -50,6 +51,12 @@ class MapSettings extends Component {
       onOptionChange_transparency,
       optionValue_transparencyTolerance,
       onOptionChange_transparencyTolerance,
+      optionValue_transparencySource,
+      onOptionChange_transparencySource,
+      optionValue_transparencyKeyColour,
+      onOptionChange_transparencyKeyColour,
+      optionValue_transparencyKeyTolerance,
+      onOptionChange_transparencyKeyTolerance,
       optionValue_mapdatFilenameUseId,
       onOptionChange_mapdatFilenameUseId,
       optionValue_mapdatFilenameIdStart,
@@ -326,65 +333,6 @@ class MapSettings extends Component {
         </React.Fragment>
       );
     } else {
-      let setting_transparency = (
-        <tr>
-          <th>
-            <Tooltip tooltipText={getLocaleString("MAP-SETTINGS/MAPDAT-SPECIFIC/TRANSPARENCY-TT")}>
-              <b>
-                {getLocaleString("MAP-SETTINGS/MAPDAT-SPECIFIC/TRANSPARENCY")}
-                {":"}
-              </b>
-            </Tooltip>{" "}
-          </th>
-          <td>
-            <input type="checkbox" checked={optionValue_transparency} onChange={onOptionChange_transparency} />
-          </td>
-          <td />
-        </tr>
-      );
-      let setting_transparencyTolerance = null;
-      if (optionValue_transparency) {
-        setting_transparencyTolerance = (
-          <tr>
-            <th>
-              <b>
-                {getLocaleString("MAP-SETTINGS/MAPDAT-SPECIFIC/TRANSPARENCY-TOLERANCE")}
-                {":"}
-              </b>{" "}
-            </th>
-            <td>
-              <input
-                type="range"
-                min="0"
-                max="256"
-                value={optionValue_transparencyTolerance}
-                onChange={(e) => onOptionChange_transparencyTolerance(parseInt(e.target.value))}
-              />
-            </td>
-            <td>
-              <BufferedNumberInput
-                min="0"
-                max="256"
-                step="1"
-                value={optionValue_transparencyTolerance}
-                validators={[(t) => !isNaN(t), (t) => t >= 0, (t) => t <= 256]}
-                onValidInput={onOptionChange_transparencyTolerance}
-                style={{ width: "3em" }}
-              />
-            </td>
-          </tr>
-        );
-      }
-      let settingGroup_transparency = (
-        <div className={optionValue_transparency ? "settingsGroup" : null}>
-          <table>
-            <tbody>
-              {setting_transparency}
-              {setting_transparencyTolerance}
-            </tbody>
-          </table>
-        </div>
-      );
       let setting_mapdatFilenameUseId = (
         <tr>
           <th>
@@ -447,11 +395,105 @@ class MapSettings extends Component {
       );
       settings_mapModeConditional = (
         <React.Fragment>
-          {settingGroup_transparency}
           {settingGroup_mapdatFilename}
         </React.Fragment>
       );
     }
+    // transparency, for map.dat and (built above an invisible floor) for schematics
+    const toleranceRow = (value, max, onChange) => (
+      <tr>
+        <th>
+          <b>
+            {getLocaleString("MAP-SETTINGS/MAPDAT-SPECIFIC/TRANSPARENCY-TOLERANCE")}
+            {":"}
+          </b>{" "}
+        </th>
+        <td>
+          <input type="range" min="0" max={max} value={value} onChange={(e) => onChange(parseInt(e.target.value))} />
+        </td>
+        <td>
+          <BufferedNumberInput
+            min="0"
+            max={max}
+            step="1"
+            value={value}
+            validators={[(t) => !isNaN(t), (t) => t >= 0, (t) => t <= max]}
+            onValidInput={onChange}
+            style={{ width: "3em" }}
+          />
+        </td>
+      </tr>
+    );
+    const settingGroup_transparency = (
+      <div className={optionValue_transparency ? "settingsGroup" : null}>
+        <table>
+          <tbody>
+            <tr>
+              <th>
+                <Tooltip tooltipText={getLocaleString("MAP-SETTINGS/MAPDAT-SPECIFIC/TRANSPARENCY-TT")}>
+                  <b>
+                    {getLocaleString("MAP-SETTINGS/MAPDAT-SPECIFIC/TRANSPARENCY")}
+                    {":"}
+                  </b>
+                </Tooltip>{" "}
+              </th>
+              <td>
+                <input type="checkbox" checked={optionValue_transparency} onChange={onOptionChange_transparency} />
+              </td>
+              <td />
+            </tr>
+            {optionValue_transparency && (
+              <tr>
+                <th>
+                  <b>
+                    {getLocaleString("MAP-SETTINGS/TRANSPARENCY/SOURCE")}
+                    {":"}
+                  </b>{" "}
+                </th>
+                <td colSpan={2}>
+                  <select value={optionValue_transparencySource} onChange={onOptionChange_transparencySource}>
+                    {Object.values(TransparencySources).map((source) => (
+                      <option key={source.uniqueId} value={source.uniqueId}>
+                        {getLocaleString(source.localeKey)}
+                      </option>
+                    ))}
+                  </select>
+                </td>
+              </tr>
+            )}
+            {optionValue_transparency &&
+              optionValue_transparencySource === TransparencySources.PNG.uniqueId &&
+              toleranceRow(optionValue_transparencyTolerance, 256, onOptionChange_transparencyTolerance)}
+            {optionValue_transparency && optionValue_transparencySource === TransparencySources.KEY_COLOUR.uniqueId && (
+              <tr>
+                <th>
+                  <Tooltip tooltipText={getLocaleString("MAP-SETTINGS/TRANSPARENCY/KEY-COLOUR-TT")}>
+                    <b>
+                      {getLocaleString("MAP-SETTINGS/TRANSPARENCY/KEY-COLOUR")}
+                      {":"}
+                    </b>
+                  </Tooltip>{" "}
+                </th>
+                <td colSpan={2}>
+                  <input type="color" value={optionValue_transparencyKeyColour} onChange={onOptionChange_transparencyKeyColour} />
+                </td>
+              </tr>
+            )}
+            {optionValue_transparency &&
+              optionValue_transparencySource === TransparencySources.KEY_COLOUR.uniqueId &&
+              toleranceRow(optionValue_transparencyKeyTolerance, 128, onOptionChange_transparencyKeyTolerance)}
+          </tbody>
+        </table>
+        {optionValue_transparency && optionValue_modeNBTOrMapdat === MapModes.SCHEMATIC_NBT.uniqueId && (
+          <p className="transparencyHint">
+            {getLocaleString("MAP-SETTINGS/TRANSPARENCY/SCHEMATIC-HINT")}{" "}
+            <a href={`${window.location.pathname.replace(/\/+$/, "")}/faq#transparent`} target="_blank" rel="noopener noreferrer">
+              {getLocaleString("FAQ/FAQ")}
+            </a>
+          </p>
+        )}
+      </div>
+    );
     const setting_betterColour = (
       <React.Fragment>
         <Tooltip tooltipText={getLocaleString("MAP-SETTINGS/BETTER-COLOUR-TT")}>
@@ -730,6 +772,7 @@ class MapSettings extends Component {
         {setting_grid}
         {setting_staircasing}
         {settings_mapModeConditional}
+        {settingGroup_transparency}
         {setting_betterColour}
         {setting_dithering}
         {settingGroup_preprocessing}

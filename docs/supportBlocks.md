@@ -113,3 +113,9 @@ In effect we create a carbon-copy of the map structure as it would appear in [No
 Each support block remembers why it was placed: either it holds up the block directly above it (instances that involve a gravity affected block, and every block in [All blocks double (optimized)](#All-blocks-double-(optimized))), or it is an anchor that sits next to a target block at the same height so that the target can be placed against it, for example `S` next to a block that steps down.
 
 Valley staircasing pulls plateaus and the valleys between them down by different amounts. All blocks with the same z-value move together, so a support block always keeps holding the block above it, but an anchor's target can end up at a different height. A support block whose reasons are all gone is an overhang that only costs material, and it is removed. Since an anchor can target another support block, this is repeated until nothing changes. A support block beneath a gravity affected block is never removed.
+
+## Transparent maps
+
+Minecraft shades a pixel South of a transparent pixel against the bottom of the world, so it always shows its light tone. `getPhysicalColumn` therefore splits a column at transparent pixels into segments and lays out each segment like a column of its own: only the first segment has a noobline, and every segment starts its staircase anew, which keeps 3D maps lower. Nothing is placed in a transparent row, and every block that needs support still gets a support block beneath it, also in segments that are only one row long.
+
+The noobline has to be visible on the map, because the first row is shaded against it. When the support block has no map colour (glass, barrier, see `json/invisibleBlocks.json`), the noobline is built from cobblestone instead and listed separately in the materials.

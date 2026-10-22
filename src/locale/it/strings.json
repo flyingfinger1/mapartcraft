@@ -133,6 +133,14 @@
       "MAPDAT-FILENAME-USE-ID-TT": null,
       "MAPDAT-FILENAME-ID-RANGE": null
     },
+    "TRANSPARENCY": {
+      "SOURCE": null,
+      "SOURCE-PNG": null,
+      "SOURCE-KEY-COLOUR": null,
+      "KEY-COLOUR": null,
+      "KEY-COLOUR-TT": null,
+      "SCHEMATIC-HINT": null
+    },
     "BETTER-COLOUR": "Colori migliori",
     "BETTER-COLOUR-TT": "Garantisce una maggiore precisione del colore",
     "DITHERING": {
@@ -188,6 +196,7 @@
     "BLOCK": "Blocco",
     "AMOUNT": "Quantità",
     "PLACEHOLDER-BLOCK-TT": "Blocco esempio",
+    "NOOBLINE-BLOCK-TT": null,
     "SHOW-PER-SPLIT": null,
     "SHOW-PER-SPLIT-TT": null,
     "REFRESH-MATERIALS": "AGGIORNA MATERIALI",

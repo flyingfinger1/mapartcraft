@@ -119,6 +119,37 @@ function FAQContent_en({ images }) {
         just like the NBT download.
       </p>
 
+      <h2 id="transparent">Transparent maps</h2>
+      <b>How do I make parts of a map transparent?</b>
+      <p>
+        Enable <em>Transparency</em> under <em>Settings</em> and choose where the transparent parts come from: the transparency of the image (a PNG with
+        transparent areas) or a <em>key colour</em>. With a key colour, fill everything that should be transparent with a colour that does not appear in the
+        picture, for example bright magenta, and pick that colour; the tolerance also catches slightly different shades. The preview shows transparent pixels
+        as a checkerboard. Turn off the <em>Background</em> option of the image preprocessing, it fills transparent areas.
+      </p>
+
+      <b>Where do I have to build a transparent map?</b>
+      <p>
+        A map pixel only stays transparent if nothing with a map colour is below it, down to the bottom of the world. Glass, glass panes, barriers and air
+        have no map colour, so a map can be built in the void (for example in the End), or on a layer of glass or a floor of barriers, as long as nothing
+        else is underneath. Stained and tinted glass do have a map colour. To check a place, create a new map there before you build: it should stay empty.
+      </p>
+
+      <b>Why is the row below a transparent part lighter?</b>
+      <p>
+        Minecraft shades every pixel by comparing its height with the pixel North of it. For a transparent pixel it uses the bottom of the world, so the pixel
+        directly South of it is always higher and shows its light tone, also on flat maps. MapartCraft takes this into account: these pixels only use light
+        tones, and the preview shows exactly what the map will look like. In return, the staircase may start again at any height after a transparent part,
+        which keeps 3D maps lower.
+      </p>
+
+      <b>Which support blocks are used?</b>
+      <p>
+        The ones you chose under <em>Block to add</em>; nothing is ever placed where the map should be transparent. <em>glass</em> is a handy support block in
+        general: it is invisible on maps. Because of that, the noobline is built from cobblestone when the support block is glass (or another block
+        without map colour): the top row is shaded against it, so it has to be visible.
+      </p>
+
       <h2>Datafile (.dat)</h2>
       <b>What is a map.dat file?</b>
       <p>

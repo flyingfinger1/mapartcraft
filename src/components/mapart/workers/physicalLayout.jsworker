@@ -13,7 +13,19 @@
     The target is described relative to a map row: the block of that row (dy = 0) or the support beneath it (dy = -1).
   Valley staircasing pulls plateaus and valleys down by different amounts, which can move an anchor's target away.
   A support block whose reasons are all gone is an overhang and is removed.
+
+  Transparent pixels (colourSetId "-1") split a column into segments. Minecraft shades the pixel South of a transparent
+  pixel against the bottom of the world, so it always shows its light tone whatever its height: every segment can start
+  its staircase anew, and is laid out like a column of its own. Nothing is ever placed in a transparent row, or the map
+  would show it there.
 */
+
+// The noobline shades the first map row, so it has to be visible on the map; a support block without map colour (eg glass)
+// is replaced by a visible one there.
+function getNooblineBlock(supportBlock, InvisibleBlocks) {
+  const block = supportBlock.toLowerCase();
+  return InvisibleBlocks.blocks.includes(block) ? InvisibleBlocks.nooblineFallback : block;
+}
 
 const SupportReason = {
   HOLD: { type: "HOLD" },
@@ -21,7 +33,39 @@ const SupportReason = {
 };
 
 function getPhysicalColumn(coloursLayoutColumn, columnNumber, settings) {
-  const { MapModes, WhereSupportBlocksModes, staircasing, whereSupportBlocks, noSupportBlocksFirstRow, isSupportBlockMandatory } = settings;
+  const { noSupportBlocksFirstRow } = settings;
+  const firstMapRowZ = noSupportBlocksFirstRow ? 0 : 1; // the noobline, if any, is at z = 0
+
+  let physicalColumn = [];
+  const transparentRowsZ = new Set();
+  let segmentStart = null;
+  for (let rowNumber = 0; rowNumber <= coloursLayoutColumn.length; rowNumber++) {
+    const isTransparent = rowNumber === coloursLayoutColumn.length || coloursLayoutColumn[rowNumber].colourSetId === "-1";
+    if (isTransparent && rowNumber < coloursLayoutColumn.length) {
+      transparentRowsZ.add(firstMapRowZ + rowNumber);
+    }
+    if (!isTransparent && segmentStart === null) {
+      segmentStart = rowNumber;
+    } else if (isTransparent && segmentStart !== null) {
+      const isFirstSegment = segmentStart === 0;
+      physicalColumn = physicalColumn.concat(
+        getPhysicalColumnSegment(coloursLayoutColumn.slice(segmentStart, rowNumber), columnNumber, settings, {
+          firstRowZ: firstMapRowZ + segmentStart,
+          // only the top of the map gets a noobline; a segment after a transparent pixel needs none
+          withNoobline: isFirstSegment && !noSupportBlocksFirstRow,
+          skipFirstRowSupports: isFirstSegment && noSupportBlocksFirstRow,
+        })
+      );
+      segmentStart = null;
+    }
+  }
+  // a block in a transparent row would show on the map; the layout never places one there, this makes sure of it
+  return physicalColumn.filter((block) => !transparentRowsZ.has(block.z));
+}
+
+function getPhysicalColumnSegment(coloursLayoutColumn, columnNumber, settings, segment) {
+  const { MapModes, WhereSupportBlocksModes, staircasing, whereSupportBlocks, isSupportBlockMandatory } = settings;
+  const { firstRowZ, withNoobline, skipFirstRowSupports } = segment;
 
   let physicalColumn = [];
   const rowBlocks = new Map(); // map row number -> its block; -1 is the noobline
@@ -64,11 +108,8 @@ function getPhysicalColumn(coloursLayoutColumn, columnNumber, settings) {
     pushBlock(y, z, "NOOBLINE_SCAFFOLD").reasons = reasons;
   };
 
-  const mapRowSouthOffset = noSupportBlocksFirstRow ? 0 : 1;
-
-  // initialize noobline only when it is enabled
-  if (!noSupportBlocksFirstRow) {
-    rowBlocks.set(-1, pushBlock(currentHeight, 0, "NOOBLINE_ROW"));
+  if (withNoobline) {
+    rowBlocks.set(-1, pushBlock(currentHeight, firstRowZ - 1, "NOOBLINE_ROW"));
   }
 
   for (let rowNumber = 0; rowNumber < coloursLayoutColumn.length; rowNumber++) {
@@ -93,7 +134,7 @@ function getPhysicalColumn(coloursLayoutColumn, columnNumber, settings) {
     }
 
     // when noobline is enabled, map rows are offset South by one block
-    const mapRowZ = rowNumber + mapRowSouthOffset;
+    const mapRowZ = firstRowZ + rowNumber;
     const northFaceZ = mapRowZ - 1;
 
     rowBlocks.set(rowNumber, pushBlock(currentHeight, mapRowZ, coloursLayoutBlock.colourSetId));
@@ -105,7 +146,7 @@ function getPhysicalColumn(coloursLayoutColumn, columnNumber, settings) {
       }
       case WhereSupportBlocksModes.IMPORTANT.uniqueId: {
         // Skip support blocks for the first row if the option is enabled
-        if (!(noSupportBlocksFirstRow && rowNumber === 0) && isSupportBlockMandatory(coloursLayoutBlock)) {
+        if (!(skipFirstRowSupports && rowNumber === 0) && isSupportBlockMandatory(coloursLayoutBlock)) {
           pushSupport(currentHeight - 1, mapRowZ, [SupportReason.HOLD]);
         }
         break;
@@ -113,8 +154,8 @@ function getPhysicalColumn(coloursLayoutColumn, columnNumber, settings) {
       case WhereSupportBlocksModes.ALL_OPTIMIZED.uniqueId: {
         switch (rowNumber) {
           case 0: {
-            // Skip support blocks for the first row if the option is enabled
-            if (!noSupportBlocksFirstRow) {
+            // these support blocks are beneath the noobline, so only when there is one
+            if (withNoobline) {
               // first under-support block, beneath the noobline
               const reasons = [];
               if (coloursLayoutBlock.tone === "dark") {
@@ -223,7 +264,7 @@ function getPhysicalColumn(coloursLayoutColumn, columnNumber, settings) {
       case WhereSupportBlocksModes.ALL_DOUBLE_OPTIMIZED.uniqueId: {
         switch (rowNumber) {
           case 0: {
-            if (!noSupportBlocksFirstRow) {
+            if (withNoobline) {
               pushSupport(previousHeight - 1, northFaceZ, [SupportReason.HOLD]);
               if (coloursLayoutBlock.tone === "dark") {
                 pushSupport(previousHeight - 2, northFaceZ, [SupportReason.anchor(0, -1)]);
@@ -261,6 +302,22 @@ function getPhysicalColumn(coloursLayoutColumn, columnNumber, settings) {
         throw new Error("Unknown support-blocks option");
       }
     }
+  }
+
+  // Every block that needs support gets a support block beneath it (in All double mode: every block). The rules above do
+  // this for whole columns; short segments between transparent pixels can miss out.
+  if (whereSupportBlocks !== WhereSupportBlocksModes.NONE.uniqueId) {
+    const occupied = new Set(physicalColumn.map((block) => `${block.y},${block.z}`));
+    rowBlocks.forEach((block, rowNumber) => {
+      if (rowNumber === -1 || (skipFirstRowSupports && rowNumber === 0) || occupied.has(`${block.y - 1},${block.z}`)) {
+        return;
+      }
+      const needsSupport =
+        whereSupportBlocks === WhereSupportBlocksModes.ALL_DOUBLE_OPTIMIZED.uniqueId || isSupportBlockMandatory(coloursLayoutColumn[rowNumber]);
+      if (needsSupport) {
+        pushSupport(block.y - 1, block.z, [SupportReason.HOLD]);
+      }
+    });
   }
 
   // sort in terms of z and y, necessary for determining when a plateau has finished in valley mode, and correct noobline heights in map preview

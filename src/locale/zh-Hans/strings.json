@@ -127,11 +127,19 @@
       "UNOBTAINABLE-COLOURS": "无法获得的颜色",
       "UNOBTAINABLE-COLOURS-TT": "启用schematic中无法获得的 map.dat 档颜色",
       "TRANSPARENCY": "透明度",
-      "TRANSPARENCY-TT": "为 map.dat 启用透明度",
+      "TRANSPARENCY-TT": null,
       "TRANSPARENCY-TOLERANCE": "宽容度",
       "MAPDAT-FILENAME-USE-ID": "数字文件名",
       "MAPDAT-FILENAME-USE-ID-TT": "将地图数据另存为'map_#.dat'",
       "MAPDAT-FILENAME-ID-RANGE": "范围"
+    },
+    "TRANSPARENCY": {
+      "SOURCE": null,
+      "SOURCE-PNG": null,
+      "SOURCE-KEY-COLOUR": null,
+      "KEY-COLOUR": null,
+      "KEY-COLOUR-TT": null,
+      "SCHEMATIC-HINT": null
     },
     "BETTER-COLOUR": "更好的色准",
     "BETTER-COLOUR-TT": "为您提供更好的色彩准确性",
@@ -189,6 +197,7 @@
     "BLOCK": "方块",
     "AMOUNT": "合计",
     "PLACEHOLDER-BLOCK-TT": "占位方块",
+    "NOOBLINE-BLOCK-TT": null,
     "SHOW-PER-SPLIT": "只显示每个分割区块需要的最大材料",
     "SHOW-PER-SPLIT-TT": "用于锁定地图的材料重用",
     "REFRESH-MATERIALS": "刷新材料",

@@ -9,6 +9,7 @@ import WhereSupportBlocksModes from "./json/whereSupportBlocksModes.json";
 
 import NBTWorker from "./workers/nbt.jsworker";
 import PhysicalLayoutScript from "./workers/physicalLayout.jsworker";
+import InvisibleBlocks from "./json/invisibleBlocks.json";
 
 import "./greenButtons.css";
 
@@ -189,6 +190,7 @@ class GreenButtons extends Component {
         optionValue_supportBlock: optionValue_supportBlock,
         optionValue_noSupportBlocksFirstRow: optionValue_noSupportBlocksFirstRow,
         physicalLayoutScriptURL: new URL(PhysicalLayoutScript, window.location.href).href,
+        InvisibleBlocks: InvisibleBlocks,
         schematicBaseName: uploadedImage_baseFilename,
         pixelsData: currentMaterialsData.pixelsData,
         maps: currentMaterialsData.maps,
@@ -242,6 +244,9 @@ class GreenButtons extends Component {
       optionValue_noSupportBlocksFirstRow,
       optionValue_transparency,
       optionValue_transparencyTolerance,
+      optionValue_transparencySource,
+      optionValue_transparencyKeyColour,
+      optionValue_transparencyKeyTolerance,
       optionValue_mapdatFilenameUseId,
       optionValue_mapdatFilenameIdStart,
       optionValue_betterColour,
@@ -272,6 +277,9 @@ class GreenButtons extends Component {
       prevProps.optionValue_noSupportBlocksFirstRow !== optionValue_noSupportBlocksFirstRow,
       prevProps.optionValue_transparency !== optionValue_transparency,
       prevProps.optionValue_transparencyTolerance !== optionValue_transparencyTolerance,
+      prevProps.optionValue_transparencySource !== optionValue_transparencySource,
+      prevProps.optionValue_transparencyKeyColour !== optionValue_transparencyKeyColour,
+      prevProps.optionValue_transparencyKeyTolerance !== optionValue_transparencyKeyTolerance,
       prevProps.optionValue_mapdatFilenameUseId !== optionValue_mapdatFilenameUseId,
       prevProps.optionValue_mapdatFilenameIdStart !== optionValue_mapdatFilenameIdStart,
       prevProps.optionValue_betterColour !== optionValue_betterColour,

@@ -16,6 +16,7 @@ import DefaultPresets from "./json/defaultPresets.json";
 import DitherMethods from "./json/ditherMethods.json";
 import MapModes from "./json/mapModes.json";
 import SupportedVersions from "./json/supportedVersions.json";
+import TransparencySources from "./json/transparencySources.json";
 import WhereSupportBlocksModes from "./json/whereSupportBlocksModes.json";
 
 import IMG_Upload from "../../images/upload.png";
@@ -41,6 +42,9 @@ class MapartController extends Component {
     optionValue_noSupportBlocksFirstRow: false,
     optionValue_transparency: false,
     optionValue_transparencyTolerance: 128,
+    optionValue_transparencySource: TransparencySources.PNG.uniqueId,
+    optionValue_transparencyKeyColour: "#ff00ff",
+    optionValue_transparencyKeyTolerance: 24,
     optionValue_mapdatFilenameUseId: true,
     optionValue_mapdatFilenameIdStart: 0,
     optionValue_betterColour: true,
@@ -307,6 +311,18 @@ class MapartController extends Component {
     this.setState({
       optionValue_transparencyTolerance: value,
     });
+  };
+
+  onOptionChange_transparencySource = (e) => {
+    this.setState({ optionValue_transparencySource: parseInt(e.target.value) });
+  };
+
+  onOptionChange_transparencyKeyColour = (e) => {
+    this.setState({ optionValue_transparencyKeyColour: e.target.value });
+  };
+
+  onOptionChange_transparencyKeyTolerance = (value) => {
+    this.setState({ optionValue_transparencyKeyTolerance: value });
   };
 
   onOptionChange_mapdatFilenameUseId = () => {
@@ -770,6 +786,9 @@ class MapartController extends Component {
       optionValue_noSupportBlocksFirstRow,
       optionValue_transparency,
       optionValue_transparencyTolerance,
+      optionValue_transparencySource,
+      optionValue_transparencyKeyColour,
+      optionValue_transparencyKeyTolerance,
       optionValue_mapdatFilenameUseId,
       optionValue_mapdatFilenameIdStart,
       optionValue_betterColour,
@@ -829,9 +848,13 @@ class MapartController extends Component {
             optionValue_showGridOverlay={optionValue_showGridOverlay}
             optionValue_staircasing={optionValue_staircasing}
             optionValue_whereSupportBlocks={optionValue_whereSupportBlocks}
+            optionValue_supportBlock={optionValue_supportBlock}
             optionValue_noSupportBlocksFirstRow={optionValue_noSupportBlocksFirstRow}
             optionValue_transparency={optionValue_transparency}
             optionValue_transparencyTolerance={optionValue_transparencyTolerance}
+            optionValue_transparencySource={optionValue_transparencySource}
+            optionValue_transparencyKeyColour={optionValue_transparencyKeyColour}
+            optionValue_transparencyKeyTolerance={optionValue_transparencyKeyTolerance}
             optionValue_betterColour={optionValue_betterColour}
             optionValue_dithering={optionValue_dithering}
             optionValue_ditheringStrength={optionValue_ditheringStrength}
@@ -881,6 +904,12 @@ class MapartController extends Component {
               onOptionChange_transparency={this.onOptionChange_transparency}
               optionValue_transparencyTolerance={optionValue_transparencyTolerance}
               onOptionChange_transparencyTolerance={this.onOptionChange_transparencyTolerance}
+              optionValue_transparencySource={optionValue_transparencySource}
+              onOptionChange_transparencySource={this.onOptionChange_transparencySource}
+              optionValue_transparencyKeyColour={optionValue_transparencyKeyColour}
+              onOptionChange_transparencyKeyColour={this.onOptionChange_transparencyKeyColour}
+              optionValue_transparencyKeyTolerance={optionValue_transparencyKeyTolerance}
+              onOptionChange_transparencyKeyTolerance={this.onOptionChange_transparencyKeyTolerance}
               optionValue_mapdatFilenameUseId={optionValue_mapdatFilenameUseId}
               onOptionChange_mapdatFilenameUseId={this.onOptionChange_mapdatFilenameUseId}
               optionValue_mapdatFilenameIdStart={optionValue_mapdatFilenameIdStart}
@@ -926,6 +955,9 @@ class MapartController extends Component {
               optionValue_noSupportBlocksFirstRow={optionValue_noSupportBlocksFirstRow}
               optionValue_transparency={optionValue_transparency}
               optionValue_transparencyTolerance={optionValue_transparencyTolerance}
+              optionValue_transparencySource={optionValue_transparencySource}
+              optionValue_transparencyKeyColour={optionValue_transparencyKeyColour}
+              optionValue_transparencyKeyTolerance={optionValue_transparencyKeyTolerance}
               optionValue_mapdatFilenameUseId={optionValue_mapdatFilenameUseId}
               optionValue_mapdatFilenameIdStart={optionValue_mapdatFilenameIdStart}
               optionValue_betterColour={optionValue_betterColour}

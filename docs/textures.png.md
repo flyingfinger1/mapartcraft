@@ -9,3 +9,5 @@ The 65th row at the bottom contains extra textures, currently:
 - Placeholder block (for unknown support block)
 - Plus for preview size
 - Minus for preview size
+- Overlay for custom blocks (drawn over the colour of their colour set)
+- Glass, offered as a support block (it has no map colour, so it is not in `coloursJSON`)

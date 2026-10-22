@@ -4,3 +4,10 @@
   padding: 0.2em;
   outline: 0.1em solid white;
 }
+
+.transparencyHint {
+  max-width: 320px;
+  margin: 4px 0;
+  color: orange;
+  text-align: left;
+}

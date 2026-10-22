@@ -12,6 +12,14 @@ class AutoCompleteInputBlockToAdd extends Component {
     let suggestions_prefix = [];
     let suggestions_includes = [];
 
+    // glass is not a map colour block, but a handy support block: invisible on maps and easy to get in bulk
+    const glassSuggestion = { blockName: "glass", colourSetId: "64", blockId: "6" };
+    if (glassSuggestion.blockName.startsWith(value)) {
+      suggestions_prefix.push(glassSuggestion);
+    } else if (glassSuggestion.blockName.includes(value)) {
+      suggestions_includes.push(glassSuggestion);
+    }
+
     for (const [colourSetId, colourSet] of Object.entries(coloursJSON)) {
       for (const [blockId, block] of Object.entries(colourSet.blocks)) {
         if (!(optionValue_version.MCVersion in block.validVersions)) {

@@ -10,6 +10,7 @@ class BlockImage extends Component {
     const { getLocaleString, coloursJSON, colourSetId, blockId, style, className, ...props_others } = this.props;
     const isNone = blockId === "-1"; // if barrier / no block selected for colourSetId
     const isUnknown = colourSetId === "64" && blockId === "2"; // if unknown / placeholder block
+    const isGlass = colourSetId === "64" && blockId === "6"; // glass, a support block that is invisible on maps
     return (
       <img
         src={IMG_Null}
@@ -18,6 +19,8 @@ class BlockImage extends Component {
             ? getLocaleString("NONE")
             : isUnknown
             ? getLocaleString("MATERIALS/PLACEHOLDER-BLOCK-TT")
+            : isGlass
+            ? "Glass"
             : coloursJSON[colourSetId].blocks[blockId].displayName
         }
         style={
@@ -32,6 +35,13 @@ class BlockImage extends Component {
             ? {
                 backgroundImage: `url(${IMG_Textures})`,
                 backgroundPositionX: "-200%",
+                backgroundPositionY: "-6400%",
+                ...style,
+              }
+            : isGlass
+            ? {
+                backgroundImage: `url(${IMG_Textures})`,
+                backgroundPositionX: "-600%",
                 backgroundPositionY: "-6400%",
                 ...style,
               }

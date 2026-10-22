@@ -127,11 +127,19 @@
       "UNOBTAINABLE-COLOURS": "無法取得的顏色",
       "UNOBTAINABLE-COLOURS-TT": "啟用無法在 schematics 中取得的顏色",
       "TRANSPARENCY": "透明度",
-      "TRANSPARENCY-TT": "為 map.dat 啟用透明度",
+      "TRANSPARENCY-TT": null,
       "TRANSPARENCY-TOLERANCE": "容忍度",
       "MAPDAT-FILENAME-USE-ID": "檔名編號",
       "MAPDAT-FILENAME-USE-ID-TT": "map.dat 的檔名格式將設為 'map_#.dat'",
       "MAPDAT-FILENAME-ID-RANGE": "範圍"
+    },
+    "TRANSPARENCY": {
+      "SOURCE": null,
+      "SOURCE-PNG": null,
+      "SOURCE-KEY-COLOUR": null,
+      "KEY-COLOUR": null,
+      "KEY-COLOUR-TT": null,
+      "SCHEMATIC-HINT": null
     },
     "BETTER-COLOUR": "提高色準",
     "BETTER-COLOUR-TT": "提升色彩準確度",
@@ -188,6 +196,7 @@
     "BLOCK": "方塊",
     "AMOUNT": "數量",
     "PLACEHOLDER-BLOCK-TT": "預留方塊",
+    "NOOBLINE-BLOCK-TT": null,
     "SHOW-PER-SPLIT": "只顯示每個分割區塊所需的最大材料",
     "SHOW-PER-SPLIT-TT": "用於鎖定地圖後材料重複使用",
     "REFRESH-MATERIALS": "重新載入材料",

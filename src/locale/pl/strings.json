@@ -127,11 +127,19 @@
       "UNOBTAINABLE-COLOURS": "niedostępne kolory",
       "UNOBTAINABLE-COLOURS-TT": "Umożliwia kolory w map.dat których są nie dostępne w schematics",
       "TRANSPARENCY": "Przezroczystość",
-      "TRANSPARENCY-TT": "Umożliwia przeztoczystość dla map.dat",
+      "TRANSPARENCY-TT": null,
       "TRANSPARENCY-TOLERANCE": "Tolerancja",
       "MAPDAT-FILENAME-USE-ID": "Numeryczne nazwy plików",
       "MAPDAT-FILENAME-USE-ID-TT": "Pobiera pliki map.dat jako 'map_#.dat'",
       "MAPDAT-FILENAME-ID-RANGE": "Przedział"
+    },
+    "TRANSPARENCY": {
+      "SOURCE": null,
+      "SOURCE-PNG": null,
+      "SOURCE-KEY-COLOUR": null,
+      "KEY-COLOUR": null,
+      "KEY-COLOUR-TT": null,
+      "SCHEMATIC-HINT": null
     },
     "BETTER-COLOUR": "Lepsze kolory",
     "BETTER-COLOUR-TT": "Zapewnia lepszą dokładność kolorów",
@@ -188,6 +196,7 @@
     "BLOCK": "Bloki",
     "AMOUNT": "Ilość",
     "PLACEHOLDER-BLOCK-TT": "Placeholderowe bloki",
+    "NOOBLINE-BLOCK-TT": null,
     "SHOW-PER-SPLIT": null,
     "SHOW-PER-SPLIT-TT": null,
     "REFRESH-MATERIALS": "odśwież materiały",

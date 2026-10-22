@@ -127,11 +127,19 @@
       "UNOBTAINABLE-COLOURS": "Colores no obtenibles",
       "UNOBTAINABLE-COLOURS-TT": "Permite colores para map.dat no obtenibles en .schematic",
       "TRANSPARENCY": "Transparencia",
-      "TRANSPARENCY-TT": "Permite la transparencia para map.dat",
+      "TRANSPARENCY-TT": null,
       "TRANSPARENCY-TOLERANCE": "Tolerancia",
       "MAPDAT-FILENAME-USE-ID": "Identificador numérico",
       "MAPDAT-FILENAME-USE-ID-TT": "Genera los archivos a partir del identificador numérico (map_#.dat)",
       "MAPDAT-FILENAME-ID-RANGE": "Rango"
+    },
+    "TRANSPARENCY": {
+      "SOURCE": null,
+      "SOURCE-PNG": null,
+      "SOURCE-KEY-COLOUR": null,
+      "KEY-COLOUR": null,
+      "KEY-COLOUR-TT": null,
+      "SCHEMATIC-HINT": null
     },
     "BETTER-COLOUR": "Mejores colores",
     "BETTER-COLOUR-TT": "Da mayor precisión respecto a los colores de la imagen",
@@ -188,6 +196,7 @@
     "BLOCK": "Bloque",
     "AMOUNT": "Cantidad",
     "PLACEHOLDER-BLOCK-TT": "Bloque de soporte",
+    "NOOBLINE-BLOCK-TT": null,
     "SHOW-PER-SPLIT": "Muestra el máximo de materiales por sección",
     "SHOW-PER-SPLIT-TT": "Para reutilizar materiales con mapas bloqueados de 128x128 bloques",
     "REFRESH-MATERIALS": "RECARGA",
