@@ -9,7 +9,9 @@ COPY public/ public/
 COPY src/ src/
 RUN npm run build
 
-FROM nginx:1.27-alpine
+FROM nginx:1.28-alpine
+# Pull patched Alpine packages (brotli-libs >= 1.2.1, CVE-2026-111497)
+RUN apk upgrade --no-cache
 
 COPY docker/default.conf /etc/nginx/conf.d/default.conf
 # Daily access logs (read by GoAccess) and the generated statistics report;
