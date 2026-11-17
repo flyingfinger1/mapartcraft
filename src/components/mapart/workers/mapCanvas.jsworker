@@ -22,6 +22,7 @@ var optionValue_betterColour;
 var optionValue_dithering;
 var optionValue_ditheringStrength; // 0 to 100, percent of the dithering effect
 var optionValue_ditheringSerpentine; // error diffusion alternates its direction every row
+var optionValue_gamutMapping; // move colours the selected blocks cannot mix inside their gamut before dithering
 
 var colourSetsToUse = []; // colourSetIds and shades to use in map
 // In schematics, a pixel directly South of a transparent pixel always shows its light tone: Minecraft compares it with the
@@ -229,6 +230,169 @@ function colourSetIdAndToneToRGB(colourSetId, tone) {
   return coloursJSON[colourSetId]["tonesRGB"][tone];
 }
 
+/*
+  Gamut mapping: colours the selected blocks cannot mix are moved inside what they can mix before dithering. Otherwise
+  error diffusion keeps chasing an unreachable colour, which shows as stray dots of other colours, for example blue dots
+  in a dark navy background. Colours are moved in OKLab, keeping lightness and hue and lowering only the chroma, with a
+  soft knee so that nearly unreachable colours are compressed smoothly instead of being cut off.
+*/
+const GAMUT_KNEE = 0.8;
+
+function srgbByteToLinear(v) {
+  const c = v / 255;
+  return c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+}
+
+function linearToSrgbFloat(v) {
+  const c = v <= 0 ? 0 : v >= 1 ? 1 : v;
+  return 255 * (c <= 0.0031308 ? 12.92 * c : 1.055 * Math.pow(c, 1 / 2.4) - 0.055);
+}
+
+function srgbToOklab(rgb) {
+  const r = srgbByteToLinear(rgb[0]);
+  const g = srgbByteToLinear(rgb[1]);
+  const b = srgbByteToLinear(rgb[2]);
+  const l = Math.cbrt(0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b);
+  const m = Math.cbrt(0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b);
+  const s = Math.cbrt(0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b);
+  return [
+    0.2104542553 * l + 0.793617785 * m - 0.0040720468 * s,
+    1.9779984951 * l - 2.428592205 * m + 0.4505937099 * s,
+    0.0259040371 * l + 0.7827717662 * m - 0.808675766 * s,
+  ];
+}
+
+function oklabToSrgbFloat(lab) {
+  const l = Math.pow(lab[0] + 0.3963377774 * lab[1] + 0.2158037573 * lab[2], 3);
+  const m = Math.pow(lab[0] - 0.1055613458 * lab[1] - 0.0638541728 * lab[2], 3);
+  const s = Math.pow(lab[0] - 0.0894841775 * lab[1] - 1.291485548 * lab[2], 3);
+  return [
+    linearToSrgbFloat(4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s),
+    linearToSrgbFloat(-1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s),
+    linearToSrgbFloat(-0.0041960863 * l - 0.7034186147 * m + 1.707614701 * s),
+  ];
+}
+
+// Convex hull of the palette in sRGB (where error diffusion mixes), built incrementally. Returns null when the palette
+// does not span a volume (all colours on a plane or a line).
+function convexHull(points) {
+  const sub = (a, b) => [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
+  const cross = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
+  const dot = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+  const EPS = 1e-7;
+  // initial tetrahedron from points far apart
+  let i0 = 0;
+  let i1 = -1;
+  let best = 0;
+  points.forEach((p, i) => {
+    const d = dot(sub(p, points[i0]), sub(p, points[i0]));
+    if (d > best) [best, i1] = [d, i];
+  });
+  if (i1 < 0) return null;
+  let i2 = -1;
+  best = 0;
+  points.forEach((p, i) => {
+    const c = cross(sub(points[i1], points[i0]), sub(p, points[i0]));
+    const d = dot(c, c);
+    if (d > best) [best, i2] = [d, i];
+  });
+  if (i2 < 0 || best < 1) return null;
+  let i3 = -1;
+  best = 0;
+  const n012 = cross(sub(points[i1], points[i0]), sub(points[i2], points[i0]));
+  points.forEach((p, i) => {
+    const d = Math.abs(dot(n012, sub(p, points[i0])));
+    if (d > best) [best, i3] = [d, i];
+  });
+  if (i3 < 0 || best < 1) return null;
+
+  const centroid = [0, 1, 2].map((c) => (points[i0][c] + points[i1][c] + points[i2][c] + points[i3][c]) / 4);
+  const makeFace = (a, b, c) => {
+    let normal = cross(sub(points[b], points[a]), sub(points[c], points[a]));
+    if (dot(normal, sub(centroid, points[a])) > 0) {
+      [b, c] = [c, b];
+      normal = [-normal[0], -normal[1], -normal[2]];
+    }
+    const length = Math.hypot(normal[0], normal[1], normal[2]);
+    return { v: [a, b, c], n: normal.map((x) => x / length), d: dot(normal, points[a]) / length };
+  };
+  let faces = [makeFace(i0, i1, i2), makeFace(i0, i1, i3), makeFace(i0, i2, i3), makeFace(i1, i2, i3)];
+  points.forEach((p, i) => {
+    if (i === i0 || i === i1 || i === i2 || i === i3) return;
+    const visible = faces.filter((f) => dot(f.n, p) - f.d > EPS);
+    if (visible.length === 0) return;
+    const edges = new Map();
+    visible.forEach((f) => {
+      for (let k = 0; k < 3; k++) {
+        const a = f.v[k];
+        const b = f.v[(k + 1) % 3];
+        const reverse = `${b},${a}`;
+        if (edges.has(reverse)) edges.delete(reverse);
+        else edges.set(`${a},${b}`, [a, b]);
+      }
+    });
+    faces = faces.filter((f) => !visible.includes(f));
+    edges.forEach(([a, b]) => faces.push(makeFace(a, b, i)));
+  });
+  return faces;
+}
+
+function makeGamutMapper(palette) {
+  const points = [];
+  palette.forEach((colourSet) => Object.values(colourSet.tonesRGB).forEach((rgb) => points.push(rgb)));
+  const hull = points.length >= 4 ? convexHull(points) : null;
+  const isGreyscale = points.every((rgb) => Math.hypot(...srgbToOklab(rgb).slice(1)) < 0.02);
+  if (hull === null && !isGreyscale) {
+    return null; // a flat palette (eg two colours): nothing sensible to map to
+  }
+  const inside = (rgb) => hull.every((f) => f.n[0] * rgb[0] + f.n[1] * rgb[1] + f.n[2] * rgb[2] - f.d <= 1e-6);
+  // lightness range of the greys inside the gamut
+  const lightnesses = points.map((rgb) => srgbToOklab(rgb)[0]);
+  let lightnessMin = Math.max(...lightnesses);
+  let lightnessMax = Math.min(...lightnesses);
+  if (hull !== null) {
+    for (let L = 0; L <= 1.0001; L += 0.005) {
+      if (inside(oklabToSrgbFloat([L, 0, 0]))) {
+        lightnessMin = Math.min(lightnessMin, L);
+        lightnessMax = Math.max(lightnessMax, L);
+      }
+    }
+  } else {
+    lightnessMin = Math.min(...lightnesses);
+    lightnessMax = Math.max(...lightnesses);
+  }
+  const cache = new Map();
+  return (rgb) => {
+    const key = (rgb[0] << 16) + (rgb[1] << 8) + rgb[2];
+    if (cache.has(key)) return cache.get(key);
+    const lab = srgbToOklab(rgb);
+    const L = Math.min(Math.max(lab[0], lightnessMin), lightnessMax);
+    const chroma = Math.hypot(lab[1], lab[2]);
+    let mappedChroma = 0;
+    if (hull !== null && chroma > 1e-9) {
+      const da = lab[1] / chroma;
+      const db = lab[2] / chroma;
+      // largest chroma inside the gamut along this hue at this lightness
+      let low = 0;
+      let high = 0.5;
+      for (let step = 0; step < 18; step++) {
+        const middle = (low + high) / 2;
+        if (inside(oklabToSrgbFloat([L, da * middle, db * middle]))) low = middle;
+        else high = middle;
+      }
+      const knee = GAMUT_KNEE * low;
+      const span = Math.max((1 - GAMUT_KNEE) * low, 1e-9);
+      mappedChroma = chroma <= knee ? chroma : knee + span * Math.tanh((chroma - knee) / span);
+      const result = oklabToSrgbFloat([L, da * mappedChroma, db * mappedChroma]).map((v) => Math.min(255, Math.max(0, Math.round(v))));
+      cache.set(key, result);
+      return result;
+    }
+    const result = oklabToSrgbFloat([L, 0, 0]).map((v) => Math.min(255, Math.max(0, Math.round(v))));
+    cache.set(key, result);
+    return result;
+  };
+}
+
 function getMapartImageDataAndMaterials() {
   for (let y = 0; y < optionValue_mapSize_y; y++) {
     let mapsRowToAdd = [];
@@ -269,6 +433,21 @@ function getMapartImageDataAndMaterials() {
   const multimapWidth = optionValue_mapSize_x * 128;
   const multimapHeight = optionValue_mapSize_y * 128;
   const transparencyMask = getTransparencyMask(multimapWidth, multimapHeight);
+  if (optionValue_gamutMapping) {
+    const gamutMapper = makeGamutMapper(colourSetsToUse);
+    if (gamutMapper !== null) {
+      for (let p = 0; p < multimapWidth * multimapHeight; p++) {
+        const i = 4 * p;
+        const rgb = [canvasImageData.data[i], canvasImageData.data[i + 1], canvasImageData.data[i + 2]];
+        // transparent pixels and exact block colours (pixel art) stay as they are
+        if (transparencyMask[p] === 1 || exactColourCache.has((rgb[0] << 16) + (rgb[1] << 8) + rgb[2])) continue;
+        const mapped = gamutMapper(rgb);
+        canvasImageData.data[i] = mapped[0];
+        canvasImageData.data[i + 1] = mapped[1];
+        canvasImageData.data[i + 2] = mapped[2];
+      }
+    }
+  }
   for (let multimap_y = 0; multimap_y < multimapHeight; multimap_y++) {
     postMessage({
       head: "PROGRESS_REPORT",
@@ -457,6 +636,7 @@ onmessage = (e) => {
   optionValue_dithering = e.data.body.optionValue_dithering;
   optionValue_ditheringStrength = e.data.body.optionValue_ditheringStrength;
   optionValue_ditheringSerpentine = e.data.body.optionValue_ditheringSerpentine;
+  optionValue_gamutMapping = e.data.body.optionValue_gamutMapping;
 
   setupColourSetsToUse();
   setupExactColourCache();

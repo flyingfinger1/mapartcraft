@@ -215,6 +215,16 @@ function FAQContent_de({ images }) {
         eingeschaltet zu lassen.
       </p>
 
+      <b>Farben an Blöcke anpassen?</b>
+      <p>
+        Manche Farben lassen sich aus den gewählten Blöcken gar nicht mischen, etwa ein kräftiges Pink oder ein tiefes Dunkelblau bei wenigen Blöcken.
+        Das Dithering jagt dann der unerreichbaren Farbe hinterher und streut Punkte anderer Farben ein, zum Beispiel blaue Punkte in einem dunklen
+        Hintergrund. Mit dieser Einstellung werden solche Farben vor dem Dithering abgeschwächt: Helligkeit und Farbton bleiben, nur die Farbstärke wird auf
+        das gesenkt, was die Blöcke mischen können. Dunkle und kräftig gefärbte Flächen werden ruhiger, kräftige Farben wirken aber blasser, besonders bei
+        wenigen Blöcken oder flachen Karten. Standardmäßig ist sie aus; probiere sie aus, wenn Dir verirrte farbige Punkte auffallen. Exakte Blockfarben
+        (Pixel-Art) werden nie verändert.
+      </p>
+
       <b>Dithering?</b>
       <p>
         Damit bekommt Dein Bild eine Körnung, die es deutlich weicher wirken lässt. Floyd-Steinberg ist am genauesten, Ordered/Bayer-Dithering erzeugt meist

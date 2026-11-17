@@ -145,6 +145,8 @@
     },
     "BETTER-COLOUR": "色の改善",
     "BETTER-COLOUR-TT": "色の精度を高めます",
+    "GAMUT-MAPPING": null,
+    "GAMUT-MAPPING-TT": null,
     "DITHERING": {
       "TITLE": "ディザリング",
       "TITLE-TT": "見かけ上ランダムなピクセルを追加し，より多くの色を錯覚させます",

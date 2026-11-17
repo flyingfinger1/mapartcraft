@@ -145,6 +145,8 @@
     },
     "BETTER-COLOUR": "Улучшенный цвет",
     "BETTER-COLOUR-TT": "Обеспечивает лучшую точность цветопередачи",
+    "GAMUT-MAPPING": null,
+    "GAMUT-MAPPING-TT": null,
     "DITHERING": {
       "TITLE": "Смешивание",
       "TITLE-TT": "Добавляет случайные пиксели для иллюзии большего количества цветов",

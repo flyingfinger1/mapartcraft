@@ -145,6 +145,8 @@
     },
     "BETTER-COLOUR": "提高色準",
     "BETTER-COLOUR-TT": "提升色彩準確度",
+    "GAMUT-MAPPING": null,
+    "GAMUT-MAPPING-TT": null,
     "DITHERING": {
       "TITLE": "抖動",
       "TITLE-TT": "添加看似隨機的像素，以產生更多顏色的錯覺",

@@ -145,6 +145,8 @@
     },
     "BETTER-COLOUR": "Geresnės spalvos",
     "BETTER-COLOUR-TT": "Suteikia geresnį spalvų tikslumą",
+    "GAMUT-MAPPING": null,
+    "GAMUT-MAPPING-TT": null,
     "DITHERING": {
       "TITLE": "Ditheriuoti",
       "TITLE-TT": "Prideda iš pažiūros atsitiktinių taškų, kad iliustruotų daugiau spalvų",

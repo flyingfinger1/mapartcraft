@@ -145,6 +145,8 @@
     },
     "BETTER-COLOUR": "Lepsze kolory",
     "BETTER-COLOUR-TT": "Zapewnia lepszą dokładność kolorów",
+    "GAMUT-MAPPING": null,
+    "GAMUT-MAPPING-TT": null,
     "DITHERING": {
       "TITLE": "Tryb towrzenia",
       "TITLE-TT": "Dodaje pozornie losowe pixele dające iluzje większej ilości kolorów",

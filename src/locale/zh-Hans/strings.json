@@ -145,6 +145,8 @@
     },
     "BETTER-COLOUR": "更好的色准",
     "BETTER-COLOUR-TT": "为您提供更好的色彩准确性",
+    "GAMUT-MAPPING": null,
+    "GAMUT-MAPPING-TT": null,
     "DITHERING": {
       "TITLE": "抖动像素化",
       "TITLE-TT": "添加看似随机的像素以产生更多颜色的错觉",

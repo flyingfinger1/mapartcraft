@@ -145,6 +145,8 @@
     },
     "BETTER-COLOUR": "Paremad värvid",
     "BETTER-COLOUR-TT": "Annab parema värvitäpsuse",
+    "GAMUT-MAPPING": null,
+    "GAMUT-MAPPING-TT": null,
     "DITHERING": {
       "TITLE": "Värelemine",
       "TITLE-TT": "Lisab näiliselt suvalisi piksleid, tekitades illusiooni rohkematest värvidest",

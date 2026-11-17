@@ -205,6 +205,15 @@ function FAQContent_en({ images }) {
         keep this enabled.
       </p>
 
+      <b>Fit colors to blocks?</b>
+      <p>
+        Some colors cannot be mixed from the selected blocks at all, for example a strong pink or a deep navy blue with only a few blocks. Dithering then
+        keeps chasing the unreachable color and scatters dots of other colors, like blue dots in a dark background. With this setting, such colors are
+        softened before dithering: lightness and hue stay, only the color strength is lowered to what the blocks can mix. Dark and strongly colored areas
+        get calmer, but strong colors look paler, especially with few blocks or flat maps. It is off by default; try it when you see stray colored dots.
+        Exact block colors (pixel art) are never changed.
+      </p>
+
       <b>Dithering?</b>
       <p>
         This will add grain to your image to make it look a lot smoother. Floyd-Steinberg dithering is the most accurate, but the Ordered/Bayer dithering will

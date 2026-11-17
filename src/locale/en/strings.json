@@ -145,6 +145,8 @@
     },
     "BETTER-COLOUR": "Better color",
     "BETTER-COLOUR-TT": "Gives you better color accuracy",
+    "GAMUT-MAPPING": "Fit colors to blocks",
+    "GAMUT-MAPPING-TT": "Before dithering, softens colors the selected blocks cannot reproduce. Fewer stray dots of other colors, but strong colors look paler",
     "DITHERING": {
       "TITLE": "Dithering",
       "TITLE-TT": "Adds seemingly random pixels for the illusion of more colors",

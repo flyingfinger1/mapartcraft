@@ -48,6 +48,7 @@ class MapartController extends Component {
     optionValue_mapdatFilenameUseId: true,
     optionValue_mapdatFilenameIdStart: 0,
     optionValue_betterColour: true,
+    optionValue_gamutMapping: false,
     optionValue_highQualityScaling: true,
     optionValue_dithering: DitherMethods.FloydSteinberg.uniqueId,
     optionValue_ditheringStrength: 100,
@@ -344,6 +345,10 @@ class MapartController extends Component {
     this.setState({
       optionValue_betterColour: !this.state.optionValue_betterColour,
     });
+  };
+
+  onOptionChange_GamutMapping = () => {
+    this.setState({ optionValue_gamutMapping: !this.state.optionValue_gamutMapping });
   };
 
   onOptionChange_highQualityScaling = () => {
@@ -797,6 +802,7 @@ class MapartController extends Component {
       optionValue_mapdatFilenameUseId,
       optionValue_mapdatFilenameIdStart,
       optionValue_betterColour,
+      optionValue_gamutMapping,
       optionValue_highQualityScaling,
       optionValue_dithering,
       optionValue_ditheringStrength,
@@ -863,6 +869,7 @@ class MapartController extends Component {
             optionValue_transparencyKeyColour={optionValue_transparencyKeyColour}
             optionValue_transparencyKeyTolerance={optionValue_transparencyKeyTolerance}
             optionValue_betterColour={optionValue_betterColour}
+            optionValue_gamutMapping={optionValue_gamutMapping}
             optionValue_dithering={optionValue_dithering}
             optionValue_ditheringStrength={optionValue_ditheringStrength}
             optionValue_ditheringSerpentine={optionValue_ditheringSerpentine}
@@ -922,7 +929,9 @@ class MapartController extends Component {
               optionValue_mapdatFilenameIdStart={optionValue_mapdatFilenameIdStart}
               onOptionChange_mapdatFilenameIdStart={this.onOptionChange_mapdatFilenameIdStart}
               optionValue_betterColour={optionValue_betterColour}
+              optionValue_gamutMapping={optionValue_gamutMapping}
               onOptionChange_BetterColour={this.onOptionChange_BetterColour}
+              onOptionChange_GamutMapping={this.onOptionChange_GamutMapping}
               optionValue_highQualityScaling={optionValue_highQualityScaling}
               onOptionChange_highQualityScaling={this.onOptionChange_highQualityScaling}
               optionValue_dithering={optionValue_dithering}
@@ -971,6 +980,7 @@ class MapartController extends Component {
               optionValue_mapdatFilenameUseId={optionValue_mapdatFilenameUseId}
               optionValue_mapdatFilenameIdStart={optionValue_mapdatFilenameIdStart}
               optionValue_betterColour={optionValue_betterColour}
+              optionValue_gamutMapping={optionValue_gamutMapping}
               optionValue_dithering={optionValue_dithering}
               optionValue_ditheringStrength={optionValue_ditheringStrength}
               optionValue_ditheringSerpentine={optionValue_ditheringSerpentine}

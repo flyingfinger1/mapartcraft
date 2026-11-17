@@ -146,6 +146,8 @@
     },
     "BETTER-COLOUR": "Кращі кольори",
     "BETTER-COLOUR-TT": "Дає більшу точність кольорів",
+    "GAMUT-MAPPING": null,
+    "GAMUT-MAPPING-TT": null,
     "DITHERING": {
       "TITLE": "Дитеринг",
       "TITLE-TT": "Додає на перший погляд випадкові пікселі для ілюзії більшої кількості кольорів",

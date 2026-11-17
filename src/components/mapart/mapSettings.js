@@ -62,7 +62,9 @@ class MapSettings extends Component {
       optionValue_mapdatFilenameIdStart,
       onOptionChange_mapdatFilenameIdStart,
       optionValue_betterColour,
+      optionValue_gamutMapping,
       onOptionChange_BetterColour,
+      onOptionChange_GamutMapping,
       optionValue_highQualityScaling,
       onOptionChange_highQualityScaling,
       optionValue_dithering,
@@ -520,6 +522,18 @@ class MapSettings extends Component {
         <br />
       </React.Fragment>
     );
+    const setting_gamutMapping = (
+      <React.Fragment>
+        <Tooltip tooltipText={getLocaleString("MAP-SETTINGS/GAMUT-MAPPING-TT")}>
+          <b>
+            {getLocaleString("MAP-SETTINGS/GAMUT-MAPPING")}
+            {":"}
+          </b>
+        </Tooltip>{" "}
+        <input type="checkbox" checked={optionValue_gamutMapping} onChange={onOptionChange_GamutMapping} />
+        <br />
+      </React.Fragment>
+    );
     const setting_dithering = (
       <React.Fragment>
         <Tooltip tooltipText={getLocaleString("MAP-SETTINGS/DITHERING/TITLE-TT")}>
@@ -789,6 +803,7 @@ class MapSettings extends Component {
         {settings_mapModeConditional}
         {settingGroup_transparency}
         {setting_betterColour}
+        {setting_gamutMapping}
         {setting_dithering}
         {settingGroup_preprocessing}
         {settingGroup_extras}

@@ -145,6 +145,8 @@
     },
     "BETTER-COLOUR": "Cor melhor",
     "BETTER-COLOUR-TT": "Dá-lhe uma melhor precisão de cor",
+    "GAMUT-MAPPING": null,
+    "GAMUT-MAPPING-TT": null,
     "DITHERING": {
       "TITLE": "Dithering",
       "TITLE-TT": "Adiciona pixeis aleatórios para dar uma preceção de mais cor",

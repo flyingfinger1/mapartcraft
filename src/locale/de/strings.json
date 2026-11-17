@@ -145,6 +145,8 @@
     },
     "BETTER-COLOUR": "Verbesserte Farben",
     "BETTER-COLOUR-TT": "Aktiviert eine optimierte Farbgenauigkeit",
+    "GAMUT-MAPPING": "Farben an Blöcke anpassen",
+    "GAMUT-MAPPING-TT": "Schwächt vor dem Dithering Farben ab, die die gewählten Blöcke nicht darstellen können. Weniger verirrte Punkte anderer Farben, kräftige Farben wirken aber blasser",
     "DITHERING": {
       "TITLE": "Dithering",
       "TITLE-TT": "Schafft die Illusion von mehr Farben durch das Hinzufügen scheinbar zufälliger Pixel",

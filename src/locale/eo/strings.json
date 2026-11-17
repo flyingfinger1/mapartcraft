@@ -145,6 +145,8 @@
     },
     "BETTER-COLOUR": "Pli bona koloro",
     "BETTER-COLOUR-TT": "Tio igas pli bonan kolorakuratecon",
+    "GAMUT-MAPPING": null,
+    "GAMUT-MAPPING-TT": null,
     "DITHERING": {
       "TITLE": "Konfuzado",
       "TITLE-TT": "Tio aldonas ŝajne hazardajn rastrumerojn por iluzio de pli multe da koloroj",
