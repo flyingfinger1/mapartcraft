@@ -75,7 +75,9 @@
     "BEST-RESOLUTION-TT": "Origina bildo kun ĉi tia amplekso laboros la plej bone",
     "ASPECT-RATIO-MISMATCH-TT": "Bildo ne sekvas la flankproporcion de mapo",
     "SCALE-MINUS-TT": "Malpligrandigi la antaŭvidon",
-    "SCALE-PLUS-TT": "Pligrandigi la antaŭvidon"
+    "SCALE-PLUS-TT": "Pligrandigi la antaŭvidon",
+    "MAPDAT-HINT": null,
+    "MAPDAT-IMPORT-FAILED": null
   },
   "MAP-SETTINGS": {
     "TITLE": "Agordoj",

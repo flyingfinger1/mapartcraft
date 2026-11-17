@@ -75,7 +75,9 @@
     "BEST-RESOLUTION-TT": "Sellise resolutsiooniga pilt töötab kõige paremini",
     "ASPECT-RATIO-MISMATCH-TT": "Pildi külgede suhe ei ühtu kaardi omaga",
     "SCALE-MINUS-TT": "Tee eelvaade väiksemaks",
-    "SCALE-PLUS-TT": "Tee eelvaade suuremaks"
+    "SCALE-PLUS-TT": "Tee eelvaade suuremaks",
+    "MAPDAT-HINT": null,
+    "MAPDAT-IMPORT-FAILED": null
   },
   "MAP-SETTINGS": {
     "TITLE": "Sätted",

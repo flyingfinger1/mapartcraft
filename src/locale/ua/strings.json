@@ -76,7 +76,9 @@
     "BEST-RESOLUTION-TT": "Вхідне зображення з цим розміром спрацює найкраще",
     "ASPECT-RATIO-MISMATCH-TT": "Співвідношення сторін зображення і мапи не співпадають",
     "SCALE-MINUS-TT": "Зробити попередній перегляд меншим",
-    "SCALE-PLUS-TT": "Зробити попередній перегляд більшим"
+    "SCALE-PLUS-TT": "Зробити попередній перегляд більшим",
+    "MAPDAT-HINT": null,
+    "MAPDAT-IMPORT-FAILED": null
   },
   "MAP-SETTINGS": {
     "TITLE": "Налаштування",

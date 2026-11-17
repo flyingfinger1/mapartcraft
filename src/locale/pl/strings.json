@@ -75,7 +75,9 @@
     "BEST-RESOLUTION-TT": "Źródłowy obraz z tą rozdzielczością będzie działał lepiej",
     "ASPECT-RATIO-MISMATCH-TT": "Obraz nie pasuje do rozmiaru mapy",
     "SCALE-MINUS-TT": "Zrób podgląd mniejszy",
-    "SCALE-PLUS-TT": "Zrób podgląd większy"
+    "SCALE-PLUS-TT": "Zrób podgląd większy",
+    "MAPDAT-HINT": null,
+    "MAPDAT-IMPORT-FAILED": null
   },
   "MAP-SETTINGS": {
     "TITLE": "Ustawienia",

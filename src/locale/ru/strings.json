@@ -75,7 +75,9 @@
     "BEST-RESOLUTION-TT": "Изображение такого разрешения будет выглядеть лучше всего",
     "ASPECT-RATIO-MISMATCH-TT": "Изображение не соответствует соотношению сторон карты",
     "SCALE-MINUS-TT": "Уменьшить превью",
-    "SCALE-PLUS-TT": "Увеличить превью"
+    "SCALE-PLUS-TT": "Увеличить превью",
+    "MAPDAT-HINT": null,
+    "MAPDAT-IMPORT-FAILED": null
   },
   "MAP-SETTINGS": {
     "TITLE": "Настройки",

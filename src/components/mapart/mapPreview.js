@@ -400,7 +400,8 @@ class MapPreview extends Component {
               .replace("{preset}", getLocaleString("BLOCK-SELECTION/PRESETS/EVERYTHING"))}
           </p>
         )}
-        <input type="file" className="imgUpload" ref={this.fileInputRef} onChange={onFileDialogEvent} />
+        <input type="file" className="imgUpload" accept="image/*,.dat" ref={this.fileInputRef} onChange={onFileDialogEvent} />
+        <p className="mapPreviewNote">{getLocaleString("MAP-PREVIEW/MAPDAT-HINT")}</p>
         <div>
           <span
             className="gridOverlay"

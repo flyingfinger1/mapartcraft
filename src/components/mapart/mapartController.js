@@ -14,6 +14,7 @@ import BackgroundColourModes from "./json/backgroundColourModes.json";
 import CropModes from "./json/cropModes.json";
 import DefaultPresets from "./json/defaultPresets.json";
 import DitherMethods from "./json/ditherMethods.json";
+import { isMapdatFile, mapdatFileToImageURL } from "./mapdatImport";
 import MapModes from "./json/mapModes.json";
 import SupportedVersions from "./json/supportedVersions.json";
 import TransparencySources from "./json/transparencySources.json";
@@ -135,9 +136,7 @@ class MapartController extends Component {
     e.stopPropagation();
     const files = e.dataTransfer.files;
     if (files.length) {
-      const file = files[0];
-      const imgUrl = URL.createObjectURL(file);
-      this.loadUploadedImageFromURL(imgUrl, "mapart");
+      this.loadUploadedFile(files[0], "mapart");
     }
   }.bind(this);
 
@@ -146,9 +145,7 @@ class MapartController extends Component {
     e.stopPropagation();
     const files = e.clipboardData.files;
     if (files.length) {
-      const file = files[0];
-      const imgUrl = URL.createObjectURL(file);
-      this.loadUploadedImageFromURL(imgUrl, "mapart");
+      this.loadUploadedFile(files[0], "mapart");
     }
   }.bind(this);
 
@@ -173,10 +170,28 @@ class MapartController extends Component {
       return;
     } else {
       const file = files[0];
-      const imgUrl = URL.createObjectURL(file);
-      this.loadUploadedImageFromURL(imgUrl, file.name.replace(/\.[^/.]+$/, ""));
+      this.loadUploadedFile(file, file.name.replace(/\.[^/.]+$/, ""));
     }
   };
+
+  loadUploadedFile(file, baseFilename) {
+    if (!isMapdatFile(file)) {
+      this.loadUploadedImageFromURL(URL.createObjectURL(file), baseFilename);
+      return;
+    }
+    // a map file from a world (map_<id>.dat): shown in its exact map colours, on one map; its empty parts stay transparent,
+    // which also keeps dithering error from leaking out of them into the exact colours
+    mapdatFileToImageURL(file, coloursJSON).then(
+      ({ imageURL, hasTransparency }) => {
+        this.setState({ optionValue_mapSize_x: 1, optionValue_mapSize_y: 1 });
+        if (hasTransparency) {
+          this.setState({ optionValue_transparency: true, optionValue_transparencySource: TransparencySources.PNG.uniqueId });
+        }
+        this.loadUploadedImageFromURL(imageURL, file.name.replace(/\.[^/.]+$/, ""));
+      },
+      () => alert(this.props.getLocaleString("MAP-PREVIEW/MAPDAT-IMPORT-FAILED"))
+    );
+  }
 
   loadUploadedImageFromURL(imageURL, baseFilename) {
     const img = new Image();

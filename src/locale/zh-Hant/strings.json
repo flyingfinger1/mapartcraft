@@ -75,7 +75,9 @@
     "BEST-RESOLUTION-TT": "建議使用此解析度的圖片",
     "ASPECT-RATIO-MISMATCH-TT": "圖片與地圖的長寬比不相符",
     "SCALE-MINUS-TT": "縮小預覽",
-    "SCALE-PLUS-TT": "放大預覽"
+    "SCALE-PLUS-TT": "放大預覽",
+    "MAPDAT-HINT": null,
+    "MAPDAT-IMPORT-FAILED": null
   },
   "MAP-SETTINGS": {
     "TITLE": "設定",

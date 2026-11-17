@@ -168,6 +168,16 @@ function FAQContent_de({ images }) {
         herunter.
       </p>
 
+      <b>Kann ich eine map.dat-Datei laden?</b>
+      <p>
+        Ja: Öffne oder ziehe statt eines Bildes eine Datei map_xxx.dat aus dem Ordner <em>data</em> einer Welt hinein, zum Beispiel um eine vorhandene Karte als
+        Schematic nachzubauen. MapartCraft zeigt sie in ihren exakten Kartenfarben und stellt die Maße auf 1x1; hat die Karte leere Stellen, wird <em>Transparenz</em> eingeschaltet, damit sie transparent bleiben. Damit
+        wieder dieselben Blöcke herauskommen, wähle Blöcke für alle Farben der Karte (z. B. das Preset <em>Everything</em>) und nutze 3D-Staircasing, wenn die
+        Karte Schattierung hat, denn flache Karten haben nur einen Farbton pro Farbe. Farben, die es nur per Befehl gibt (der dunkelste Farbton), werden durch die
+        nächste baubare Farbe ersetzt, und im Schematic können Pixel direkt südlich einer leeren Stelle nur ihren hellen Farbton zeigen (siehe
+        <em>Transparente Karten</em>). Als map.dat-Datei kommt die Karte genau so zurück, wie sie war.
+      </p>
+
       <h2>Einstellungen</h2>
       <b>Maße?</b>
       <p>

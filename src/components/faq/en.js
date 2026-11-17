@@ -164,6 +164,14 @@ function FAQContent_en({ images }) {
         there you can replace map_xxx.dat files. MapartCraft downloads a .zip file containing all of the 1x1 map.dat files.
       </p>
 
+      <b>Can I load a map.dat file?</b>
+      <p>
+        Yes: open or drop a map_xxx.dat file from a world's <em>data</em> folder instead of an image, for example to rebuild an existing map as a schematic.
+        MapartCraft shows it in its exact map colors and sets the map size to 1x1; if the map has empty parts, <em>Transparency</em> is turned on so they stay transparent. To get the same blocks back,
+        select blocks for all colors the map uses (eg the <em>Everything</em> preset) and use 3D staircasing if the map has shading, since flat maps only
+        have one tone per color. Colors only reachable with commands (the darkest tone) are replaced by the nearest buildable color, and in a schematic, pixels directly South of an empty part can only show their light tone (see <em>Transparent maps</em>). As a map.dat file, the map comes back exactly as it was.
+      </p>
+
       <h2>Settings</h2>
       <b>Map size?</b>
       <p>

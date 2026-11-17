@@ -75,7 +75,9 @@
     "BEST-RESOLUTION-TT": "Una imagen original con esta resolución funcionará mejor",
     "ASPECT-RATIO-MISMATCH-TT": "La imagen no concuerda con la relación de aspecto del mapa",
     "SCALE-MINUS-TT": "Disminuir vista previa",
-    "SCALE-PLUS-TT": "Ampliar vista previa"
+    "SCALE-PLUS-TT": "Ampliar vista previa",
+    "MAPDAT-HINT": null,
+    "MAPDAT-IMPORT-FAILED": null
   },
   "MAP-SETTINGS": {
     "TITLE": "Opciones",

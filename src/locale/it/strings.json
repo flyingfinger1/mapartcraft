@@ -75,7 +75,9 @@
     "BEST-RESOLUTION-TT": "Un'immagine sorgente con questa risoluzione funzionerà al meglio",
     "ASPECT-RATIO-MISMATCH-TT": "L'immagine non rispetta le proporzioni della mappa",
     "SCALE-MINUS-TT": "Ridurre l'anteprima",
-    "SCALE-PLUS-TT": "Ingradire l'anteprima"
+    "SCALE-PLUS-TT": "Ingradire l'anteprima",
+    "MAPDAT-HINT": null,
+    "MAPDAT-IMPORT-FAILED": null
   },
   "MAP-SETTINGS": {
     "TITLE": "Impostazioni",

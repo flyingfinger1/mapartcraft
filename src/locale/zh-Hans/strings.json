@@ -75,7 +75,9 @@
     "BEST-RESOLUTION-TT": "具有此分辨率的源图像效果最佳",
     "ASPECT-RATIO-MISMATCH-TT": "图片与地图的长宽比例不符",
     "SCALE-MINUS-TT": "缩小预览",
-    "SCALE-PLUS-TT": "放大预览"
+    "SCALE-PLUS-TT": "放大预览",
+    "MAPDAT-HINT": null,
+    "MAPDAT-IMPORT-FAILED": null
   },
   "MAP-SETTINGS": {
     "TITLE": "设定",

@@ -75,7 +75,9 @@
     "BEST-RESOLUTION-TT": "Uma imagem fonte com esta resolução funcionará melhor",
     "ASPECT-RATIO-MISMATCH-TT": "A imagem não corresponde à proporção do mapa",
     "SCALE-MINUS-TT": "Tornar a pré-visualização menor",
-    "SCALE-PLUS-TT": "Tornar a pré-visualização maior"
+    "SCALE-PLUS-TT": "Tornar a pré-visualização maior",
+    "MAPDAT-HINT": null,
+    "MAPDAT-IMPORT-FAILED": null
   },
   "MAP-SETTINGS": {
     "TITLE": "Defenições",

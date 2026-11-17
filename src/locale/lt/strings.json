@@ -75,7 +75,9 @@
     "BEST-RESOLUTION-TT": "Šaltinio vaiždas su šia raiška veiks geriausiai",
     "ASPECT-RATIO-MISMATCH-TT": "Vaizdas neatitinka žemėlapio kraštinių santykio",
     "SCALE-MINUS-TT": "Padaryti peržiūra mažesne",
-    "SCALE-PLUS-TT": "Padaryti peržiūra didesne"
+    "SCALE-PLUS-TT": "Padaryti peržiūra didesne",
+    "MAPDAT-HINT": null,
+    "MAPDAT-IMPORT-FAILED": null
   },
   "MAP-SETTINGS": {
     "TITLE": "Nustatymai",

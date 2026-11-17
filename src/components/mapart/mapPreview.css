@@ -11,6 +11,14 @@
   display: none;
 }
 
+.mapPreviewNote {
+  max-width: 256px;
+  margin: 0 0 8px;
+  font-size: small;
+  opacity: 0.75;
+  text-align: left;
+}
+
 .gridOverlay {
   position: absolute;
   background-repeat: repeat;

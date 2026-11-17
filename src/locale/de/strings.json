@@ -75,7 +75,9 @@
     "BEST-RESOLUTION-TT": "Ein Bild mit dieser Auflösung wird am besten funktionieren",
     "ASPECT-RATIO-MISMATCH-TT": "Das Bild stimmt nicht mit dem Seitenverhältnis der Map überein",
     "SCALE-MINUS-TT": "Vorschau verkleinern",
-    "SCALE-PLUS-TT": "Vorschau vergrößern"
+    "SCALE-PLUS-TT": "Vorschau vergrößern",
+    "MAPDAT-HINT": "Nimmt auch Kartendateien aus einer Welt (data/map_<id>.dat), zum Beispiel um eine Karte als Schematic nachzubauen.",
+    "MAPDAT-IMPORT-FAILED": "Diese Datei ließ sich nicht als Minecraft-Karte (map_<id>.dat) lesen."
   },
   "MAP-SETTINGS": {
     "TITLE": "Einstellungen",
