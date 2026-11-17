@@ -63,6 +63,8 @@ class MapSettings extends Component {
       onOptionChange_mapdatFilenameIdStart,
       optionValue_betterColour,
       onOptionChange_BetterColour,
+      optionValue_highQualityScaling,
+      onOptionChange_highQualityScaling,
       optionValue_dithering,
       onOptionChange_dithering,
       optionValue_ditheringStrength,
@@ -260,6 +262,18 @@ class MapSettings extends Component {
           </tbody>
         </table>
       </div>
+    );
+    const setting_highQualityScaling = (
+      <React.Fragment>
+        <Tooltip tooltipText={getLocaleString("MAP-SETTINGS/HIGH-QUALITY-SCALING-TT")}>
+          <b>
+            {getLocaleString("MAP-SETTINGS/HIGH-QUALITY-SCALING")}
+            {":"}
+          </b>
+        </Tooltip>{" "}
+        <input type="checkbox" checked={optionValue_highQualityScaling} onChange={onOptionChange_highQualityScaling} />
+        <br />
+      </React.Fragment>
     );
     const setting_grid = (
       <React.Fragment>
@@ -769,6 +783,7 @@ class MapSettings extends Component {
         {setting_version}
         {setting_mapSize}
         {settingGroup_cropping}
+        {setting_highQualityScaling}
         {setting_grid}
         {setting_staircasing}
         {settings_mapModeConditional}

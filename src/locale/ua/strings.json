@@ -95,6 +95,8 @@
       "MANUAL": "Ручне",
       "ZOOM": "Збільшення"
     },
+    "HIGH-QUALITY-SCALING": null,
+    "HIGH-QUALITY-SCALING-TT": null,
     "GRID-OVERLAY": "Сітка",
     "GRID-OVERLAY-TT": "Накладає сітку, яка показує межі чанків і межі між мапами",
     "3D": {

@@ -31,7 +31,8 @@ function FAQContent_en({ images }) {
 
       <b>Why does the output change with the same image and settings?</b>
       <p>
-        The JPEG decoding and scaling algorithms vary between browsers and get changed all the time. If you wish to be 100% sure your image stays the same,
+        JPEG decoding varies between browsers and gets changed from time to time (with <em>High quality reduction</em>, the scaling itself is the same
+        everywhere). If you wish to be 100% sure your image stays the same,
         right click on the <em>Map preview</em> and choose <em>Save image as...</em>. Next time you can upload the image you saved.
       </p>
 
@@ -169,6 +170,13 @@ function FAQContent_en({ images }) {
         This will define how many maps you will create for your picture. When creating bigger maps, it's recommended to split it into multiple schematics (lest
         large staircased maps stretch above the world height limit). This can be done with the "DOWNLOAD NBT AS 1x1 SPLIT" and "DOWNLOAD LITEMATIC AS 1x1 SPLIT" buttons, which download all the 1x1 NBTs or litematics in a
         .zip file.
+      </p>
+
+      <b>High quality reduction?</b>
+      <p>
+        Large images have to be reduced to 128x128 pixels per map. With this option MapartCraft does that itself, in linear light and with a filter that keeps
+        edges sharp, instead of leaving it to the browser. Fine detail (foliage, hair, patterns) keeps its true brightness instead of turning darker, moiré is
+        about five times weaker, and the result is the same in every browser. Images that are not larger than the map are not affected.
       </p>
 
       <b>My image is stretched!</b>

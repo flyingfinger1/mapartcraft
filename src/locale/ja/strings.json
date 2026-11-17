@@ -94,6 +94,8 @@
       "MANUAL": "手動",
       "ZOOM": "ズーム"
     },
+    "HIGH-QUALITY-SCALING": null,
+    "HIGH-QUALITY-SCALING-TT": null,
     "GRID-OVERLAY": "グリッド",
     "GRID-OVERLAY-TT": "チャンクと地図の境界をオーバーレイ表示します",
     "3D": {

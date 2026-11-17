@@ -94,6 +94,8 @@
       "MANUAL": "手动",
       "ZOOM": "缩放"
     },
+    "HIGH-QUALITY-SCALING": null,
+    "HIGH-QUALITY-SCALING-TT": null,
     "GRID-OVERLAY": "网格",
     "GRID-OVERLAY-TT": "显示 16x16 的区块和 1x1 分割的网格",
     "3D": {

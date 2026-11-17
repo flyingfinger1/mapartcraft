@@ -94,6 +94,8 @@
       "MANUAL": "手動",
       "ZOOM": "縮放"
     },
+    "HIGH-QUALITY-SCALING": null,
+    "HIGH-QUALITY-SCALING-TT": null,
     "GRID-OVERLAY": "網格",
     "GRID-OVERLAY-TT": "在預覽圖中顯示 16*16 的區塊及 1x1 的方格網格。",
     "3D": {

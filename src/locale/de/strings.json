@@ -94,6 +94,8 @@
       "MANUAL": "Manuell",
       "ZOOM": "Zoom"
     },
+    "HIGH-QUALITY-SCALING": "Hochwertige Verkleinerung",
+    "HIGH-QUALITY-SCALING-TT": "Verkleinert große Bilder durch Mittelung in linearem Licht: schärfer, ohne Moiré und in jedem Browser gleich",
     "GRID-OVERLAY": "Raster",
     "GRID-OVERLAY-TT": "Blendet ein Raster mit 16x16-Chunks und den 1x1-Teilen ein",
     "3D": {

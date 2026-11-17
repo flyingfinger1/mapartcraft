@@ -94,6 +94,8 @@
       "MANUAL": "Manuel",
       "ZOOM": "Zoom"
     },
+    "HIGH-QUALITY-SCALING": null,
+    "HIGH-QUALITY-SCALING-TT": null,
     "GRID-OVERLAY": "Grille",
     "GRID-OVERLAY-TT": "Fait apparaître un calque délimitant les maps, et chunks 16x16",
     "3D": {

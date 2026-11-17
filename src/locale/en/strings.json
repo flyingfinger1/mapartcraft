@@ -94,6 +94,8 @@
       "MANUAL": "Manual",
       "ZOOM": "Zoom"
     },
+    "HIGH-QUALITY-SCALING": "High quality reduction",
+    "HIGH-QUALITY-SCALING-TT": "Reduces large images by averaging in linear light: sharper, without moiré, and the same in every browser",
     "GRID-OVERLAY": "Grid",
     "GRID-OVERLAY-TT": "Overlays a grid that shows 16x16 chunks and 1x1 splits",
     "3D": {

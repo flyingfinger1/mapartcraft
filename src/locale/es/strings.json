@@ -94,6 +94,8 @@
       "MANUAL": "Manual",
       "ZOOM": "Zoom"
     },
+    "HIGH-QUALITY-SCALING": null,
+    "HIGH-QUALITY-SCALING-TT": null,
     "GRID-OVERLAY": "Cuadrícula",
     "GRID-OVERLAY-TT": "Muestra una cuadrícula con bordes cada 16x16 y 1x1 chunks",
     "3D": {

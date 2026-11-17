@@ -48,6 +48,7 @@ class MapartController extends Component {
     optionValue_mapdatFilenameUseId: true,
     optionValue_mapdatFilenameIdStart: 0,
     optionValue_betterColour: true,
+    optionValue_highQualityScaling: true,
     optionValue_dithering: DitherMethods.FloydSteinberg.uniqueId,
     optionValue_ditheringStrength: 100,
     optionValue_ditheringSerpentine: true,
@@ -343,6 +344,10 @@ class MapartController extends Component {
     this.setState({
       optionValue_betterColour: !this.state.optionValue_betterColour,
     });
+  };
+
+  onOptionChange_highQualityScaling = () => {
+    this.setState({ optionValue_highQualityScaling: !this.state.optionValue_highQualityScaling });
   };
 
   onOptionChange_dithering = (e) => {
@@ -792,6 +797,7 @@ class MapartController extends Component {
       optionValue_mapdatFilenameUseId,
       optionValue_mapdatFilenameIdStart,
       optionValue_betterColour,
+      optionValue_highQualityScaling,
       optionValue_dithering,
       optionValue_ditheringStrength,
       optionValue_ditheringSerpentine,
@@ -845,6 +851,7 @@ class MapartController extends Component {
             optionValue_cropImage_zoom={optionValue_cropImage_zoom}
             optionValue_cropImage_percent_x={optionValue_cropImage_percent_x}
             optionValue_cropImage_percent_y={optionValue_cropImage_percent_y}
+            optionValue_highQualityScaling={optionValue_highQualityScaling}
             optionValue_showGridOverlay={optionValue_showGridOverlay}
             optionValue_staircasing={optionValue_staircasing}
             optionValue_whereSupportBlocks={optionValue_whereSupportBlocks}
@@ -916,6 +923,8 @@ class MapartController extends Component {
               onOptionChange_mapdatFilenameIdStart={this.onOptionChange_mapdatFilenameIdStart}
               optionValue_betterColour={optionValue_betterColour}
               onOptionChange_BetterColour={this.onOptionChange_BetterColour}
+              optionValue_highQualityScaling={optionValue_highQualityScaling}
+              onOptionChange_highQualityScaling={this.onOptionChange_highQualityScaling}
               optionValue_dithering={optionValue_dithering}
               onOptionChange_dithering={this.onOptionChange_dithering}
               optionValue_ditheringStrength={optionValue_ditheringStrength}
@@ -949,6 +958,7 @@ class MapartController extends Component {
               optionValue_cropImage_zoom={optionValue_cropImage_zoom}
               optionValue_cropImage_percent_x={optionValue_cropImage_percent_x}
               optionValue_cropImage_percent_y={optionValue_cropImage_percent_y}
+              optionValue_highQualityScaling={optionValue_highQualityScaling}
               optionValue_staircasing={optionValue_staircasing}
               optionValue_whereSupportBlocks={optionValue_whereSupportBlocks}
               optionValue_supportBlock={optionValue_supportBlock}

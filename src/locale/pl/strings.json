@@ -94,6 +94,8 @@
       "MANUAL": "Ręcznie",
       "ZOOM": null
     },
+    "HIGH-QUALITY-SCALING": null,
+    "HIGH-QUALITY-SCALING-TT": null,
     "GRID-OVERLAY": "Siatka",
     "GRID-OVERLAY-TT": "Nakłada siatkę przedstawiającą fragmenty 16x16 i podziały 1x1",
     "3D": {

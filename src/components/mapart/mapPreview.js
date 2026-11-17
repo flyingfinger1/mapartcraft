@@ -16,6 +16,8 @@ import IMG_Null from "../../images/null.png";
 import IMG_Textures from "../../images/textures.png";
 import IMG_GridOverlay from "../../images/gridOverlay.png";
 
+import { drawReduced } from "./highQualityScale";
+
 import "./mapPreview.css";
 
 class MapPreview extends Component {
@@ -43,6 +45,7 @@ class MapPreview extends Component {
       prevProps.optionValue_cropImage_zoom === newProps.optionValue_cropImage_zoom,
       prevProps.optionValue_cropImage_percent_x === newProps.optionValue_cropImage_percent_x,
       prevProps.optionValue_cropImage_percent_y === newProps.optionValue_cropImage_percent_y,
+      prevProps.optionValue_highQualityScaling === newProps.optionValue_highQualityScaling,
       prevProps.optionValue_staircasing === newProps.optionValue_staircasing,
       prevProps.optionValue_preprocessingEnabled === newProps.optionValue_preprocessingEnabled,
       prevProps.preProcessingValue_brightness === newProps.preProcessingValue_brightness,
@@ -192,6 +195,7 @@ class MapPreview extends Component {
       optionValue_cropImage_zoom,
       optionValue_cropImage_percent_x,
       optionValue_cropImage_percent_y,
+      optionValue_highQualityScaling,
     } = this.props;
     const { canvasRef_source } = this;
     const ctx_source = canvasRef_source.current.getContext("2d");
@@ -201,70 +205,77 @@ class MapPreview extends Component {
                                                // anti-fingerprinting). Firefox is unaffected by any of this.
     ctx_source.clearRect(0, 0, ctx_source.canvas.width, ctx_source.canvas.height);
 
-    if (optionValue_preprocessingEnabled) {
-      if (preProcessingValue_backgroundColourSelect !== BackgroundColourModes.OFF.uniqueId && /^#?[a-f\d]{6}$/i.test(preProcessingValue_backgroundColour)) {
-        let backgroundColour;
-        if (
-          preProcessingValue_backgroundColourSelect === BackgroundColourModes.SMOOTH.uniqueId &&
-          !Object.values(selectedBlocks).every((selectedBlockId) => selectedBlockId === "-1")
-        ) {
-          backgroundColour = this.closestSmoothColourTo(preProcessingValue_backgroundColour);
-        } else {
-          backgroundColour = preProcessingValue_backgroundColour;
+    // background and filters of the image preprocessing, applied to whichever context the image is drawn on
+    const prepare = (ctx) => {
+      if (optionValue_preprocessingEnabled) {
+        if (preProcessingValue_backgroundColourSelect !== BackgroundColourModes.OFF.uniqueId && /^#?[a-f\d]{6}$/i.test(preProcessingValue_backgroundColour)) {
+          let backgroundColour;
+          if (
+            preProcessingValue_backgroundColourSelect === BackgroundColourModes.SMOOTH.uniqueId &&
+            !Object.values(selectedBlocks).every((selectedBlockId) => selectedBlockId === "-1")
+          ) {
+            backgroundColour = this.closestSmoothColourTo(preProcessingValue_backgroundColour);
+          } else {
+            backgroundColour = preProcessingValue_backgroundColour;
+          }
+          ctx.filter = "none"; // this needs to be present to stop filters affecting background colour
+          ctx.fillStyle = backgroundColour;
+          ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
         }
-        ctx_source.filter = "none"; // this needs to be present to stop filters affecting background colour
-        ctx_source.rect(0, 0, ctx_source.canvas.width, ctx_source.canvas.height);
-        ctx_source.fillStyle = backgroundColour;
-        ctx_source.fill();
+        ctx.filter = `brightness(${preProcessingValue_brightness}%) contrast(${preProcessingValue_contrast}%) saturate(${preProcessingValue_saturation}%)`;
+      } else {
+        ctx.filter = "none";
       }
-      ctx_source.filter = `brightness(${preProcessingValue_brightness}%) contrast(${preProcessingValue_contrast}%) saturate(${preProcessingValue_saturation}%)`;
-    } else {
-      ctx_source.filter = "none";
-    }
+    };
 
+    // the part of the image that is used
+    let samplingOffset_x = 0;
+    let samplingOffset_y = 0;
+    let samplingWidth = uploadedImage.width;
+    let samplingHeight = uploadedImage.height;
     switch (optionValue_cropImage) {
       case CropModes.OFF.uniqueId: {
-        ctx_source.drawImage(uploadedImage, 0, 0, ctx_source.canvas.width, ctx_source.canvas.height);
         break;
       }
       case CropModes.CENTER.uniqueId:
       case CropModes.MANUAL.uniqueId: {
         const img_width = uploadedImage.width;
         const img_height = uploadedImage.height;
-        let samplingWidth;
-        let samplingHeight;
-        let samplingOffset_x;
-        let samplingOffset_y;
         if (img_width * optionValue_mapSize_y > img_height * optionValue_mapSize_x) {
           // image w/h greater than canvas w/h
           samplingWidth = Math.floor((10 * img_height * optionValue_mapSize_x) / (optionValue_mapSize_y * optionValue_cropImage_zoom));
           // the 10 is because the input is from 10 to 50 in steps of 1; scale down by 10
           samplingHeight = Math.floor((10 * img_height) / optionValue_cropImage_zoom);
-          samplingOffset_x = Math.floor((optionValue_cropImage_percent_x * (img_width - samplingWidth)) / 100);
-          samplingOffset_y = Math.floor((optionValue_cropImage_percent_y * (img_height - samplingHeight)) / 100);
         } else {
           // image w/h leq canvas w/h
           samplingWidth = Math.floor((10 * img_width) / optionValue_cropImage_zoom);
           samplingHeight = Math.floor((10 * img_width * optionValue_mapSize_y) / (optionValue_mapSize_x * optionValue_cropImage_zoom));
-          samplingOffset_x = Math.floor((optionValue_cropImage_percent_x * (img_width - samplingWidth)) / 100);
-          samplingOffset_y = Math.floor((optionValue_cropImage_percent_y * (img_height - samplingHeight)) / 100);
         }
-        ctx_source.drawImage(
-          uploadedImage,
-          samplingOffset_x,
-          samplingOffset_y,
-          samplingWidth,
-          samplingHeight,
-          0,
-          0,
-          ctx_source.canvas.width,
-          ctx_source.canvas.height
-        );
+        samplingOffset_x = Math.floor((optionValue_cropImage_percent_x * (img_width - samplingWidth)) / 100);
+        samplingOffset_y = Math.floor((optionValue_cropImage_percent_y * (img_height - samplingHeight)) / 100);
         break;
       }
       default: {
         throw new Error("Unknown optionValue_cropImage");
       }
+    }
+
+    const reduced =
+      optionValue_highQualityScaling &&
+      drawReduced(ctx_source, uploadedImage, samplingOffset_x, samplingOffset_y, samplingWidth, samplingHeight, prepare);
+    if (!reduced) {
+      prepare(ctx_source);
+      ctx_source.drawImage(
+        uploadedImage,
+        samplingOffset_x,
+        samplingOffset_y,
+        samplingWidth,
+        samplingHeight,
+        0,
+        0,
+        ctx_source.canvas.width,
+        ctx_source.canvas.height
+      );
     }
   }
 

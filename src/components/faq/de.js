@@ -30,7 +30,8 @@ function FAQContent_de({ images }) {
 
       <b>Warum ändert sich das Ergebnis bei gleichem Bild und gleichen Einstellungen?</b>
       <p>
-        Die Algorithmen zum Dekodieren und Skalieren von JPEGs unterscheiden sich zwischen Browsern und ändern sich ständig. Wenn Du sicher sein willst, dass
+        Das Dekodieren von JPEGs unterscheidet sich zwischen Browsern und ändert sich ab und zu (mit <em>Hochwertige Verkleinerung</em> ist die Skalierung
+        selbst überall gleich). Wenn Du sicher sein willst, dass
         Dein Bild gleich bleibt, klicke mit der rechten Maustaste auf die <em>Map-Vorschau</em> und wähle <em>Bild speichern unter...</em>. Beim nächsten Mal
         kannst Du das gespeicherte Bild hochladen.
       </p>
@@ -173,6 +174,13 @@ function FAQContent_de({ images }) {
         Hier legst Du fest, aus wie vielen Karten Dein Bild besteht. Bei größeren Karten empfiehlt es sich, sie in mehrere Schematics aufzuteilen, damit große
         3D-Karten nicht über die Bauhöhengrenze hinausragen. Das geht mit den Buttons "DOWNLOAD NBT ALS 1x1 TEILE" und "DOWNLOAD LITEMATIC ALS 1x1 TEILE", die alle 1x1-NBTs bzw. -Litematics in einer .zip-Datei
         herunterladen.
+      </p>
+
+      <b>Hochwertige Verkleinerung?</b>
+      <p>
+        Große Bilder müssen auf 128x128 Pixel pro Karte verkleinert werden. Mit dieser Option macht MapartCraft das selbst, in linearem Licht und mit einem
+        Filter, der Kanten scharf hält, statt es dem Browser zu überlassen. Feine Details (Laub, Haare, Muster) behalten ihre echte Helligkeit, statt dunkler
+        zu werden, Moiré ist etwa fünfmal schwächer, und das Ergebnis ist in jedem Browser gleich. Bilder, die nicht größer als die Karte sind, betrifft das nicht.
       </p>
 
       <b>Mein Bild ist verzerrt!</b>
