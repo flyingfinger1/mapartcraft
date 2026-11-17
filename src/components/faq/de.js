@@ -214,10 +214,6 @@ function FAQContent_de({ images }) {
         Diese Einstellung sorgt für natürlichere Farben. Schaltest Du sie aus, wird die Seite schneller, die Farben aber etwas schlechter. Es wird empfohlen, sie
         eingeschaltet zu lassen.
       </p>
-      <p>
-        Bei 3D-Karten (mit Staircasing) arbeiten Floyd-Steinberg und die anderen Verfahren mit Fehlerverteilung in linearem Licht, das Farben so mischt, wie
-        das Auge sie aus der Ferne sieht. Dort wählen sie die Farben ebenfalls in linearem Licht, diese Einstellung hat also keine Wirkung.
-      </p>
 
       <b>Dithering?</b>
       <p>
