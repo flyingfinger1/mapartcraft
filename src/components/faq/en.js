@@ -204,6 +204,10 @@ function FAQContent_en({ images }) {
         This setting will give you more natural colors. Disabling this will make the website faster and give you slightly worse colors. It is recommended to
         keep this enabled.
       </p>
+      <p>
+        On staircased (3D) maps, Floyd-Steinberg and the other error diffusion methods work in linear light, which mixes colours the way the eye does from a
+        distance; there they also choose colours in linear light, so this setting has no effect.
+      </p>
 
       <b>Dithering?</b>
       <p>

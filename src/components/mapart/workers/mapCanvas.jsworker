@@ -28,6 +28,33 @@ var colourSetsToUse = []; // colourSetIds and shades to use in map
 // height of the transparent column, which is the bottom of the world. These pixels can only use the light tones.
 var lightColourSetsToUse = [];
 var lightColourCache = new Map();
+var paletteToneCount = 1; // tones per colour set in the palette: 1 for flat maps, 3 or 4 for staircased ones
+
+const SRGB_TO_LINEAR = new Float32Array(256);
+for (let i = 0; i < 256; i++) {
+  const c = i / 255;
+  SRGB_TO_LINEAR[i] = c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+}
+
+// nearest palette colour for a colour in linear RGB, by distance in linear RGB
+function findClosestColourSetIdAndToneToLinear(pixelLinear, palette) {
+  let shortestDistance = Infinity;
+  let closestPixel;
+  for (const colourSet of palette) {
+    for (const toneKey of Object.keys(colourSet.tonesRGB)) {
+      const toneRGB = colourSet.tonesRGB[toneKey];
+      const r = SRGB_TO_LINEAR[toneRGB[0]] - pixelLinear[0];
+      const g = SRGB_TO_LINEAR[toneRGB[1]] - pixelLinear[1];
+      const b = SRGB_TO_LINEAR[toneRGB[2]] - pixelLinear[2];
+      const squareDistance = r * r + g * g + b * b;
+      if (squareDistance < shortestDistance) {
+        shortestDistance = squareDistance;
+        closestPixel = { colourSetId: colourSet.colourSetId, tone: toneKey };
+      }
+    }
+  }
+  return closestPixel;
+}
 var exactColourCache = new Map(); // for mapping RGB that exactly matches in coloursJSON to colourSetId and tone
 var colourCache = new Map(); // cache for reusing colours in identical pixels
 var labCache = new Map();
@@ -160,6 +187,7 @@ function setupColourSetsToUse() {
     (staircaseMode) => staircaseMode.uniqueId === optionValue_staircasing
   ).toneKeys;
 
+  paletteToneCount = toneKeys.length;
   for (const colourSetId of colourSetIdsToUse) {
     let tonesRGB = {};
     for (const toneKey of toneKeys) {
@@ -269,6 +297,20 @@ function getMapartImageDataAndMaterials() {
   const multimapWidth = optionValue_mapSize_x * 128;
   const multimapHeight = optionValue_mapSize_y * 128;
   const transparencyMask = getTransparencyMask(multimapWidth, multimapHeight);
+  // With the dense palettes of staircased maps, error diffusion works better in linear light, where light mixes like
+  // it does for the eye: measured on 26 photos, the result seen from a distance was closer to the original for most of
+  // them. Matching then also happens in linear RGB, so that both work in the same space. Flat maps, with their sparse
+  // palette, did not gain consistently and keep diffusing in sRGB.
+  const linearDiffusion = paletteToneCount >= 3 && divisor !== undefined;
+  let linearBuffer;
+  if (linearDiffusion) {
+    linearBuffer = new Float32Array(multimapWidth * multimapHeight * 3);
+    for (let p = 0; p < multimapWidth * multimapHeight; p++) {
+      for (let c = 0; c < 3; c++) {
+        linearBuffer[3 * p + c] = SRGB_TO_LINEAR[canvasImageData.data[4 * p + c]];
+      }
+    }
+  }
   for (let multimap_y = 0; multimap_y < multimapHeight; multimap_y++) {
     postMessage({
       head: "PROGRESS_REPORT",
@@ -342,16 +384,22 @@ function getMapartImageDataAndMaterials() {
           case DitherMethods.SierraLite.uniqueId:
           case DitherMethods.Stucki.uniqueId:
           case DitherMethods.Atkinson.uniqueId: {
-            closestColourSetIdAndTone = findClosestColourSetIdAndToneAndRGBTo(oldPixel, palette, paletteCache);
+            const pixelNumber = multimap_y * multimapWidth + multimap_x;
+            const oldPixelLinear = linearDiffusion ? linearBuffer.subarray(3 * pixelNumber, 3 * pixelNumber + 3) : null;
+            closestColourSetIdAndTone = linearDiffusion
+              ? findClosestColourSetIdAndToneToLinear(oldPixelLinear, palette)
+              : findClosestColourSetIdAndToneAndRGBTo(oldPixel, palette, paletteCache);
             const closestColour = colourSetIdAndToneToRGB(closestColourSetIdAndTone.colourSetId, closestColourSetIdAndTone.tone);
             canvasImageData.data[indexR] = closestColour[0];
             canvasImageData.data[indexG] = closestColour[1];
             canvasImageData.data[indexB] = closestColour[2];
-            const quant_error = [
-              (oldPixel[0] - closestColour[0]) * ditheringStrength,
-              (oldPixel[1] - closestColour[1]) * ditheringStrength,
-              (oldPixel[2] - closestColour[2]) * ditheringStrength,
-            ];
+            const quant_error = linearDiffusion
+              ? [0, 1, 2].map((c) => (oldPixelLinear[c] - SRGB_TO_LINEAR[closestColour[c]]) * ditheringStrength)
+              : [
+                  (oldPixel[0] - closestColour[0]) * ditheringStrength,
+                  (oldPixel[1] - closestColour[1]) * ditheringStrength,
+                  (oldPixel[2] - closestColour[2]) * ditheringStrength,
+                ];
 
             // ditherMatrix is 3 rows (this row, 1 down, 2 down) by 5 columns (2 left to 2 right of this pixel);
             // the entries up to and including this pixel in its own row are always zero
@@ -367,10 +415,17 @@ function getMapartImageDataAndMaterials() {
                   // never carry error over from one side of the image to the other, or into transparent pixels
                   continue;
                 }
-                const target_i = 4 * (target_y * multimapWidth + target_x);
-                canvasImageData.data[target_i] += quant_error[0] * weight;
-                canvasImageData.data[target_i + 1] += quant_error[1] * weight;
-                canvasImageData.data[target_i + 2] += quant_error[2] * weight;
+                if (linearDiffusion) {
+                  const target_l = 3 * (target_y * multimapWidth + target_x);
+                  linearBuffer[target_l] += quant_error[0] * weight;
+                  linearBuffer[target_l + 1] += quant_error[1] * weight;
+                  linearBuffer[target_l + 2] += quant_error[2] * weight;
+                } else {
+                  const target_i = 4 * (target_y * multimapWidth + target_x);
+                  canvasImageData.data[target_i] += quant_error[0] * weight;
+                  canvasImageData.data[target_i + 1] += quant_error[1] * weight;
+                  canvasImageData.data[target_i + 2] += quant_error[2] * weight;
+                }
               }
             }
             break;
