@@ -151,6 +151,7 @@
       "TITLE": "Dithering",
       "TITLE-TT": "Adds seemingly random pixels for the illusion of more colors",
       "NONE": "None",
+      "OPTIMISED": "Optimized (slower)",
       "STRENGTH": "Strength",
       "STRENGTH-TT": "How strongly to dither; lower values give calmer flat areas",
       "SERPENTINE": "Serpentine",

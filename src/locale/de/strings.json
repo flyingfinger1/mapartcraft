@@ -151,6 +151,7 @@
       "TITLE": "Dithering",
       "TITLE-TT": "Schafft die Illusion von mehr Farben durch das Hinzufügen scheinbar zufälliger Pixel",
       "NONE": "Aus",
+      "OPTIMISED": "Optimiert (langsamer)",
       "STRENGTH": "Stärke",
       "STRENGTH-TT": "Wie stark gedithert wird; niedrigere Werte ergeben ruhigere Flächen",
       "SERPENTINE": "Serpentine",

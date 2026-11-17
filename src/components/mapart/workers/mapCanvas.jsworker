@@ -393,6 +393,159 @@ function makeGamutMapper(palette) {
   };
 }
 
+/*
+  Optimised dithering (direct binary search): starts from Floyd-Steinberg and then changes single pixels to another block
+  colour as long as that brings the image, blurred slightly as seen from a little distance, closer to the original.
+  Floyd-Steinberg only looks ahead; this looks at the whole neighbourhood, so gradients get even, without the rings and
+  streaks of error diffusion, and dark areas get fewer stray dots. The error is measured in sRGB like the error diffusion.
+*/
+const OPTIMISE_SIGMA = 1.0; // blur of the viewer, in map pixels
+const OPTIMISE_CANDIDATES = 8; // block colours tried per pixel: those nearest to the original pixel
+const OPTIMISE_MAX_PASSES = 8;
+
+function srgbToCielab(rgb) {
+  const r = srgbByteToLinear(rgb[0]);
+  const g = srgbByteToLinear(rgb[1]);
+  const b = srgbByteToLinear(rgb[2]);
+  const f = (t) => (t > 216 / 24389 ? Math.cbrt(t) : ((24389 / 27) * t + 16) / 116);
+  const fx = f((0.4124564 * r + 0.3575761 * g + 0.1804375 * b) / 0.95047);
+  const fy = f(0.2126729 * r + 0.7151522 * g + 0.072175 * b);
+  const fz = f((0.0193339 * r + 0.119192 * g + 0.9503041 * b) / 1.08883);
+  return [116 * fy - 16, 500 * (fx - fy), 200 * (fy - fz)];
+}
+
+function optimiseDithering(source, transparencyMask, width, height) {
+  // all usable block colours in one list; pixels South of transparent pixels may only use light tones
+  const colours = [];
+  const colourIndexByRGB = new Map();
+  colourSetsToUse.forEach((colourSet) =>
+    Object.entries(colourSet.tonesRGB).forEach(([tone, rgb]) => {
+      colourIndexByRGB.set((rgb[0] << 16) + (rgb[1] << 8) + rgb[2], colours.length);
+      colours.push({ colourSetId: colourSet.colourSetId, tone: tone, rgb: rgb, lab: srgbToCielab(rgb) });
+    })
+  );
+  const allIndices = colours.map((_, index) => index);
+  const lightIndices = allIndices.filter((index) => colours[index].tone === "light");
+  const K = Math.min(OPTIMISE_CANDIDATES, colours.length);
+  const pixelCount = width * height;
+  const candidates = new Int32Array(pixelCount * K).fill(-1);
+  const candidateCache = new Map();
+  const current = new Int32Array(pixelCount).fill(-1);
+  for (let p = 0; p < pixelCount; p++) {
+    if (transparencyMask[p] === 1) continue;
+    const i = 4 * p;
+    current[p] = colourIndexByRGB.get((canvasImageData.data[i] << 16) + (canvasImageData.data[i + 1] << 8) + canvasImageData.data[i + 2]);
+    const onlyLightTones = optionValue_modeNBTOrMapdat === MapModes.SCHEMATIC_NBT.uniqueId && p >= width && transparencyMask[p - width] === 1;
+    const key = (onlyLightTones ? 1 << 24 : 0) + (source[3 * p] << 16) + (source[3 * p + 1] << 8) + source[3 * p + 2];
+    let nearest = candidateCache.get(key);
+    if (nearest === undefined) {
+      const lab = srgbToCielab([source[3 * p], source[3 * p + 1], source[3 * p + 2]]);
+      const distance = (index) => {
+        const c = colours[index].lab;
+        return (c[0] - lab[0]) ** 2 + (c[1] - lab[1]) ** 2 + (c[2] - lab[2]) ** 2;
+      };
+      nearest = (onlyLightTones ? lightIndices : allIndices)
+        .map((index) => [distance(index), index])
+        .sort((a, b) => a[0] - b[0])
+        .slice(0, K)
+        .map((entry) => entry[1]);
+      candidateCache.set(key, nearest);
+    }
+    for (let k = 0; k < nearest.length; k++) candidates[p * K + k] = nearest[k];
+  }
+
+  // the error is E = sum over the image of (blur * (output - original))^2; changing one pixel by d changes it by
+  // 2 d.cpe + |d|^2 c0, where cpe is the error convolved with the autocorrelation of the blur (a Gaussian, sigma * sqrt 2)
+  const radius = Math.ceil(8 * OPTIMISE_SIGMA);
+  const kernel = [];
+  for (let k = -radius; k <= radius; k++) kernel.push(Math.exp(-(k * k) / (4 * OPTIMISE_SIGMA * OPTIMISE_SIGMA)));
+  const c0 = 1; // the kernel's centre, squared
+  const cpe = new Float64Array(pixelCount * 3);
+  const temp = new Float64Array(pixelCount * 3);
+  for (let p = 0; p < pixelCount; p++) {
+    if (current[p] < 0) continue;
+    const rgb = colours[current[p]].rgb;
+    for (let c = 0; c < 3; c++) cpe[3 * p + c] = (rgb[c] - source[3 * p + c]) / 255;
+  }
+  for (let y = 0; y < height; y++) {
+    for (let x = 0; x < width; x++) {
+      for (let c = 0; c < 3; c++) {
+        let sum = 0;
+        for (let k = Math.max(-radius, -x); k <= Math.min(radius, width - 1 - x); k++) sum += kernel[k + radius] * cpe[3 * (y * width + x + k) + c];
+        temp[3 * (y * width + x) + c] = sum;
+      }
+    }
+  }
+  for (let y = 0; y < height; y++) {
+    for (let x = 0; x < width; x++) {
+      for (let c = 0; c < 3; c++) {
+        let sum = 0;
+        for (let k = Math.max(-radius, -y); k <= Math.min(radius, height - 1 - y); k++) sum += kernel[k + radius] * temp[3 * ((y + k) * width + x) + c];
+        cpe[3 * (y * width + x) + c] = sum;
+      }
+    }
+  }
+
+  for (let pass = 0; pass < OPTIMISE_MAX_PASSES; pass++) {
+    let changed = 0;
+    for (let y = 0; y < height; y++) {
+      if (y % 16 === 0) {
+        postMessage({ head: "PROGRESS_REPORT", body: (pass + y / height) / OPTIMISE_MAX_PASSES });
+      }
+      for (let x = 0; x < width; x++) {
+        const p = y * width + x;
+        if (current[p] < 0) continue;
+        const now = colours[current[p]].rgb;
+        let bestChange = -1e-12;
+        let best = -1;
+        let bestD;
+        for (let k = 0; k < K; k++) {
+          const index = candidates[p * K + k];
+          if (index < 0) break;
+          if (index === current[p]) continue;
+          const rgb = colours[index].rgb;
+          const d0 = (rgb[0] - now[0]) / 255;
+          const d1 = (rgb[1] - now[1]) / 255;
+          const d2 = (rgb[2] - now[2]) / 255;
+          const change = 2 * (d0 * cpe[3 * p] + d1 * cpe[3 * p + 1] + d2 * cpe[3 * p + 2]) + c0 * (d0 * d0 + d1 * d1 + d2 * d2);
+          if (change < bestChange) {
+            bestChange = change;
+            best = index;
+            bestD = [d0, d1, d2];
+          }
+        }
+        if (best < 0) continue;
+        current[p] = best;
+        changed++;
+        for (let ty = Math.max(0, y - radius); ty <= Math.min(height - 1, y + radius); ty++) {
+          const wy = kernel[ty - y + radius];
+          for (let tx = Math.max(0, x - radius); tx <= Math.min(width - 1, x + radius); tx++) {
+            const w = wy * kernel[tx - x + radius];
+            const t = 3 * (ty * width + tx);
+            cpe[t] += w * bestD[0];
+            cpe[t + 1] += w * bestD[1];
+            cpe[t + 2] += w * bestD[2];
+          }
+        }
+      }
+    }
+    if (changed < pixelCount * 0.001) break;
+  }
+
+  for (let p = 0; p < pixelCount; p++) {
+    if (current[p] < 0) continue;
+    const rgb = colours[current[p]].rgb;
+    canvasImageData.data[4 * p] = rgb[0];
+    canvasImageData.data[4 * p + 1] = rgb[1];
+    canvasImageData.data[4 * p + 2] = rgb[2];
+    if (optionValue_modeNBTOrMapdat === MapModes.SCHEMATIC_NBT.uniqueId) {
+      const whichMap_x = Math.floor((p % width) / 128);
+      const whichMap_y = Math.floor(Math.floor(p / width) / 128);
+      maps[whichMap_y][whichMap_x].materials[colours[current[p]].colourSetId] += 1;
+    }
+  }
+}
+
 function getMapartImageDataAndMaterials() {
   for (let y = 0; y < optionValue_mapSize_y; y++) {
     let mapsRowToAdd = [];
@@ -412,8 +565,13 @@ function getMapartImageDataAndMaterials() {
 
   let ditherMatrix;
   let divisor;
-  const chosenDitherMethod =
+  let chosenDitherMethod =
     DitherMethods[Object.keys(DitherMethods).find((ditherMethodKey) => DitherMethods[ditherMethodKey].uniqueId === optionValue_dithering)];
+  // optimised dithering starts from full-strength, serpentine Floyd-Steinberg
+  const optimise = chosenDitherMethod.uniqueId === DitherMethods.Optimised.uniqueId;
+  if (optimise) {
+    chosenDitherMethod = DitherMethods.FloydSteinberg;
+  }
   if (chosenDitherMethod.uniqueId !== DitherMethods.None.uniqueId) {
     ditherMatrix = chosenDitherMethod.ditherMatrix;
   }
@@ -429,7 +587,7 @@ function getMapartImageDataAndMaterials() {
   ) {
     divisor = chosenDitherMethod.ditherDivisor;
   }
-  const ditheringStrength = optionValue_ditheringStrength / 100;
+  const ditheringStrength = optimise ? 1 : optionValue_ditheringStrength / 100;
   const multimapWidth = optionValue_mapSize_x * 128;
   const multimapHeight = optionValue_mapSize_y * 128;
   const transparencyMask = getTransparencyMask(multimapWidth, multimapHeight);
@@ -448,6 +606,16 @@ function getMapartImageDataAndMaterials() {
       }
     }
   }
+  // the original colours (after gamut mapping), which optimised dithering compares against
+  let source;
+  if (optimise) {
+    source = new Uint8ClampedArray(multimapWidth * multimapHeight * 3);
+    for (let p = 0; p < multimapWidth * multimapHeight; p++) {
+      source[3 * p] = canvasImageData.data[4 * p];
+      source[3 * p + 1] = canvasImageData.data[4 * p + 1];
+      source[3 * p + 2] = canvasImageData.data[4 * p + 2];
+    }
+  }
   for (let multimap_y = 0; multimap_y < multimapHeight; multimap_y++) {
     postMessage({
       head: "PROGRESS_REPORT",
@@ -455,7 +623,7 @@ function getMapartImageDataAndMaterials() {
     });
     // with serpentine scanning, error diffusion runs right to left on odd rows (with a mirrored matrix),
     // which avoids the diagonal 'worm' artifacts of always diffusing in one direction
-    const direction = optionValue_ditheringSerpentine && multimap_y % 2 === 1 ? -1 : 1;
+    const direction = (optimise || optionValue_ditheringSerpentine) && multimap_y % 2 === 1 ? -1 : 1;
     for (let step = 0; step < multimapWidth; step++) {
       const multimap_x = direction === 1 ? step : multimapWidth - 1 - step;
       const i = 4 * (multimap_y * multimapWidth + multimap_x);
@@ -558,12 +726,16 @@ function getMapartImageDataAndMaterials() {
             break;
         }
 
-        // materials count: mapdat can skip this
-        if (optionValue_modeNBTOrMapdat === MapModes.SCHEMATIC_NBT.uniqueId) {
+        // materials count: mapdat can skip this; optimised dithering counts after optimising
+        if (optionValue_modeNBTOrMapdat === MapModes.SCHEMATIC_NBT.uniqueId && !optimise) {
           maps[whichMap_y][whichMap_x].materials[closestColourSetIdAndTone.colourSetId] += 1;
         }
       }
     }
+  }
+
+  if (optimise) {
+    optimiseDithering(source, transparencyMask, multimapWidth, multimapHeight);
   }
 
   // support blocks are counted from the same physical layout that nbt.jsworker exports

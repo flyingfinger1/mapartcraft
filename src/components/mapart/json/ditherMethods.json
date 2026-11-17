@@ -90,5 +90,11 @@
       [0, 0, 1.0, 0, 0]
     ],
     "ditherDivisor": 8.0
+  },
+  "Optimised": {
+    "uniqueId": 10,
+    "name": "Optimised",
+    "localeKey": "MAP-SETTINGS/DITHERING/OPTIMISED",
+    "optimised": true
   }
 }

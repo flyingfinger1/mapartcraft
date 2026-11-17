@@ -151,6 +151,7 @@
       "TITLE": "Смешивание",
       "TITLE-TT": "Добавляет случайные пиксели для иллюзии большего количества цветов",
       "NONE": "Без смешения",
+      "OPTIMISED": null,
       "STRENGTH": null,
       "STRENGTH-TT": null,
       "SERPENTINE": null,

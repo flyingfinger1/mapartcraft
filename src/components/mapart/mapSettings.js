@@ -552,7 +552,7 @@ class MapSettings extends Component {
           ))}
         </select>
         <br />
-        {optionValue_dithering !== DitherMethods.None.uniqueId && (
+        {optionValue_dithering !== DitherMethods.None.uniqueId && optionValue_dithering !== DitherMethods.Optimised.uniqueId && (
           <React.Fragment>
             <Tooltip tooltipText={getLocaleString("MAP-SETTINGS/DITHERING/STRENGTH-TT")}>
               <b>

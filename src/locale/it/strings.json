@@ -151,6 +151,7 @@
       "TITLE": "Dithering",
       "TITLE-TT": "Aggiunge pixel con colori apparentemente casuali per rendere l'illusione di una gamma di colori più ampia",
       "NONE": "Nulla",
+      "OPTIMISED": null,
       "STRENGTH": null,
       "STRENGTH-TT": null,
       "SERPENTINE": null,

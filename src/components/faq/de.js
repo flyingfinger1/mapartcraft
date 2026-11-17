@@ -235,6 +235,12 @@ function FAQContent_de({ images }) {
         was die Karte auch leichter baubar macht. <em>Serpentine</em> (bei Floyd-Steinberg und den anderen Verfahren mit Fehlerverteilung) wechselt in jeder
         Zeile die Richtung und vermeidet so die schrägen Streifen, die diese Verfahren sonst erzeugen.
       </p>
+      <p>
+        <em>Optimiert</em> beginnt mit Floyd-Steinberg und ändert dann so lange einzelne Pixel in einen anderen Block, wie die Karte aus etwas Abstand
+        betrachtet dem Original näher kommt. Verläufe werden gleichmäßig, ohne die Ringe und Streifen der Fehlerverteilung, und dunkle Flächen bekommen
+        weniger verirrte Punkte; manche glatten Flächen wie Himmel bekommen dafür eine feinere, gleichmäßige Körnung. Die Berechnung dauert einige Sekunden
+        länger, bei großen Karten mehr.
+      </p>
 
       <b>Platziere Blöcke unter / Platzierter Block?</b>
       <p>

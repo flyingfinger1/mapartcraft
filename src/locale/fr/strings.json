@@ -151,6 +151,7 @@
       "TITLE": "Dithering",
       "TITLE-TT": "Ajoute des pixels aléatoires pour une illusion de couleurs",
       "NONE": "Rien",
+      "OPTIMISED": null,
       "STRENGTH": null,
       "STRENGTH-TT": null,
       "SERPENTINE": null,

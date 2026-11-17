@@ -151,6 +151,7 @@
       "TITLE": "Gradiente (dithering)",
       "TITLE-TT": "Añade píxeles aleatorios para dar mayor sensación de color",
       "NONE": "Sin gradiente (dithering)",
+      "OPTIMISED": null,
       "STRENGTH": null,
       "STRENGTH-TT": null,
       "SERPENTINE": null,

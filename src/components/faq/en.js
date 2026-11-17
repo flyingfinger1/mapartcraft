@@ -224,6 +224,11 @@ function FAQContent_en({ images }) {
         easier to build. <em>Serpentine</em> (for Floyd-Steinberg and the other error diffusion methods) alternates the direction every row and avoids the
         diagonal streaks these methods otherwise produce.
       </p>
+      <p>
+        <em>Optimized</em> starts from Floyd-Steinberg and then keeps changing single pixels to another block as long as the map, seen from a little
+        distance, gets closer to the original. Gradients get even, without the rings and streaks of error diffusion, and dark areas get fewer stray
+        dots; some smooth areas like skies get a finer, more even grain instead. It takes a few seconds longer to compute, more for large maps.
+      </p>
 
       <b>Add blocks under/Block to add?</b>
       <p>
