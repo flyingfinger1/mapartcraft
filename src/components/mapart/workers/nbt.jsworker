@@ -378,7 +378,8 @@ class Map_NBT {
     }).map((block) => this.returnPhysicalBlock(block.x, block.y, block.z, block.colourSetId));
 
     this.NBT_json.value.blocks.value.value = this.NBT_json.value.blocks.value.value.concat(physicalColumn);
-    this.columnHeightsCache.push(physicalColumn.reduce((a, b) => (a.pos.value.value[1] > b.pos.value.value[1] ? a : b)).pos.value.value[1]);
+    // a fully transparent column can have no blocks at all
+    this.columnHeightsCache.push(physicalColumn.reduce((highest, block) => Math.max(highest, block.pos.value.value[1]), 0));
   }
 
   setNBT_json_blocks() {
@@ -389,7 +390,7 @@ class Map_NBT {
     const mapDepth = this.mapColoursLayout[0].length + (optionValue_noSupportBlocksFirstRow ? 0 : 1);
     this.NBT_json.value.size.value.value = [
       this.mapColoursLayout.length,
-      this.columnHeightsCache.reduce((a, b) => (a > b ? a : b)) + 1,
+      this.columnHeightsCache.reduce((highest, height) => Math.max(highest, height), 0) + 1,
       mapDepth,
     ];
   }

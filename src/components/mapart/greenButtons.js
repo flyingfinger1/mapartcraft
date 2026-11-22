@@ -93,7 +93,8 @@ class GreenButtons extends Component {
           this.setState({ buttonWidth_Litematic_Split: (numberOfSplitsCalculated + e.data.body) / (optionValue_mapSize_x * optionValue_mapSize_y) });
           break;
         }
-        case "PROGRESS_REPORT_CREATE_MAPDAT_SPLIT": {
+        case "PROGRESS_REPORT_CREATE_MAPDAT_SPLIT":
+        case "PROGRESS_REPORT_CREATE_MAPDAT_SPLIT_ZIP": {
           this.setState({ buttonWidth_Mapdat_Split: (numberOfSplitsCalculated + e.data.body) / (optionValue_mapSize_x * optionValue_mapSize_y) });
           break;
         }

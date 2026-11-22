@@ -337,6 +337,11 @@ function getPhysicalColumnSegment(coloursLayoutColumn, columnNumber, settings, s
     }
   });
 
+  if (physicalColumn.length === 0) {
+    // a fully transparent column (with the noobline left out) has no blocks at all
+    return physicalColumn;
+  }
+
   switch (staircasing) {
     case MapModes.SCHEMATIC_NBT.staircaseModes.VALLEY.uniqueId: {
       let plateaus = [{ startIndex: 0, endIndex: 0 }];
