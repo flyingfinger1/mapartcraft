@@ -365,6 +365,15 @@ class Map_NBT {
         body: (columnNumber + 1) / this.mapColoursLayout.length,
       });
     }
+    // remove empty layers below the whole map (flat maps are laid out a few blocks above y = 0)
+    const blocks = this.NBT_json.value.blocks.value.value;
+    const lowestY = blocks.reduce((lowest, block) => Math.min(lowest, block.pos.value.value[1]), Infinity);
+    if (blocks.length !== 0 && lowestY !== 0) {
+      blocks.forEach((block) => {
+        block.pos.value.value[1] -= lowestY;
+      });
+      this.columnHeightsCache = this.columnHeightsCache.map((height) => Math.max(0, height - lowestY));
+    }
   }
 
   getPhysicalLayout_individualColumn(columnNumber) {

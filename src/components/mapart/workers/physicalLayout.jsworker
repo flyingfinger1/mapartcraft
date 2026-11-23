@@ -116,7 +116,10 @@ function getPhysicalColumnSegment(coloursLayoutColumn, columnNumber, settings, s
     const coloursLayoutBlock = coloursLayoutColumn[rowNumber];
 
     const previousHeight = currentHeight;
-    switch (coloursLayoutBlock.tone) {
+    // flat maps use only the normal tone, except the first pixel South of a transparent pixel: that one always shows its
+    // light tone, whatever its height, so it stays level with the rest of the map
+    const toneForHeight = staircasing === MapModes.SCHEMATIC_NBT.staircaseModes.OFF.uniqueId ? "normal" : coloursLayoutBlock.tone;
+    switch (toneForHeight) {
       case "dark": {
         currentHeight -= 1;
         break;
@@ -396,18 +399,20 @@ function getPhysicalColumnSegment(coloursLayoutColumn, columnNumber, settings, s
       physicalColumn = removeOverhangs(physicalColumn, rowBlocks);
       break;
     }
-    case MapModes.SCHEMATIC_NBT.staircaseModes.CLASSIC.uniqueId:
-    case MapModes.SCHEMATIC_NBT.staircaseModes.OFF.uniqueId: {
+    case MapModes.SCHEMATIC_NBT.staircaseModes.CLASSIC.uniqueId: {
       // make sure the column's global minimum is at y = 0; doing this for every column gives the map a common base.
-      // for OFF mode this removes the empty air layers that would otherwise appear below flat maps.
       const columnMinimumY = physicalColumn.reduce((a, b) => (a.y < b.y ? a : b)).y;
       physicalColumn.forEach((block) => {
         block.y -= columnMinimumY;
       });
       break;
     }
+    case MapModes.SCHEMATIC_NBT.staircaseModes.OFF.uniqueId:
     case MapModes.SCHEMATIC_NBT.staircaseModes.FULL_DARK.uniqueId:
     case MapModes.SCHEMATIC_NBT.staircaseModes.FULL_LIGHT.uniqueId: {
+      // flat maps keep every map block at the same height in every column and segment; shifting them down per column
+      // would put columns with and without support blocks at different heights. The schematic export removes empty layers
+      // below the whole map.
       break;
     }
     default: {
